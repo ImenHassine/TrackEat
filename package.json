@@ -1,5 +1,5 @@
 {
-  "name": "rn-material-kit-free",
+  "name": "Track-Eat",
   "version": "1.5.0",
   "description": "Material Kit React Native. Coded by Creative Tim",
   "main": "node_modules/expo/AppEntry.js",
@@ -22,16 +22,20 @@
     "@react-navigation/stack": "~5.0.6",
     "expo": "36.0.0",
     "expo-asset": "~8.0.0",
+    "expo-facebook": "~8.0.0",
     "expo-font": "~8.0.0",
     "expo-linear-gradient": "~8.0.0",
     "galio-framework": "~0.6.3",
     "react": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
+    "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "~1.5.0",
     "react-native-modal-dropdown": "~0.7.0",
     "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "~0.7.3",
-    "react-native-screens": "~2.0.0-beta.8"
+    "react-native-screens": "~2.0.0-beta.8",
+    "react-native-vector-icons": "^6.6.0",
+    "tcomb-form-native": "^0.6.20"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "rn-material-kit-free",
-    "description": "React Native - Material Kit Free",
-    "slug": "rn-material-kit-free",
+    "name": "Track-Eat",
+    "description": "Track your food meanwhile you wait for it to be prepared ",
+    "slug": "Track-Eat",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
     "platforms": [
