@@ -13,6 +13,7 @@ import ProScreen from '../screens/Pro';
 import SettingsScreen from '../screens/Settings';
 import HistorialScreen from '../screens/Historial';
 import PuntosScreen from '../screens/Puntos';
+import PruebaScreen from '../screens/Prueba';
 
 import CustomDrawerContent from './Menu';
 import { Icon, Header } from '../components';
@@ -43,6 +44,28 @@ function ProfileStack(props) {
               white
               transparent
               title="Profile"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+function PruebaStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="Prueba" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Prueba"
+        component={PruebaScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              white
+              transparent
+              title="Prueba"
               scene={scene}
               navigation={navigation}
             />
@@ -256,6 +279,20 @@ function AppStack(props) {
       <Drawer.Screen
         name="Profile"
         component={ProfileStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen
+        name="Prueba"
+        component={PruebaStack}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
