@@ -28,6 +28,24 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
+      case "Historial":
+        return(
+          <Icon 
+            size={16}
+            name="md-book"
+            family="ionicon"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+        );
+      case "Puntos":
+        return(
+          <Icon 
+            size={16}
+            name="md-star"
+            family="ionicon"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+        );
       case "Woman":
         return (
           <Icon

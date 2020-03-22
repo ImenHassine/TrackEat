@@ -11,6 +11,8 @@ import OnboardingScreen from '../screens/Onboarding';
 import ProfileScreen from '../screens/Profile';
 import ProScreen from '../screens/Pro';
 import SettingsScreen from '../screens/Settings';
+import HistorialScreen from '../screens/Historial';
+import PuntosScreen from '../screens/Puntos';
 
 import CustomDrawerContent from './Menu';
 import { Icon, Header } from '../components';
@@ -152,6 +154,34 @@ function AppStack(props) {
       }}
       initialRouteName="Home"
     >
+      <Drawer.Screen 
+        name="Historial"
+        component={HistorialStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon 
+              size={16}
+              name="md-book"
+              family="ionicon"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen 
+        name="Puntos"
+        component={PuntosStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon 
+              size={16}
+              name="md-star"
+              family="ionicon"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
       <Drawer.Screen
         name="Home"
         component={HomeStack}
@@ -297,6 +327,50 @@ function AppStack(props) {
       />
     </Drawer.Navigator>
   );
+}
+
+function HistorialStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="Historial" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Historial"
+        component={HistorialScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              white
+              transparent
+              title="Historial"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  )
+}
+
+function PuntosStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="Puntos" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Puntos"
+        component={PuntosScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Puntos"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  )
 }
 
 export default function OnboardingStack(props) {
