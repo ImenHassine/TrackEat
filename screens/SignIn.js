@@ -9,37 +9,29 @@ import * as Facebook from 'expo-facebook';
 import { Button, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
-
 import { materialTheme } from '../constants/';
 
 const { width } = Dimensions.get('screen');
 
-
-
-
 export default class SignIn extends React.Component {
-
-    onFBLogin = async () => {
-        try {
-          await Facebook.initializeAsync('252387635776823');
-          const {
-            type,
-            token
-          } = await Facebook.logInWithReadPermissionsAsync({
-            permissions: ['public_profile', 'email'],
-          });
-          if (type === 'success') {
-            const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
-            console.log('Logged in!', `Hi ${(await response.json()).name}!`);
-          } else {
-          }
-        } catch ({ message }) {
-          console.log(`Facebook Login Error: ${message}`);
+  onFBLogin = async () => {
+      try {
+        await Facebook.initializeAsync('252387635776823');
+        const {
+          type,
+          token
+        } = await Facebook.logInWithReadPermissionsAsync({
+          permissions: ['public_profile', 'email'],
+        });
+        if (type === 'success') {
+          const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
+          console.log('Logged in!', `Hi ${(await response.json()).name}!`);
+        } else {
         }
-    }
-  
-  
+      } catch ({ message }) {
+        console.log(`Facebook Login Error: ${message}`);
+      }
+  }
   
   renderText = () => {
     return (
@@ -118,9 +110,6 @@ export default class SignIn extends React.Component {
       </Block>
     )
   }
-  
-  
-  
   
   render() {
     return (
