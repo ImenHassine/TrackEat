@@ -1,9 +1,8 @@
 import React from 'react';
-import { Easing, Animated, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import { Block, Text, theme } from "galio-framework";
 
 import ComponentsScreen from '../screens/Components';
 import HomeScreen from '../screens/Home';
@@ -11,6 +10,8 @@ import OnboardingScreen from '../screens/Onboarding';
 import ProfileScreen from '../screens/Profile';
 import ProScreen from '../screens/Pro';
 import SettingsScreen from '../screens/Settings';
+import SignScreen from '../screens/SignIn';
+import SignUpScreen from '../screens/SignUp';
 import HistorialScreen from '../screens/Historial';
 import PuntosScreen from '../screens/Puntos';
 import PruebaScreen from '../screens/Prueba';
@@ -111,6 +112,39 @@ function ComponentsStack(props) {
       />
     </Stack.Navigator>
   );
+}
+
+function SignInStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="SignIn"
+        component={SignScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Sing In" scene={scene} navigation={navigation} />
+          )
+        }}
+        />
+    </Stack.Navigator>
+  )
+}
+
+
+function SignUpStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Sing Up" scene={scene} navigation={navigation} />
+          )
+        }}
+        />
+    </Stack.Navigator>
+  )
 }
 
 function HomeStack(props) {
@@ -336,7 +370,7 @@ function AppStack(props) {
       />
       <Drawer.Screen
         name="Sign In"
-        component={ProScreen}
+        component={SignInStack}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
@@ -350,7 +384,7 @@ function AppStack(props) {
       />
       <Drawer.Screen
         name="Sign Up"
-        component={ProScreen}
+        component={SignUpStack}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
