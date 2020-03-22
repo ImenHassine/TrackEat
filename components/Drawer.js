@@ -73,6 +73,15 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
+      case "Prueba":
+        return (
+         <Icon
+            size={16}
+            name="circle-10"
+            family="GalioExtra"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+          );
       case "Settings":
         return (
           <Icon

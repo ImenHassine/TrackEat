@@ -39,7 +39,7 @@ export default class Onboarding extends React.Component {
                 style={styles.button}
                 color={materialTheme.COLORS.BUTTON_COLOR}
                 onPress={() => navigation.navigate('App')}>
-                GET STARTED
+                ESTA ES Onboarding.js
               </Button>
             </Block>
           </Block>

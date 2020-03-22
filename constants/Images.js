@@ -5,6 +5,7 @@ const Products = {
 };
 
 const Profile = 'https://images.unsplash.com/photo-1512529920731-e8abaea917a5?fit=crop&w=840&q=80';
+const ProfileP = 'https://pi.tedcdn.com/r/s3.amazonaws.com/ted.conferences.profiles/00/00/03/24/bb/206011.jpg?'
 const Avatar = 'https://images.unsplash.com/photo-1518725522904-4b3939358342?fit=crop&w=210&q=80';
 
 const Viewed = [
@@ -21,6 +22,7 @@ export default {
   Pro,
   Products,
   Profile,
+  ProfileP,
   Viewed,
   Avatar,
 }

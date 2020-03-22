@@ -23,6 +23,7 @@ function CustomDrawerContent({
     "Kids",
     "New Collection",
     "Profile",
+    "Prueba",
     "Settings",
     "Components"
   ];
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#4B1958',
+    backgroundColor: '#195829',
     paddingHorizontal: 28,
     paddingBottom: theme.SIZES.BASE,
     paddingTop: theme.SIZES.BASE * 2,
