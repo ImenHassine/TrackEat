@@ -382,7 +382,7 @@ function HistorialStack(props) {
               navigation={navigation}
             />
           ),
-          headerTransparent: true
+          headerTransparent: false
         }}
       />
     </Stack.Navigator>
@@ -403,7 +403,7 @@ function PuntosStack(props) {
               navigation={navigation}
             />
           ),
-          headerTransparent: true
+          headerTransparent: false
         }}
       />
     </Stack.Navigator>
