@@ -23,7 +23,8 @@ function CustomDrawerContent({
     "FAQ",
     "Home",
     "Settings",
-    "Components"
+    "Components",
+    "Tracking de Órdenes"
   ];
   return (
     <Block
@@ -69,6 +70,7 @@ function CustomDrawerContent({
         >
           {screens.map((item, index) => {
             return (
+              
               <DrawerCustomItem
                 title={item}
                 key={index}

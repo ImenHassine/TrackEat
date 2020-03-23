@@ -16,6 +16,7 @@ import HistorialScreen from '../screens/Historial';
 import PuntosScreen from '../screens/Puntos';
 import PruebaScreen from '../screens/Prueba';
 import FAQScreen from '../screens/FAQ';
+import TrackingOrdenesScreen from '../screens/TrackingOrdenes';
 
 import CustomDrawerContent from './Menu';
 import { Icon, Header } from '../components';
@@ -73,6 +74,26 @@ function PruebaStack(props) {
             />
           ),
           headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+function TrackingOrdenesStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="TrackingOrdenes" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="TrackingOrdenes"
+        component={TrackingOrdenesScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Tracking de Órdenes"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: false
         }}
       />
     </Stack.Navigator>
@@ -249,6 +270,20 @@ function AppStack(props) {
       <Drawer.Screen 
         name="Puntos"
         component={PuntosStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon 
+              size={16}
+              name="md-star"
+              family="ionicon"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen 
+        name="Tracking de Órdenes"
+        component={TrackingOrdenesStack}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon 
