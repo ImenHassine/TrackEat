@@ -26,28 +26,11 @@ export default class FAQ extends React.Component {
       </Block>
     )
   }
-  renderCard = () => {
-    return (
-      <Card
-        flex
-        borderless
-        style={styles.card}
-        title="Christopher Moon"
-        caption="139 minutes ago"
-        location="Los Angeles, CA"
-        avatar="http://i.pravatar.cc/100?id=skater"
-        imageStyle={styles.cardImageRadius}
-        imageBlockStyle={{ padding: theme.SIZES.BASE / 2 }}
-        image = 'https://pi.tedcdn.com/r/s3.amazonaws.com/ted.conferences.profiles/00/00/03/24/bb/206011.jpg?'
-      />
-
-    )
-  }
   renderAlgo = (props) => {
     return (
       <Block style={{flex:2,padding:30}}> 
         <Block flex center>
-          <Accordion dataArray={data1} opened={50} headerStyle={{padding:20}} contentStyle={{fontWeight:'bold'}}/>
+          <Accordion dataArray={data1} opened={50} headerStyle={{padding:20}} contentStyle={{fontWeight:'bold',  textAlign: 'justify'}}/>
         </Block>
       </Block>
     )
@@ -71,16 +54,16 @@ export default class FAQ extends React.Component {
   }
 }
 const data1 = [
-  { title: "¿Cómo gasto mis puntos?                      ", content: "Lorem ipsum dolor sit amet" },
-  { title: "¿Que pasa si no recibo una notificacion?    ", content: "Lorem ipsum dolor sit amet" },
-  { title: "¿Qué restaurantes usan esta app?            ", content: "Lorem ipsum dolor sit amet" },
-  { title: "¿Como gano puntos?                           ", content: "Lorem ipsum dolor sit amet" },
-  { title: "¿Puedo ver las ordenes que hice en otra fecha?", content: "Lorem ipsum dolor sit amet" },
-  { title: "¿Funciona sin internet?                      ", content: "Lorem ipsum dolor sit amet" },
-  { title: "¿Y si no voy a recoger rápido mi comida?     ", content: "Lorem ipsum dolor sit amet" },
-  { title: "¿Puedo pagar desde la app?                   ", content: "Lorem ipsum dolor sit amet" },
-  { title: "Otro telefono puede escanear mi codigo QR?", content: "Lorem ipsum dolor sit amet" },
-  { title: "¿Cuánto tiempo duran los puntos?             ", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Cómo gasto mis puntos?                      ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Que pasa si no recibo una notificacion?    ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Qué restaurantes usan esta app?            ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Como gano puntos?                           ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Puedo ver las ordenes que hice en otra fecha?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Funciona sin internet?                      ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Y si no voy a recoger rápido mi comida?     ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Puedo pagar desde la app?                   ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "Otro telefono puede escanear mi codigo QR?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Cuánto tiempo duran los puntos?             ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
   { title: "¿Hay alguna promoción extra?                 ", content: "Lorem ipsum dolor sit amet" }
 ];
 const data2 = [

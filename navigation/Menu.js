@@ -17,16 +17,11 @@ function CustomDrawerContent({
 }) {
   const insets = useSafeArea();
   const screens = [
+    "Profile",
     "Historial",
     "Puntos",
     "FAQ",
     "Home",
-    "Woman",
-    "Man",
-    "Kids",
-    "New Collection",
-    "Profile",
-    "Prueba",
     "Settings",
     "Components"
   ];
