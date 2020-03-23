@@ -19,6 +19,7 @@ function CustomDrawerContent({
   const screens = [
     "Historial",
     "Puntos",
+    "FAQ",
     "Home",
     "Woman",
     "Man",
