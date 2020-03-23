@@ -122,7 +122,7 @@ function SignInStack(props) {
         component={SignScreen}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Sing In" scene={scene} navigation={navigation} />
+            null
           )
         }}
         />
