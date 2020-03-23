@@ -17,17 +17,14 @@ function CustomDrawerContent({
 }) {
   const insets = useSafeArea();
   const screens = [
+    "Profile",
     "Historial",
     "Puntos",
+    "FAQ",
     "Home",
-    "Woman",
-    "Man",
-    "Kids",
-    "New Collection",
-    "Profile",
-    "Prueba",
     "Settings",
-    "Components"
+    "Components",
+    "Tracking de Órdenes"
   ];
   return (
     <Block
@@ -73,6 +70,7 @@ function CustomDrawerContent({
         >
           {screens.map((item, index) => {
             return (
+              
               <DrawerCustomItem
                 title={item}
                 key={index}

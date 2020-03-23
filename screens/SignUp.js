@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import { Block, Text,  theme, Button } from 'galio-framework';
+import { Block, Text, theme, Button } from 'galio-framework';
 import * as Facebook from 'expo-facebook';
 import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -14,7 +14,6 @@ import { materialTheme } from '../constants/';
 const { width } = Dimensions.get('screen');
 
 export default class SignUp extends React.Component {
-
   onFBLogin = async () => {
     try {
       await Facebook.initializeAsync('252387635776823');
@@ -38,7 +37,7 @@ export default class SignUp extends React.Component {
     return (
       <Block flex style={styles.group}>
         <Text h3>
-          Sign up
+          Regístrate
         </Text>
       </Block>
     )

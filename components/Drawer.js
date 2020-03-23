@@ -118,6 +118,24 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
+        case "FAQ":
+          return (
+            <Icon
+              size={16}
+              name="question-circle"
+              family="font-awesome"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          );
+          case "Tracking de Órdenes":
+            return (
+              <Icon
+                size={16}
+                name="ios-log-in"
+                family="ionicon"
+                color={focused ? "white" : materialTheme.COLORS.MUTED}
+              />
+            );
       case "Sign In":
         return (
           <Icon
