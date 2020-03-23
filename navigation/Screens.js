@@ -15,6 +15,7 @@ import SignUpScreen from '../screens/SignUp';
 import HistorialScreen from '../screens/Historial';
 import PuntosScreen from '../screens/Puntos';
 import PruebaScreen from '../screens/Prueba';
+import FAQScreen from '../screens/FAQ';
 
 import CustomDrawerContent from './Menu';
 import { Icon, Header } from '../components';
@@ -72,6 +73,26 @@ function PruebaStack(props) {
             />
           ),
           headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+function FAQStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="FAQ" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="FAQ"
+        component={FAQScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="FAQ"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: false
         }}
       />
     </Stack.Navigator>
@@ -139,7 +160,7 @@ function SignUpStack(props) {
         component={SignUpScreen}
         options={{
           header: ({ navigation, scene }) => (
-            null
+            <Header title="Sing Up" scene={scene} navigation={navigation} />
           )
         }}
         />
@@ -228,6 +249,20 @@ function AppStack(props) {
       <Drawer.Screen 
         name="Puntos"
         component={PuntosStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon 
+              size={16}
+              name="md-star"
+              family="ionicon"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen 
+        name="FAQ"
+        component={FAQStack}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon 
