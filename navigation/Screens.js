@@ -160,7 +160,7 @@ function SignUpStack(props) {
         component={SignUpScreen}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Sing Up" scene={scene} navigation={navigation} />
+            null
           )
         }}
         />
