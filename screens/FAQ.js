@@ -7,7 +7,7 @@ import {
   ImageBackground,
   Dimensions
 } from 'react-native';
-import { Block, Text, theme, Card } from 'galio-framework';
+import {Accordion, Block, Text, theme, Card } from 'galio-framework';
 const { width } = Dimensions.get('screen');
 import { materialTheme, products, Images } from '../constants/';
 
@@ -43,6 +43,15 @@ export default class FAQ extends React.Component {
 
     )
   }
+  renderAlgo = (props) => {
+    return (
+      <Block style={{flex:2,padding:30}}> 
+        <Block flex center>
+          <Accordion dataArray={data1} opened={50} headerStyle={{padding:20}} contentStyle={{fontWeight:'bold'}}/>
+        </Block>
+      </Block>
+    )
+  }
 
   render() {
     return (
@@ -50,17 +59,33 @@ export default class FAQ extends React.Component {
           <ScrollView
             style={styles.components}
             showsVerticalScrollIndicator={false}>
+
             {this.renderText()}
-            {this.renderCard()}
-            {this.renderCard()}
-            {this.renderCard()}
-            {this.renderCard()}
+            {this.renderAlgo()}
+
+            
           </ScrollView>
           
         </Block>
     );
   }
 }
+const data1 = [
+  { title: "¿Cómo gasto mis puntos?                      ", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Que pasa si no recibo una notificacion?    ", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Qué restaurantes usan esta app?            ", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Como gano puntos?                           ", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Puedo ver las ordenes que hice en otra fecha?", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Funciona sin internet?                      ", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Y si no voy a recoger rápido mi comida?     ", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Puedo pagar desde la app?                   ", content: "Lorem ipsum dolor sit amet" },
+  { title: "Otro telefono puede escanear mi codigo QR?", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Cuánto tiempo duran los puntos?             ", content: "Lorem ipsum dolor sit amet" },
+  { title: "¿Hay alguna promoción extra?                 ", content: "Lorem ipsum dolor sit amet" }
+];
+const data2 = [
+  { title: "¿Que pasa si no recibo una notificacion?", content: "Lorem ipsum dolor sit amet" }
+];
 const styles = StyleSheet.create({
   components: {
   },
