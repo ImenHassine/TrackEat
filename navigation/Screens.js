@@ -164,7 +164,8 @@ function SignInStack(props) {
         component={SignInScreen}
         options={{
           header: ({ navigation, scene }) => (
-            null
+            <Header title="Iniciar Sesión" scene={scene} navigation={navigation} />
+
           )
         }}
       />
@@ -181,7 +182,8 @@ function SignUpStack(props) {
         component={SignUpScreen}
         options={{
           header: ({ navigation, scene }) => (
-            null
+            <Header title="Crear Cuenta" scene={scene} navigation={navigation} />
+
           )
         }}
         />

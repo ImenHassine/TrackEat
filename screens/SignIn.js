@@ -2,8 +2,14 @@ import React from 'react';
 import {
   StyleSheet,
 } from 'react-native';
-import { Block, Text, theme, Button, Input } from 'galio-framework';
+import { Block, Text, theme, Button } from 'galio-framework';
 import * as Facebook from 'expo-facebook';
+import {  Input } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+
+
+
 
 export default class SignIn extends React.Component {
   onFBLogin = async () => {
@@ -27,7 +33,7 @@ export default class SignIn extends React.Component {
   
   renderText = () => {
     return (
-      <Block flex style={styles.group}>
+      <Block style={styles.group}>
         <Text h3>Inicia sesión</Text>
       </Block>
     )
@@ -36,29 +42,44 @@ export default class SignIn extends React.Component {
   renderInputs = () => {
     return (
       <Block style={styles.content}>
-        <Input
-          left
-          rounded
-          icon="mail"
-          family="antdesign"
-          placeholder="Ingrese su e-mail"
-          color="black"
-          style={{ borderColor: 'black' }}
-          placeholderTextColor="black"
-        />
+          <Input
+            leftIcon={
+              <Icon
+                name="envelope"
+                color="#444"
+                size={20}
+              />
+            }
+            inputStyle={styles.input}
+            inputContainerStyle={styles.containetInput}
+            keyboardAppearance="light"
+            autoFocus={false}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+            returnKeyType="next"
+            placeholder={'Correo electrónico'}
+          />
 
-        <Input
-          left
-          rounded
-          password
-          viewPass
-          icon="lock"
-          family="antdesign"
-          placeholder="Ingrese su contraseña"
-          color="black"
-          style={{ borderColor: 'black' }}
-          placeholderTextColor="black"
-        />
+          <Input
+            leftIcon={
+              <Icon
+                name="lock"
+                color="#444"
+                size={30}
+              />
+            }
+            blurOnSubmit={true}
+            inputContainerStyle={styles.containetInput}
+            inputStyle={styles.input}
+            keyboardAppearance="light"
+            autoFocus={false}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+            returnKeyType="next"
+            placeholder={'Contraseña'}
+          />
       </Block>
     )
   }
@@ -69,9 +90,9 @@ export default class SignIn extends React.Component {
         round
         onlyIcon
         shadowless
+        size="small"
         icon="facebook"
         iconFamily="font-awesome"
-        size="small"
         iconColor={theme.COLORS.WHITE}
         iconSize={theme.SIZES.BASE * 1.45}
         color={theme.COLORS.FACEBOOK}
@@ -84,11 +105,11 @@ export default class SignIn extends React.Component {
   renderCrearBtn = () => {
     return (
       <Button
-        size="small"
         round
         uppercase
+        size="small"
         color="success"
-        style={[{width: "auto", paddingHorizontal: "8%"}, styles.shadow]}
+        style={[{width: "auto", paddingHorizontal: 20}, styles.shadow]}
       >
         Iniciar sesión
       </Button>
@@ -100,24 +121,21 @@ export default class SignIn extends React.Component {
 
     return (
       <Block flex style={styles.components}>
-        <Block flex style={styles.signin}>
           {this.renderText()}
-          <Block flex style={styles.inputs}>
-            <Block style={{marginTop: "10%"}}>
-              {this.renderInputs()}
-            </Block>
+          {this.renderInputs()}
 
-            <Block style={{marginVertical: "10%", display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
-              {this.renderCrearBtn()}
-              <Text h5>o</Text>
-              {this.renderFbBtn()}
-            </Block>
-            <Block style={{marginVertical: "10%", display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
-              <Text h6 style={styles.link} onPress={() => navigation.navigate('Sign Up')}>Crear una cuenta</Text>
-            </Block>
+          <Block style={{marginVertical: 20, flex: 1/3, flexDirection: "row",  alignItems: "center"}}>
+            {this.renderCrearBtn()}
+            <Text h5>o</Text>
+            {this.renderFbBtn()}
+          </Block>
+          <Block style={{marginVertical: 80, display: "flex", flexDirection: "column",  alignItems: "center"}}>
+            <Text  style={styles.link} onPress={() => navigation.navigate('Sign Up')}>¿Olvidaste tu contraseña?</Text>
+
+            <Text  style={[styles.link, {marginTop: 20}]} onPress={() => navigation.navigate('Sign Up')}>Crear una cuenta</Text>
           </Block>
           
-        </Block>
+        
       </Block>
     );
   }
@@ -125,15 +143,8 @@ export default class SignIn extends React.Component {
 
 const styles = StyleSheet.create({
   components: {
-    backgroundColor: "#46494C",
-    paddingHorizontal: theme.SIZES.BASE * 1.2
-  },
-  signin: {
     backgroundColor: "white",
-    marginVertical: "40%",
-    marginHorizontal: "10%",
-    borderRadius: 20,
-    paddingHorizontal: "5%",
+    paddingHorizontal: theme.SIZES.BASE * 2
   },
   inputs: {
     display: "flex",
@@ -148,7 +159,7 @@ const styles = StyleSheet.create({
   content: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between"
+    marginTop: 60
   },
   shadow: {
     shadowColor: 'black',
@@ -158,24 +169,23 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   social: {
-    width: theme.SIZES.BASE * 3,
+    width: theme.SIZES.BASE * 10,
     height: theme.SIZES.BASE * 3,
-    borderRadius: theme.SIZES.BASE * 1.75,
     justifyContent: 'center',
+  },
+  containetInput: {
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 15
   },
   input: {
     color: "#111",
-    borderColor: "#9B9B9B",
-    height: 40,
     marginTop: 10,
     marginLeft: 10,
     marginBottom: 2,
-    paddingHorizontal: 10,
-    paddingBottom: 8,
-    flex: 1,
   },
   link: {
-    textDecorationLine: "underline",
-    color: "#1E90FF"
+    color: "#1E90FF", 
+    fontSize: 16
   }
 });
