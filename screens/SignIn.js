@@ -1,16 +1,9 @@
 import React from 'react';
 import {
   StyleSheet,
-  Dimensions,
 } from 'react-native';
-import { Block, Text, theme, Button } from 'galio-framework';
+import { Block, Text, theme, Button, Input } from 'galio-framework';
 import * as Facebook from 'expo-facebook';
-import { Input } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-import { materialTheme } from '../constants/';
-
-const { width } = Dimensions.get('screen');
 
 export default class SignIn extends React.Component {
   onFBLogin = async () => {
@@ -44,40 +37,27 @@ export default class SignIn extends React.Component {
     return (
       <Block style={styles.content}>
         <Input
-          leftIcon={
-            <Icon
-              name="envelope"
-              color="#444"
-              size={20}
-            />
-          }
-          inputStyle={styles.input}
-          keyboardAppearance="light"
-          autoFocus={false}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-          returnKeyType="next"
-          placeholder={'Correo electrónico'}
+          left
+          rounded
+          icon="mail"
+          family="antdesign"
+          placeholder="Ingrese su e-mail"
+          color="black"
+          style={{ borderColor: 'black' }}
+          placeholderTextColor="black"
         />
 
         <Input
-          leftIcon={
-            <Icon
-              name="lock"
-              color="#444"
-              size={30}
-            />
-          }
-          blurOnSubmit={true}
-          inputStyle={styles.input}
-          keyboardAppearance="light"
-          autoFocus={false}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-          returnKeyType="next"
-          placeholder={'Contraseña'}
+          left
+          rounded
+          password
+          viewPass
+          icon="lock"
+          family="antdesign"
+          placeholder="Ingrese su contraseña"
+          color="black"
+          style={{ borderColor: 'black' }}
+          placeholderTextColor="black"
         />
       </Block>
     )
@@ -123,7 +103,9 @@ export default class SignIn extends React.Component {
         <Block flex style={styles.signin}>
           {this.renderText()}
           <Block flex style={styles.inputs}>
-            {this.renderInputs()}
+            <Block style={{marginTop: "10%"}}>
+              {this.renderInputs()}
+            </Block>
 
             <Block style={{marginVertical: "10%", display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
               {this.renderCrearBtn()}
