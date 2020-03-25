@@ -5,6 +5,7 @@ import { Product } from '../components/';
 import {
     ScrollView,
     StyleSheet,
+    SafeAreaView,
     TouchableOpacity,
     Image,
     ImageBackground,
@@ -17,7 +18,7 @@ const { width, height } = Dimensions.get('screen');
 import { materialTheme, products, Images } from '../constants/';
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default class Historial extends React.Component {
+export default class Puntos extends React.Component {
 
     renderProducts = () => {
         return (
@@ -27,12 +28,18 @@ export default class Historial extends React.Component {
 
     renderCards = () => {
         return (
-            <Block flex style={styles.group}>
-                <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
-                    <Product product={products[0]} horizontal />
-                    <Product product={products[0]} horizontal />
-                    <Product product={products[0]} horizontal />
-                </Block>
+          <Block flex style={styles.group}>
+            <Text h4>Promociones</Text>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
+              { products.map((product) => {
+                return(
+                  <Product product={product} horizontal />
+                )
+              })}
+              
+              {/* <Product product={products[0]} horizontal />
+              <Product product={products[0]} horizontal /> */}
+            </Block>
           </Block>
         )
     }
@@ -58,17 +65,14 @@ export default class Historial extends React.Component {
 
     render() {
         return (
-            <Block style={[styles.content]}>
-                {this.renderInfo()}
-                <Block style={{marginBottom: "2%"}}>
-                    <Text h4>Promociones</Text>
-                </Block>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                >
-                    {this.renderCards()}
-                </ScrollView>
-            </Block>
+          <Block style={[styles.content]}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+            >
+              {this.renderInfo()}
+              {this.renderCards()}
+            </ScrollView>
+          </Block>
         );
     }
 }
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         marginTop: "7%",
-        alignItems: "center",
+        alignItems: "centeri",
     },
     components: {
     },

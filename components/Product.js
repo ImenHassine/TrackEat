@@ -22,7 +22,7 @@ class Product extends React.Component {
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
           <Block flex space="between" style={styles.productDescription}>
             <Text size={14} style={styles.productTitle}>{product.title}</Text>
-            <Text size={12} muted={!priceColor} color={priceColor}>${product.price}</Text>
+            <Text size={14} muted color={priceColor}>{product.price} TrackPuntos</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
