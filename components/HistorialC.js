@@ -3,15 +3,15 @@ import { withNavigation } from '@react-navigation/compat';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 
-import materialTheme from '../constants/Theme';
 
 const { width } = Dimensions.get('screen');
 
-class Product extends React.Component {
+class HistorialC extends React.Component {
   render() {
     const { navigation, product, horizontal, full, style, priceColor, imageStyle } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-
+    console.log(product)
+    console.log("hola")
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
@@ -21,8 +21,9 @@ class Product extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={14} style={styles.productTitle}>{product.title}</Text>
-            <Text size={14} muted color={priceColor}>{product.price} TrackPuntos</Text>
+            <Text size={14} style={styles.productTitle}>{product.codigo}</Text>
+            <Text size={14} color={priceColor}>{product.nombre} </Text>
+            <Text size={14} color={priceColor}>{product.fecha} </Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -30,7 +31,7 @@ class Product extends React.Component {
   }
 }
 
-export default withNavigation(Product);
+export default withNavigation(HistorialC);
 
 const styles = StyleSheet.create({
   product: {

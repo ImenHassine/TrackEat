@@ -22,8 +22,6 @@ function CustomDrawerContent({
     "Puntos",
     "FAQ",
     "Home",
-    "Settings",
-    "Components",
     "Tracking de Órdenes"
   ];
   return (

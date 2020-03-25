@@ -20,7 +20,7 @@ export default class FAQ extends React.Component {
       <Block flex style={styles.group}>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
 
-          <Text h4 style={{marginBottom: theme.SIZES.BASE / 2,   textAlign: "center"}}>Preguntas Frecuentes</Text>
+          <Text h4 style={{marginBottom: theme.SIZES.BASE / 2,   textAlign: "center", fontWeight: 'bold'}}>Preguntas Frecuentes</Text>
 
         </Block>
       </Block>
@@ -30,7 +30,7 @@ export default class FAQ extends React.Component {
     return (
       <Block style={{flex:2,padding:30}}> 
         <Block flex center>
-          <Accordion dataArray={data1} opened={50} headerStyle={{padding:20}} contentStyle={{fontWeight:'bold',  textAlign: 'justify'}}/>
+          <Accordion  style={styles.colorsito} dataArray={data1} opened={50} headerStyle={{padding:20}} contentStyle={{fontWeight:'bold',  textAlign: 'justify', color:"#46494C"}}/>
         </Block>
       </Block>
     )
@@ -38,9 +38,9 @@ export default class FAQ extends React.Component {
 
   render() {
     return (
-         <Block flex center>
+         <Block flex center style={styles.components }>
           <ScrollView
-            style={styles.components}
+            
             showsVerticalScrollIndicator={false}>
 
             {this.renderText()}
@@ -71,6 +71,17 @@ const data2 = [
 ];
 const styles = StyleSheet.create({
   components: {
+    //No me convence el color jaja
+    backgroundColor: "#9DD9D2",
+    paddingHorizontal: theme.SIZES.BASE * 1.2
+  },
+  colorsito: {
+    backgroundColor: "#FFCC00",
+    paddingHorizontal: theme.SIZES.BASE * 1.2
+  },
+  colorsitoDentro: {
+    backgroundColor: "#d4dfe9",
+    paddingHorizontal: theme.SIZES.BASE * 1.2
   },
   title: {
     paddingVertical: theme.SIZES.BASE,

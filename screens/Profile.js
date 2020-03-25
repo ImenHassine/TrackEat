@@ -3,31 +3,37 @@ import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform } 
 import { Block, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Icon } from '../components';
+//import { Icon } from '../components';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
+import { Icon, Product } from '../components/';
+import { products } from '../constants/';
+
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
 export default class Profile extends React.Component {
+  componentDidMount(){
+    //const nombre = this.props.navigation.getParam('nombre', '');
+    //const correo = this.props.navigation.getParam('correo', '');
+    //console.log(this.props.navigation)
+    //console.log(this.route.params)
+  }
   render() {
     return (
       <Block flex style={styles.profile}>
         <Block flex>
           <ImageBackground
-            source={{uri: Images.Profile}}
+            source={{uri: Images.ProfileP}}
             style={styles.profileContainer}
             imageStyle={styles.profileImage}>
             <Block flex style={styles.profileDetails}>
               <Block style={styles.profileTexts}>
-                <Text color="white" size={28} style={{ paddingBottom: 8 }}>Rachel Brown</Text>
+                <Text color="white" size={28} style={{ paddingBottom: 8 }}>dj barrios</Text>
                 <Block row space="between">
                   <Block row>
-                    <Block middle style={styles.pro}>
-                      <Text size={16} color="white">Pro</Text>
-                    </Block>
-                    <Text color="white" size={16} muted style={styles.seller}>Seller</Text>
+                    <Text color="white" size={16} muted style={styles.seller}>Cliente</Text>
                     <Text size={16} color={materialTheme.COLORS.WARNING}>
                       4.8 <Icon name="shape-star" family="GalioExtra" size={14} />
                     </Text>
@@ -35,7 +41,7 @@ export default class Profile extends React.Component {
                   <Block>
                     <Text color={theme.COLORS.MUTED} size={16}>
                       <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-                      {` `} Los Angeles, CA
+                      {` `} Guatemala, GT
                       </Text>
                   </Block>
                 </Block>
@@ -46,26 +52,26 @@ export default class Profile extends React.Component {
         </Block>
         <Block flex style={styles.options}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Block row space="between" style={{ padding: theme.SIZES.BASE, }}>
+            <Block row space="evenly" style={{ padding: theme.SIZES.BASE, }}>
               <Block middle>
                 <Text bold size={12} style={{marginBottom: 8}}>36</Text>
-                <Text muted size={12}>Orders</Text>
+                <Text muted size={12}>Órdenes</Text>
               </Block>
               <Block middle>
                 <Text bold size={12} style={{marginBottom: 8}}>5</Text>
-                <Text muted size={12}>Bids & Offers</Text>
-              </Block>
-              <Block middle>
-                <Text bold size={12} style={{marginBottom: 8}}>2</Text>
-                <Text muted size={12}>Messages</Text>
+                <Text muted size={12}>Puntos</Text>
               </Block>
             </Block>
             <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-              <Text size={16}>Recently viewed</Text>
-              <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Home')}>View All</Text>
+              <Text size={16}>Órdenes recientes</Text>
+              <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('historialP')}>Ver todas</Text>
             </Block>
             <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-              <Block row space="between" style={{ flexWrap: 'wrap' }} >
+              <Product key={1} product={products[0]} horizontal />
+              <Product key={2} product={products[1]} horizontal />
+              <Product key={3} product={products[2]} horizontal />
+              <Product key={4} product={products[3]} horizontal />
+              {/*<Block row space="between" style={{ flexWrap: 'wrap' }} >
                 {Images.Viewed.map((img, imgIndex) => (
                   <Image
                     source={{ uri: img }}
@@ -74,7 +80,7 @@ export default class Profile extends React.Component {
                     style={styles.thumb}
                   />
                 ))}
-              </Block>
+                </Block>*/}
             </Block>
           </ScrollView>
         </Block>
