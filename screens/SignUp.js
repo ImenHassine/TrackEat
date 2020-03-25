@@ -1,19 +1,55 @@
 import React from 'react';
 import {
-  ScrollView,
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import { Block, Text, theme, Button, Input } from 'galio-framework';
+import { Block, Text, theme, Button} from 'galio-framework';
 import * as Facebook from 'expo-facebook';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {  Input } from 'react-native-elements';
+import * as TrackWorker from '../TrackWorker';
+import { showMessage } from "react-native-flash-message";
 
-import { materialTheme } from '../constants/';
 
 const { width } = Dimensions.get('screen');
 
 export default class SignUp extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: "",
+      password: "",
+      name: "",
+      image: "default",
+      confirmPassword: "",
+      isPasswordValid: true,
+      isEmailValid: true,
+      isConfirmationPasswordValid: true
+    }
+  }
+
+  validateInputs = (email, password, confirmPassword) => {
+    if(email === "" || typeof(email) === "undefined"){ 
+      this.setState({isEmailValid: false});
+    }
+
+    if(password === "" || typeof(password) === "undefined"){
+      this.setState({isPasswordValid: false});
+    }
+
+    if(confirmPassword === "" || typeof(confirmPassword) === "undefined"){
+      this.setState({isConfirmationPasswordValid: false});
+    }
+  }
+
+
+  checkUser = async (email, password, image, name) => {
+    const user = TrackWorker.createAcount(email, password, name, image);
+    return user;
+  }
+
   onFBLogin = async () => {
+    const {navigation} = this.props;
     try {
       await Facebook.initializeAsync('252387635776823');
       const {
@@ -24,17 +60,67 @@ export default class SignUp extends React.Component {
       });
       if (type === 'success') {
         const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
-        console.log('Logged in!', `Hi ${(await response.json()).name}!`);
+        const userInfo = await response.json()
+        const email = userInfo.email;
+        const name = userInfo.name;
+        const password = " ";
+        const image = "default"
+        const user = this.checkUser(email, password, image, name);
+        console.log(user)
+        if(user){
+          navigation.navigate(
+            'Profile',
+            { name, email },
+          );
+        } else {
+          console.log("error");
+        }
       } else {
       }
     } catch ({ message }) {
-      console.log(`Facebook Login Error: ${message}`);
+      showMessage({
+        message: `Facebook Login Error: ${message}`,
+        type: "danger",
+        icon: "danger"
+      });
     }
+  }
+
+
+  createAccount = async () => {
+    const {navigation} = this.props;
+    const {email, password, confirmPassword, image, name} = this.state;
+    this.validateInputs(email, password, confirmPassword);
+    const {isEmailValid, isPasswordValid, isConfirmationPasswordValid} = this.state
+
+    if(isEmailValid && isPasswordValid && isConfirmationPasswordValid) {
+      const user = await TrackWorker.createAcount(email, password, name, image);
+      const email = user.email;
+      const name = user.name;
+      if(user){
+        this.setState({
+          email: "",
+          password: "",
+          image: "defaut",
+          name: "",
+          isEmailValid: true,
+          isPasswordValid: true,
+          isConfirmationPasswordValid: true
+        });
+        navigation.navigate(
+          'Profile',
+          { name, email },
+        );
+      } else {
+        console.log("segui mañana")
+      }
+    } 
+
   }
 
   renderText = () => {
     return (
-      <Block flex style={styles.group}>
+      <Block style={styles.group}>
         <Text h3>
           Regístrate
         </Text>
@@ -43,55 +129,110 @@ export default class SignUp extends React.Component {
   }
 
   renderInputs = () => {
+    const {name, email, password, confirmPassword, isEmailValid, isConfirmationPasswordValid, isPasswordValid} = this.state
     return (
       <Block style={styles.content}>
-        <Input
-          left
-          rounded
-          icon="user"
-          family="antdesign"
-          placeholder="Ingrese su nombre"
-          color="black"
-          style={{ borderColor: 'black' }}
-          placeholderTextColor="black"
-        />
+          <Input
+            leftIcon={
+              <Icon
+                name="user"
+                color="#444"
+                size={20}
+              />
+            }
+            inputStyle={styles.input}
+            inputContainerStyle={styles.containetInput}
+            keyboardAppearance="light"
+            autoFocus={false}
+            autoCapitalize="none"
+            value={name}
+            autoCorrect={false}
+            returnKeyType="next"
+            placeholder={'Nombre'}
+            onChangeText={name => this.setState({name})}
+          />
 
-        <Input
-          left
-          rounded
-          icon="mail"
-          family="antdesign"
-          placeholder="Ingrese su e-mail"
-          color="black"
-          style={{ borderColor: 'black' }}
-          placeholderTextColor="black"
-        />
+          <Block style={{marginTop: 20}}>
+            <Input
+              leftIcon={
+                <Icon
+                  name="envelope"
+                  color="#444"
+                  size={20}
+                />
+              }
+              inputStyle={styles.input}
+              inputContainerStyle={styles.containetInput}
+              keyboardAppearance="light"
+              autoFocus={false}
+              autoCapitalize="none"
+              value={email}
+              autoCorrect={false}
+              keyboardType="email-address"
+              returnKeyType="next"
+              placeholder={'Correo electrónico'}
+              errorMessage={
+                isEmailValid ? null : 'Ingresa un correo electronico'
+              }
+              onChangeText={email => this.setState({email})}
+            />
+          </Block>
 
-        <Input
-          left
-          rounded
-          password
-          viewPass
-          icon="lock"
-          family="antdesign"
-          placeholder="Ingrese su contraseña"
-          color="black"
-          style={{ borderColor: 'black' }}
-          placeholderTextColor="black"
-        />
+          <Block style={{marginTop: 20}}>
+            <Input
+              leftIcon={
+                <Icon
+                  name="lock"
+                  color="#444"
+                  size={30}
+                />
+              }
+              blurOnSubmit={true}
+              secureTextEntry={true}
+              inputContainerStyle={styles.containetInput}
+              inputStyle={styles.input}
+              keyboardAppearance="light"
+              autoFocus={false}
+              value={password}
+              autoCapitalize="none"
+              autoCorrect={false}
+              returnKeyType="next"
+              placeholder={'Contraseña'}
+              onChangeText={password => this.setState({password})}
+              errorMessage={
+                isPasswordValid ? null : 'Ingresa una contraseña'
+              }
+             
+            />
+          </Block>
 
-        <Input
-          left
-          rounded
-          password
-          viewPass
-          icon="lock"
-          family="antdesign"
-          placeholder="Repita su contraseña"
-          color="black"
-          style={{ borderColor: 'black' }}
-          placeholderTextColor="black"
-        />
+          <Block style={{marginTop: 20}}>
+            <Input
+              leftIcon={
+                <Icon
+                  name="lock"
+                  color="#444"
+                  size={30}
+                />
+              }
+              blurOnSubmit={true}
+              secureTextEntry={true}
+              inputContainerStyle={styles.containetInput}
+              inputStyle={styles.input}
+              keyboardAppearance="light"
+              autoFocus={false}
+              value={confirmPassword}
+              autoCapitalize="none"
+              autoCorrect={false}
+              returnKeyType="next"
+              placeholder={'Confirmar Contraseña'}
+              onChangeText={confirmPassword => this.setState({confirmPassword})}
+              errorMessage={
+                isConfirmationPasswordValid ? null : 'Ingresa una contraseña'
+              }
+             
+            />
+          </Block>
       </Block>
     )
   }
@@ -122,6 +263,7 @@ export default class SignUp extends React.Component {
         uppercase
         color="success"
         style={[{width: "auto", paddingHorizontal: "8%"}, styles.shadow]}
+        onPress = {this.createAccount}
       >
         Crear cuenta
       </Button>
@@ -144,7 +286,7 @@ export default class SignUp extends React.Component {
               {this.renderFbBtn()}
             </Block>
             <Block style={{margin: "5%", display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
-              <Text h6 style={styles.link} onPress={() => navigation.navigate('Sign In')}>Ya tengo cuenta</Text>
+              <Text style={styles.link} onPress={() => navigation.navigate('Sign In')}>Ya tengo cuenta</Text>
             </Block>
           </Block>
           
@@ -156,15 +298,15 @@ export default class SignUp extends React.Component {
 
 const styles = StyleSheet.create({
   components: {
-    backgroundColor: "#46494C",
+    backgroundColor: "white",
     paddingHorizontal: theme.SIZES.BASE * 1.2
   },
   signup: {
     backgroundColor: "white",
-    marginVertical: "40%",
-    marginHorizontal: "10%",
+    marginHorizontal: 10,
     borderRadius: 20,
-    paddingHorizontal: "5%"
+    marginTop: 10,
+    paddingHorizontal: 5,
   },
   inputs: {
     display: "flex",
@@ -177,9 +319,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   content: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between"
+    marginTop: 40
   },
   shadow: {
     shadowColor: 'black',
@@ -187,6 +327,11 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.2,
     elevation: 2,
+  },
+  containetInput: {
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 15
   },
   social: {
     width: theme.SIZES.BASE * 3,
@@ -207,7 +352,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   link: {
-    textDecorationLine: "underline",
-    color: "#1E90FF"
+    color: "#1E90FF",
+    fontSize: 16
   }
 });

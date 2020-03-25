@@ -43,7 +43,7 @@ export default class SignIn extends React.Component {
         const userInfo = await response.json()
         const email = userInfo.email;
         const name = userInfo.name;
-        const password = "";
+        const password = " ";
         const user = this.checkUser(email,password)
         if (user) {
           navigation.navigate(
