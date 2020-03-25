@@ -6,13 +6,24 @@ import { Block, Text, theme, Button } from 'galio-framework';
 import * as Facebook from 'expo-facebook';
 import {  Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
-
+import * as TrackWorker from '../TrackWorker';
+import { showMessage } from "react-native-flash-message";
 
 
 export default class SignIn extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: "",
+      password: "",
+      isEmailValid: true,
+      isPasswordValid: true,
+    }
+  }
+
   onFBLogin = async () => {
+    const {navigation} = this.props;
     try {
       await Facebook.initializeAsync('252387635776823');
       const {
@@ -23,11 +34,31 @@ export default class SignIn extends React.Component {
       });
       if (type === 'success') {
         const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
-        console.log('Logged in!', `Hi ${(await response.json()).name}!`);
+        const userInfo = (await response.json());
+        const email = userInfo.email;
+        const password = "";
+        const user = await TrackWorker.getUserInfo(email, password);
+        if (user) {
+          navigation.navigate(
+            'ProfileScreen',
+            { name, email },
+          );
+        } else {
+          showMessage({
+            message: "Correo electrónico o contraseña incorrectos",
+            type: "danger",
+            icon: "danger"
+          });
+        }
+
       } else {
       }
     } catch ({ message }) {
-      console.log(`Facebook Login Error: ${message}`);
+      showMessage({
+        message: `Facebook Login Error: ${message}`,
+        type: "danger",
+        icon: "danger"
+      });
     }
   }
   
@@ -38,8 +69,63 @@ export default class SignIn extends React.Component {
       </Block>
     )
   }
+
+  validateEmail = (email) => {
+    if(email === "" || typeof(email) === "undefined"){ 
+      this.setState({isEmailValid: false});
+    }
+  }
+
+  validatePassword = (password) => { 
+    if(password === "" || typeof(password) === "undefined"){
+      this.setState({isPasswordValid: false});
+    }
+  }
   
+  onLogin = async () => {
+    //se realiza la llamada al api del método login 
+    //si respuesta fue true que haga el login de lo contrario que muestre el mensaje del api
+    const {navigation} = this.props
+    const {email, password} = this.state
+    this.validateEmail(email);
+    this.validatePassword(password);
+    const {isEmailValid, isPasswordValid} = this.state
+    console.log(isEmailValid, isPasswordValid)
+    if(isEmailValid && isPasswordValid) {
+      const user = await TrackWorker.getUserInfo(email, password);
+      if(user) {
+       const name = user.nombre;
+        const email = user.email;
+        navigation.navigate(
+          'Profile',
+          { name, email },
+        ); 
+        this.setState({
+          email: "",
+          password: "",
+          isEmailValid: true,
+          isPasswordValid: true
+        });
+      } else {
+        showMessage({
+          message: "Correo electrónico o contraseña incorrectos",
+          type: "danger",
+          icon: "danger"
+        });
+        this.setState({
+          email: "",
+          password: "",
+          isEmailValid: true,
+          isPasswordValid: true
+        });
+      }
+      
+    }
+  }
+
+
   renderInputs = () => {
+    const {email, password, isEmailValid, isPasswordValid} = this.state
     return (
       <Block style={styles.content}>
           <Input
@@ -55,31 +141,44 @@ export default class SignIn extends React.Component {
             keyboardAppearance="light"
             autoFocus={false}
             autoCapitalize="none"
+            value={email}
             autoCorrect={false}
             keyboardType="email-address"
             returnKeyType="next"
             placeholder={'Correo electrónico'}
+            errorMessage={
+              isEmailValid ? null : 'Ingresa un correo electronico'
+            }
+            onChangeText={email => this.setState({email})}
           />
 
-          <Input
-            leftIcon={
-              <Icon
-                name="lock"
-                color="#444"
-                size={30}
-              />
-            }
-            blurOnSubmit={true}
-            inputContainerStyle={styles.containetInput}
-            inputStyle={styles.input}
-            keyboardAppearance="light"
-            autoFocus={false}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="email-address"
-            returnKeyType="next"
-            placeholder={'Contraseña'}
-          />
+          <Block style={{marginTop: 20}}>
+            <Input
+              leftIcon={
+                <Icon
+                  name="lock"
+                  color="#444"
+                  size={30}
+                />
+              }
+              blurOnSubmit={true}
+              secureTextEntry={true}
+              inputContainerStyle={styles.containetInput}
+              inputStyle={styles.input}
+              keyboardAppearance="light"
+              autoFocus={false}
+              value={password}
+              autoCapitalize="none"
+              autoCorrect={false}
+              returnKeyType="next"
+              placeholder={'Contraseña'}
+              onChangeText={password => this.setState({password})}
+              errorMessage={
+                isPasswordValid ? null : 'Ingresa una contraseña'
+              }
+             
+            />
+          </Block>
       </Block>
     )
   }
@@ -110,6 +209,7 @@ export default class SignIn extends React.Component {
         size="small"
         color="success"
         style={[{width: "auto", paddingHorizontal: 20}, styles.shadow]}
+        onPress={this.onLogin}
       >
         Iniciar sesión
       </Button>

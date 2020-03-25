@@ -5,6 +5,7 @@
     "slug": "Track-Eat",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
+    "scheme": "trackeat",
     "platforms": [
       "ios",
       "android"

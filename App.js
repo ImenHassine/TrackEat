@@ -16,6 +16,8 @@ import { Platform, StatusBar, Image } from 'react-native';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import { Block, GalioProvider } from 'galio-framework';
+import FlashMessage from "react-native-flash-message";
+
 
 import { Images, products, materialTheme } from './constants/';
 
@@ -83,6 +85,7 @@ export default class App extends React.Component {
               <Screens />
             </Block>
           </GalioProvider>
+          <FlashMessage position="top" />
         </NavigationContainer>
       );
     }
