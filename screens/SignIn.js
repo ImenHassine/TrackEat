@@ -23,7 +23,7 @@ export default class SignIn extends React.Component {
       });
       if (type === 'success') {
         const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
-        console.log('Logged in!', `Hi ${(await response.json()).name}!`);
+        console.log(await response.json());
       } else {
       }
     } catch ({ message }) {
