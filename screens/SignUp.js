@@ -30,14 +30,15 @@ export default class SignUp extends React.Component {
 
   validateInputs = (email, password, confirmPassword) => {
     if(email === "" || typeof(email) === "undefined"){ 
-      this.setState({isEmailValid: false});
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      this.setState({isEmailValid: re.test(email)});
     }
 
-    if(password === "" || typeof(password) === "undefined"){
+    if(password === "" || typeof(password) === "undefined" || password.length < 0){
       this.setState({isPasswordValid: false});
     }
 
-    if(confirmPassword === "" || typeof(confirmPassword) === "undefined"){
+    if(confirmPassword === "" || typeof(confirmPassword) === "undefined" || confirmPassword != password){
       this.setState({isConfirmationPasswordValid: false});
     }
   }
@@ -150,6 +151,7 @@ export default class SignUp extends React.Component {
             returnKeyType="next"
             placeholder={'Nombre'}
             onChangeText={name => this.setState({name})}
+            maxLength={32}
           />
 
           <Block style={{marginTop: 20}}>
