@@ -1,68 +1,78 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import {
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   Image,
-  ImageBackground,
   View,
   Dimensions,
   Animated 
 } from 'react-native';
-import {Accordion, Block, Text, theme, Card } from 'galio-framework';
+import { Block, Text, theme} from 'galio-framework';
+import {Card} from 'react-native-elements';
 const { width } = Dimensions.get('screen');
-import { materialTheme, products, Images } from '../constants/';
+import { materialTheme} from '../constants/';
 import Constants from 'expo-constants';
+import StepIndicator from 'react-native-step-indicator';
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
+const labels = ["Orden Puesta","En preparación", "En cocción","Lista para recoger"];
+const customStyles = {
+  stepIndicatorSize: 45,
+  currentStepIndicatorSize: 65,
+  separatorStrokeWidth: 4,
+  currentStepStrokeWidth: 3,
+  stepStrokeCurrentColor: '#fe7013',
+  stepStrokeWidth: 3,
+  stepStrokeFinishedColor: '#fe7013',
+  stepStrokeUnFinishedColor: '#aaaaaa',
+  separatorFinishedColor: '#fe7013',
+  separatorUnFinishedColor: '#aaaaaa',
+  stepIndicatorFinishedColor: '#fe7013',
+  stepIndicatorUnFinishedColor: '#ffffff',
+  stepIndicatorCurrentColor: '#ffffff',
+  stepIndicatorLabelFontSize: 13,
+  currentStepIndicatorLabelFontSize: 13,
+  stepIndicatorLabelCurrentColor: '#fe7013',
+  stepIndicatorLabelFinishedColor: '#ffffff',
+  stepIndicatorLabelUnFinishedColor: '#aaaaaa',
+  labelColor: '#999999',
+  labelSize: 13,
+  currentStepLabelColor: '#fe7013'
+}
+
 export default class TrackingOrdenes extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+        currentPosition: 1
+    }
+}
     
     renderText = () => {
         return (
-          <Block style={{paddingTop: 15}}>
-              <View style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
-                <View>
-                  <Image source={{uri: 'https://media-cdn.tripadvisor.com/media/photo-s/14/32/b9/7b/planta-baja.jpg'}} style={{width: 100, height: 100, borderWidth: 0.5, borderRadius: 40}} />  
-                </View>
-                <View>
-                  <Text>Restaurante: Panitos </Text>
-                  <Text>Ubicación: Universidad del Valle</Text>
-                  <Text>Fecha: 24/03/2020 </Text>
-                  <Text>Hora: 04:42 PM </Text>
-                </View>
-                
-              </View>
-                <View style={{borderBottomColor: 'black',borderBottomWidth: 6, paddingTop:15}}/>
-              
-            </Block>
-        )
-      }
-      renderProgreso = () => {
-        return (
-          <View style={{padding: 15}} >
-            <View style={{alignItems: 'center', paddingBottom: 5}}>
-              <Text size={20}>
-              Estado de tu órden
-            </Text> 
-            </View>
-            
-            <View style={styles.progressBar}>
-              <Animated.View style={[StyleSheet.absoluteFill], {backgroundColor: "green", flex: 0.125}}/>
-            </View>
-            <View style={{display:"flex", flexDirection: "row", justifyContent:"space-between", paddingHorizontal: 20}}>
-              <Text>Inicio </Text>
-              <Text>Cocinando </Text>
-              <Text>Listo </Text>
-            </View>
-            
-          </View>
-        )
+          <Card
+                title="panitos' tracker"
+                titleStyle={styles.name}
+                containerStyle={styles.car}
+                image={require('../assets/images/planta-baja.jpg')}>
 
+              <StepIndicator
+                customStyles={customStyles}
+                currentPosition={this.state.currentPosition}
+                labels={labels}
+                stepCount={4}
+            />
+
+              </Card>
+        )
       }
+    
       renderOrden = () => {
         return (
           <Block>
+              
               <Text h4 style={{textAlign: "center", fontWeight: 'bold'}}> Orden </Text>
               <View
                 style={{
@@ -91,10 +101,9 @@ export default class TrackingOrdenes extends React.Component {
 
     render() {
     return (
-         <Block  style={{backgroundColor:"#9DD9D2"}} >
+         <Block  style={{backgroundColor:"white"}} >
            <ScrollView>
-            {this.renderText()}
-             {this.renderProgreso()}
+             {this.renderText()}
              {this.renderOrden()}
            </ScrollView>
          </Block>
@@ -108,8 +117,12 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       paddingTop: Constants.statusBarHeight,
-      backgroundColor: '#ecf0f1',
+      backgroundColor: 'white',
       padding: 8,
+    },
+    car: {
+      elevation: 0,
+      borderColor: "white"
     },
     progressBar: {
       height: 20,
@@ -122,15 +135,15 @@ const styles = StyleSheet.create({
     },
     components: {
       //No me convence el color jaja
-      backgroundColor: "#9DD9D2",
+      backgroundColor: "white",
       paddingHorizontal: theme.SIZES.BASE * 1.2
     },
     colorsito: {
-      backgroundColor: "#FFCC00",
+      backgroundColor: "white",
       paddingHorizontal: theme.SIZES.BASE * 1.2
     },
     colorsitoDentro: {
-      backgroundColor: "#d4dfe9",
+      backgroundColor: "white",
       paddingHorizontal: theme.SIZES.BASE * 1.2
     },
     title: {
@@ -212,6 +225,12 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    name: {
+      fontSize: 28,
+      color: "#3C787E",
+      fontWeight: "bold",
+      textTransform: "uppercase"
     },
     albumThumb: {
       borderRadius: 4,
