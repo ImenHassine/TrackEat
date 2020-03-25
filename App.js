@@ -17,7 +17,7 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import { Block, GalioProvider } from 'galio-framework';
 
-import { Images, products, materialTheme } from './constants/';
+import { Images, products, historialP, materialTheme } from './constants/';
 
 import { NavigationContainer } from '@react-navigation/native';
 import Screens from './navigation/Screens';
@@ -36,6 +36,7 @@ const assetImages = [
 
 // cache product images
 products.map(product => assetImages.push(product.image));
+historialP.map(product => assetImages.push(product.image));
 
 function cacheImages(images) {
   return images.map(image => {
