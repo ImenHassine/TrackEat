@@ -22,6 +22,12 @@ export default class SignIn extends React.Component {
     }
   }
 
+  checkUser = async (email, password) => {
+    const user = await TrackWorker.getUserInfo(email, password);
+    return user;
+
+  }
+
   onFBLogin = async () => {
     const {navigation} = this.props;
     try {
@@ -34,13 +40,14 @@ export default class SignIn extends React.Component {
       });
       if (type === 'success') {
         const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
-        const userInfo = (await response.json());
+        const userInfo = await response.json()
         const email = userInfo.email;
+        const name = userInfo.name;
         const password = "";
-        const user = await TrackWorker.getUserInfo(email, password);
+        const user = this.checkUser(email,password)
         if (user) {
           navigation.navigate(
-            'ProfileScreen',
+            'Profile',
             { name, email },
           );
         } else {
