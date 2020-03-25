@@ -6,7 +6,7 @@ import { Block, Text, theme, Button } from 'galio-framework';
 import * as Facebook from 'expo-facebook';
 import {  Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { Profile } from './Profile'
 
 
 
@@ -23,7 +23,14 @@ export default class SignIn extends React.Component {
       });
       if (type === 'success') {
         const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
-        console.log(await response.json());
+        const json = await (response.json())
+        const email = json.email
+        const name = json.name
+        //despues del sign in, navega directo al screen de perfil
+        this.props.navigation.navigate(
+          'Profile',
+          { name, email },
+        );
       } else {
       }
     } catch ({ message }) {
