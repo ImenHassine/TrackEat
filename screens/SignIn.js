@@ -8,7 +8,7 @@ import {  Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Profile } from './Profile'
 
-
+import { CommonActions } from '@react-navigation/native';
 
 
 export default class SignIn extends React.Component {
@@ -27,9 +27,20 @@ export default class SignIn extends React.Component {
         const email = json.email
         const name = json.name
         //despues del sign in, navega directo al screen de perfil
-        this.props.navigation.navigate(
-          'Profile',
-          { name, email },
+        /*this.props.navigation.navigate({
+          name: 'Profile',
+          params: {
+            nombre: name,
+            correo: email,
+          }
+        });*/
+        this.props.navigation.dispatch(
+          CommonActions.navigate({
+            name: 'Profile',
+            params: {
+              nombre: name,
+            },
+          })
         );
       } else {
       }
