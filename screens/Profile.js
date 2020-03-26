@@ -30,11 +30,11 @@ export default class Profile extends React.Component {
             imageStyle={styles.profileImage}>
             <Block flex style={styles.profileDetails}>
               <Block style={styles.profileTexts}>
-                <Text color="white" size={28} style={{ paddingBottom: 8 }}>dj barrios</Text>
+                <Text color="white" size={28} style={{ paddingBottom: 8, fontFamily:"Avenir"}}>dj barrios</Text>
                 <Block row space="between">
                   <Block row>
-                    <Text color="white" size={16} muted style={styles.seller}>Cliente</Text>
-                    <Text size={16} color={materialTheme.COLORS.WARNING}>
+                    <Text color="white" size={16} muted style={styles.seller,{fontFamily:"Avenir"}}>Cliente</Text>
+                    <Text size={16} style={{fontFamily:"Avenir"}} color={materialTheme.COLORS.WARNING}>
                       4.8 <Icon name="shape-star" family="GalioExtra" size={14} />
                     </Text>
                   </Block>
@@ -54,17 +54,17 @@ export default class Profile extends React.Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             <Block row space="evenly" style={{ padding: theme.SIZES.BASE, }}>
               <Block middle>
-                <Text bold size={12} style={{marginBottom: 8}}>36</Text>
-                <Text muted size={12}>Órdenes</Text>
+                <Text bold size={12} style={{marginBottom: 8, fontFamily:"Avenir"}}>36</Text>
+                <Text muted style={{fontFamily:"Avenir"}} size={12}>Órdenes</Text>
               </Block>
               <Block middle>
-                <Text bold size={12} style={{marginBottom: 8}}>5</Text>
-                <Text muted size={12}>Puntos</Text>
+                <Text bold size={12} style={{marginBottom: 8, fontFamily:"Avenir"}}>5</Text>
+                <Text muted style={{fontFamily:"Avenir"}} size={12}>Puntos</Text>
               </Block>
             </Block>
             <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-              <Text size={16}>Órdenes recientes</Text>
-              <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
+              <Text size={16} style={{fontFamily:"Avenir"}}>Órdenes recientes</Text>
+              <Text size={12} style={{fontFamily:"Avenir"}} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
             </Block>
             <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
               <Product key={1} product={products[0]} horizontal />

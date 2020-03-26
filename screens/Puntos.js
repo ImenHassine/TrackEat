@@ -29,7 +29,7 @@ export default class Puntos extends React.Component {
     renderCards = () => {
         return (
           <Block flex style={styles.group}>
-            <Text h4>Promociones</Text>
+            <Text h4 style={{fontFamily:"Avenir"}}>Promociones</Text>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
               { products.map((product) => {
                 return(
@@ -49,12 +49,12 @@ export default class Puntos extends React.Component {
             <Block shadow shadowColor="gray" style={[styles.panel, {zIndex: 1}]}>
                 <Block style={{marginVertical: "5%"}}>
                     <Block style={{marginVertical: "2%"}}>
-                        <Text h5 color="white">
+                        <Text h5 style={{fontFamily:"Avenir"}} color="white">
                             Mis puntos:
                         </Text>
                     </Block>
                     <Block style={{marginVertical: "2%", display: "flex", alignItems: "center"}}>
-                        <Text h4 color="white">
+                        <Text h4 style={{fontFamily:"Avenir"}} color="white">
                             {misPuntos}
                         </Text>
                     </Block>

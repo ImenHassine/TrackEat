@@ -21,7 +21,7 @@ export default class FAQ extends React.Component {
       <Block flex style={styles.group}>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
 
-          <Text h4 style={{marginBottom: theme.SIZES.BASE / 2,   textAlign: "center", fontWeight: 'bold', color: 'white'}}>Preguntas Frecuentes</Text>
+          <Text h4 style={{marginBottom: theme.SIZES.BASE / 2,   textAlign: "center", fontWeight: 'bold', color: 'white', fontFamily:"Avenir"}}>Preguntas Frecuentes</Text>
 
         </Block>
       </Block>
@@ -31,7 +31,7 @@ export default class FAQ extends React.Component {
     return (
       <View style={{flex:1, padding:30}}> 
         <Block flex center style={styles.block}>
-          <Accordion flex style={styles.item} dataArray={data1} opened={null} headerStyle={{paddingVertical:20, paddingHorizontal:15, margin: 5}} contentStyle={{fontWeight:'bold',  textAlign: 'justify', color:"#46494C"}}/>
+          <Accordion flex style={styles.item} dataArray={data1} opened={null} headerStyle={{paddingVertical:20, paddingHorizontal:15, margin: 5, fontFamily:"Avenir"}} contentStyle={{fontWeight:'bold',  textAlign: 'justify', color:"#46494C", fontFamily:"Avenir"}}/>
         </Block>
       </View>
     )
