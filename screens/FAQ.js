@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  View
 } from 'react-native';
 import {Accordion, Block, Text, theme, Card } from 'galio-framework';
 const { width } = Dimensions.get('screen');
@@ -20,7 +21,7 @@ export default class FAQ extends React.Component {
       <Block flex style={styles.group}>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
 
-          <Text h4 style={{marginBottom: theme.SIZES.BASE / 2,   textAlign: "center", fontWeight: 'bold'}}>Preguntas Frecuentes</Text>
+          <Text h4 style={{marginBottom: theme.SIZES.BASE / 2,   textAlign: "center", fontWeight: 'bold', color: 'white'}}>Preguntas Frecuentes</Text>
 
         </Block>
       </Block>
@@ -28,11 +29,11 @@ export default class FAQ extends React.Component {
   }
   renderAlgo = (props) => {
     return (
-      <Block style={{flex:2,padding:30}}> 
-        <Block flex center>
-          <Accordion  style={styles.colorsito} dataArray={data1} opened={50} headerStyle={{padding:20}} contentStyle={{fontWeight:'bold',  textAlign: 'justify', color:"#46494C"}}/>
+      <View style={{flex:1, padding:30}}> 
+        <Block flex center style={styles.block}>
+          <Accordion flex style={styles.item} dataArray={data1} opened={null} headerStyle={{paddingVertical:20, paddingHorizontal:15, margin: 5}} contentStyle={{fontWeight:'bold',  textAlign: 'justify', color:"#46494C"}}/>
         </Block>
-      </Block>
+      </View>
     )
   }
 
@@ -54,17 +55,17 @@ export default class FAQ extends React.Component {
   }
 }
 const data1 = [
-  { title: "¿Cómo gasto mis puntos?                      ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
-  { title: "¿Que pasa si no recibo una notificacion?    ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
-  { title: "¿Qué restaurantes usan esta app?            ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
-  { title: "¿Como gano puntos?                           ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Cómo gasto mis puntos?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. "},
+  { title: "¿Que pasa si no recibo una notificacion?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Qué restaurantes usan esta app?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Como gano puntos?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
   { title: "¿Puedo ver las ordenes que hice en otra fecha?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
-  { title: "¿Funciona sin internet?                      ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
-  { title: "¿Y si no voy a recoger rápido mi comida?     ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
-  { title: "¿Puedo pagar desde la app?                   ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Funciona sin internet?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Y si no voy a recoger rápido mi comida?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Puedo pagar desde la app?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
   { title: "Otro telefono puede escanear mi codigo QR?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
-  { title: "¿Cuánto tiempo duran los puntos?             ", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
-  { title: "¿Hay alguna promoción extra?                 ", content: "Lorem ipsum dolor sit amet" }
+  { title: "¿Cuánto tiempo duran los puntos?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id libero pharetra, mollis sapien id, scelerisque arcu. Nullam turpis ipsum, tristique eu leo sit amet, ultrices luctus urna. Etiam lacinia aliquet maximus. Aenean vitae magna massa. Fusce vel ligula nec purus dictum porta sed eget diam. Sed a porta ipsum, sit amet venenatis arcu. Mauris blandit id quam sed laoreet. Nullam in arcu eleifend, eleifend diam vel, convallis quam. Nulla eleifend faucibus ullamcorper. Fusce quis massa nisi. Fusce interdum magna eget nisl vehicula, ut congue nisl scelerisque. " },
+  { title: "¿Hay alguna promoción extra?", content: "Lorem ipsum dolor sit amet" }
 ];
 const data2 = [
   { title: "¿Que pasa si no recibo una notificacion?", content: "Lorem ipsum dolor sit amet" }
@@ -72,15 +73,15 @@ const data2 = [
 const styles = StyleSheet.create({
   components: {
     //No me convence el color jaja
-    backgroundColor: "#9DD9D2",
+    backgroundColor: "#3C787E",
+    //backgroundColor: "#911F1F",
+    //backgroundColor: "#9FF9D2",
+    //backgroundColor: "#FFCC00",
+    //backgroundColor: "#46494C",
     paddingHorizontal: theme.SIZES.BASE * 1.2
   },
-  colorsito: {
-    backgroundColor: "#FFCC00",
-    paddingHorizontal: theme.SIZES.BASE * 1.2
-  },
-  colorsitoDentro: {
-    backgroundColor: "#d4dfe9",
+  item: {
+    justifyContent:'space-between',
     paddingHorizontal: theme.SIZES.BASE * 1.2
   },
   title: {
@@ -119,9 +120,6 @@ const styles = StyleSheet.create({
   },
   inputDefault: {
     borderBottomColor: materialTheme.COLORS.PLACEHOLDER,
-  },
-  inputTheme: {
-    borderBottomColor: materialTheme.COLORS.PRIMARY,
   },
   inputTheme: {
     borderBottomColor: materialTheme.COLORS.PRIMARY,
@@ -169,5 +167,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: thumbMeasure,
     height: thumbMeasure
+  },
+  container: {
+    flex: 1,
+    justifyContent:'space-between',
+    alignItems: 'center',
+  },
+  block: {
+    alignItems: 'stretch',
+    justifyContent:'space-between',
   },
 });

@@ -64,7 +64,7 @@ export default class Profile extends React.Component {
             </Block>
             <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
               <Text size={16}>Órdenes recientes</Text>
-              <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('historialP')}>Ver todas</Text>
+              <Text size={12} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
             </Block>
             <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
               <Product key={1} product={products[0]} horizontal />
