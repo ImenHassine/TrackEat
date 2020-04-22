@@ -16,7 +16,7 @@ export default class Home extends React.Component {
       <Input
         right
         color="black"
-        style={styles.search}
+        style={styles.search, {fontFamily: "Avenir"}}
         iconContent={iconCamera}
         placeholder="What are you looking for?"
         onFocus={() => navigation.navigate('Pro')}
@@ -32,13 +32,13 @@ export default class Home extends React.Component {
         <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
           <Block row middle>
             <Icon name="grid" family="feather" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>Categories</Text>
+            <Text size={16} style={styles.tabTitle, {fontFamily: "Avenir"}}>Categories</Text>
           </Block>
         </Button>
         <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
           <Block row middle>
             <Icon size={16} name="camera-18" family="GalioExtra" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>Best Deals</Text>
+            <Text size={16} style={styles.tabTitle, {fontFamily: "Avenir"}}>Best Deals</Text>
           </Block>
         </Button>
       </Block>

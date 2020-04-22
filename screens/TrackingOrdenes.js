@@ -38,7 +38,8 @@ const customStyles = {
   stepIndicatorLabelUnFinishedColor: '#aaaaaa',
   labelColor: '#999999',
   labelSize: 13,
-  currentStepLabelColor: '#fe7013'
+  currentStepLabelColor: '#fe7013',
+  labelFontFamily:"Avenir"
 }
 
 export default class TrackingOrdenes extends React.Component {
@@ -73,7 +74,7 @@ export default class TrackingOrdenes extends React.Component {
         return (
           <Block>
               
-              <Text h4 style={{textAlign: "center", fontWeight: 'bold'}}> Orden </Text>
+              <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
               <View
                 style={{
                 flexDirection: 'row',
@@ -82,16 +83,16 @@ export default class TrackingOrdenes extends React.Component {
                 }}>
                 <View style={{backgroundColor: '#FFCC00', flex: 1, borderRadius: 70, borderWidth: 0, height:300}}>
                   <View style={{paddingTop:45, paddingRight:40, justifyContent:"flex-end" , textAlign:"justify"}}>
-                    <Text size={19} style={{textAlign: "right"}}>Sandwich 3 Quesos             Q24</Text>
-                    <Text size={19} style={{textAlign: "right"}}>Ensalada Santa Fe               Q21</Text>
-                    <Text size={19} style={{textAlign: "right"}}>Pan Chorizo y Queso           Q26</Text>
-                    <Text size={19} style={{textAlign: "right"}}>Licuado de Banano              Q15</Text>
+                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>Sandwich 3 Quesos             Q24</Text>
+                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>Ensalada Santa Fe               Q21</Text>
+                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>Pan Chorizo y Queso           Q26</Text>
+                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>Licuado de Banano              Q15</Text>
                   </View>
                   <View style={{paddingHorizontal:20}}>
                     <View style={{borderBottomColor: 'black',borderBottomWidth: 6, paddingTop:15}}/>
                   </View>
                   <View style={{paddingRight:40, paddingTop:20}}>
-                    <Text size={19} style={{textAlign: "right"}}>   Total                     Q86</Text>
+                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>   Total                     Q86</Text>
                   </View>
                 </View>
               </View>
@@ -230,7 +231,8 @@ const styles = StyleSheet.create({
       fontSize: 28,
       color: "#3C787E",
       fontWeight: "bold",
-      textTransform: "uppercase"
+      textTransform: "uppercase",
+      fontFamily:"Avenir"
     },
     albumThumb: {
       borderRadius: 4,

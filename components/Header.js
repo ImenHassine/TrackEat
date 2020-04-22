@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     right: 8,
   },
   header: {
-    backgroundColor: theme.COLORS.WHITE,
+    backgroundColor: "#46494C",
   },
   divider: {
     borderRightWidth: 0.3,

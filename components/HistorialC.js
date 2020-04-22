@@ -21,9 +21,9 @@ class HistorialC extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={14} style={styles.productTitle}>{product.codigo}</Text>
-            <Text size={14} color={priceColor}>{product.nombre} </Text>
-            <Text size={14} color={priceColor}>{product.fecha} </Text>
+            <Text size={14} style={styles.productTitle, {fontFamily:"Avenir"}}>{product.codigo}</Text>
+            <Text size={14} style={{fontFamily:"Avenir"}} color={priceColor}>{product.nombre} </Text>
+            <Text size={14} style={{fontFamily:"Avenir"}} color={priceColor}>{product.fecha} </Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
