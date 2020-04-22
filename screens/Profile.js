@@ -20,6 +20,12 @@ export default class Profile extends React.Component {
     //console.log(this.props.navigation)
     //console.log(this.route.params)
   }
+
+  logout = () => {
+    global.isLogged = false;
+    this.props.navigation.navigate('Home')
+  }
+
   render() {
     return (
       <Block flex style={styles.profile}>
@@ -30,13 +36,11 @@ export default class Profile extends React.Component {
             imageStyle={styles.profileImage}>
             <Block flex style={styles.profileDetails}>
               <Block style={styles.profileTexts}>
-                <Text color="white" size={28} style={{ paddingBottom: 8, fontFamily:"Avenir"}}>dj barrios</Text>
+                <Text color="white" size={28} style={{ paddingBottom: 8}}>dj barrios</Text>
                 <Block row space="between">
                   <Block row>
-                    <Text color="white" size={16} muted style={styles.seller,{fontFamily:"Avenir"}}>Cliente</Text>
-                    <Text size={16} style={{fontFamily:"Avenir"}} color={materialTheme.COLORS.WARNING}>
-                      4.8 <Icon name="shape-star" family="GalioExtra" size={14} />
-                    </Text>
+                    <Text color="white" size={16} muted style={styles.seller} onPress={() => this.logout()}>Cerrar Sesión</Text>
+                    
                   </Block>
                   <Block>
                     <Text color={theme.COLORS.MUTED} size={16}>

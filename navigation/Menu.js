@@ -41,17 +41,35 @@ function CustomDrawerContent({
           ]}
           showsVerticalScrollIndicator={false}
         >
-          {screens.map((item, index) => {
-            return (
-              
-              <DrawerCustomItem
-                title={item}
-                key={index}
-                navigation={navigation}
-                focused={state.index === index ? true : false}
-              />
-            );
-          })}
+          <DrawerCustomItem
+            title="Home"
+            navigation={navigation}
+          />
+          <DrawerCustomItem
+            title="Tracking de Órdenes"
+            navigation={navigation}
+          />
+          {global.isLogged &&
+             <>
+            <DrawerCustomItem
+              title="Historial"
+              navigation={navigation}
+            />
+            <DrawerCustomItem
+              title="Puntos"
+              navigation={navigation}
+            />
+            <DrawerCustomItem
+              title="Profile"
+              navigation={navigation}
+            />
+            </>
+          }
+          <DrawerCustomItem
+            title="FAQ"
+            navigation={navigation}
+          />
+          
         </ScrollView>
       </Block>
       
@@ -60,12 +78,10 @@ function CustomDrawerContent({
         <DrawerCustomItem
           title="Sign In"
           navigation={navigation}
-          focused={state.index === 8 ? true : false}
         />
         <DrawerCustomItem
           title="Sign Up"
           navigation={navigation}
-          focused={state.index === 9 ? true : false}
         />
       </Block> : 
       <Block />

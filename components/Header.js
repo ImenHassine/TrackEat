@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     paddingBottom: theme.SIZES.BASE * 1.5,
     paddingTop: iPhoneX ? theme.SIZES.BASE * 2 : 0,
     zIndex: 5,
-    backgroundColor: "#0ab6ff"
+    backgroundColor: "#64bee3"
   },
   shadow: {
     backgroundColor: theme.COLORS.WHITE,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     right: 8,
   },
   header: {
-    backgroundColor: "#0ab6ff",
+    backgroundColor: "#64bee3",
   },
   divider: {
     borderRightWidth: 0.3,
