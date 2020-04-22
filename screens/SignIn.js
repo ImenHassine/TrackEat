@@ -256,7 +256,10 @@ export default class SignIn extends React.Component {
 const styles = StyleSheet.create({
   components: {
     backgroundColor: "#46494C",
-    paddingHorizontal: theme.SIZES.BASE * 2
+    paddingHorizontal: theme.SIZES.BASE * 2,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: 'center',
   },
   signin: {
     backgroundColor: "white",
