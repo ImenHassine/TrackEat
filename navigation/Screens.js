@@ -156,19 +156,18 @@ function ComponentsStack(props) {
   );
 }
 
-function SignInStack(props) {
+export default function SignInStack(props) {
   return (
-    <Stack.Navigator mode="card" headerMode="screen">
+    <Stack.Navigator mode="card" headerMode="none">
       <Stack.Screen
         name="SignIn"
         component={SignInScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            // <Header title="Iniciar Sesión" scene={scene} navigation={navigation} />
-            null
-          )
+        option={{
+          headerTransparent: true
         }}
       />
+      <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen name="Sign Up" component={SignUpStack} />
     </Stack.Navigator>
   )
 }
@@ -176,17 +175,16 @@ function SignInStack(props) {
 
 function SignUpStack(props) {
   return (
-    <Stack.Navigator mode="card" headerMode="screen">
+    <Stack.Navigator mode="card" headerMode="none">
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            // <Header title="Crear Cuenta" scene={scene} navigation={navigation} />
-            null
-          )
+        option={{
+          headerTransparent: true
         }}
         />
+        <Stack.Screen name="App" component={AppStack} />
+        <Stack.Screen name="Sign In" component={SignInStack} />
     </Stack.Navigator>
   )
 }
@@ -516,17 +514,17 @@ function PuntosStack(props) {
   )
 }
 
-export default function OnboardingStack(props) {
-  return (
-    <Stack.Navigator mode="card" headerMode="none">
-      <Stack.Screen
-        name="Onboarding"
-        component={OnboardingScreen}
-        option={{
-          headerTransparent: true
-        }}
-      />
-      <Stack.Screen name="App" component={AppStack} />
-    </Stack.Navigator>
-  );
-}
+// export default function OnboardingStack(props) {
+//   return (
+//     <Stack.Navigator mode="card" headerMode="none">
+//       <Stack.Screen
+//         name="Onboarding"
+//         component={OnboardingScreen}
+//         option={{
+//           headerTransparent: true
+//         }}
+//       />
+//       <Stack.Screen name="App" component={AppStack} />
+//     </Stack.Navigator>
+//   );
+// }

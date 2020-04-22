@@ -46,18 +46,33 @@ export default class Home extends React.Component {
   }
 
   renderProducts = () => {
+    const cards = [];
+
+    for(let i = 1; i < products.length; i += 4) {
+      cards.push(
+        <Block flex row>
+          {i < products.length ? <Product product={products[i]} style={{ marginRight: theme.SIZES.BASE }} /> : null }
+          {i + 1 < products.length ? <Product product={products[i + 1]} /> : null }
+        </Block>
+      );
+      if (i + 2 < products.length) 
+        cards.push(
+          <Product product={products[i + 2]} horizontal />
+        );
+
+      if (i + 3 < products.length)
+        cards.push(
+          <Product product={products[i + 3]} full />
+        );
+    }
+
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
           <Product product={products[0]} horizontal />
-          <Block flex row>
-            <Product product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Product product={products[2]} />
-          </Block>
-          <Product product={products[3]} horizontal />
-          <Product product={products[4]} full />
+          { cards }
         </Block>
       </ScrollView>
     )

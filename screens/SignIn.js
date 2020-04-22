@@ -47,7 +47,7 @@ export default class SignIn extends React.Component {
         const user = this.checkUser(email,password)
         if (user) {
           navigation.navigate(
-            'Profile',
+            'App',
             { name, email },
           );
         } else {
@@ -104,7 +104,7 @@ export default class SignIn extends React.Component {
        const name = user.nombre;
         const email = user.email;
         navigation.navigate(
-          'Profile',
+          'App',
           { name, email },
         ); 
         this.setState({
