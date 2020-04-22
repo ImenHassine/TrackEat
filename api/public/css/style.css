@@ -3219,7 +3219,16 @@ ul {
 .pricing_part .single_pricing_part {
   text-align: center;
   padding: 60px 40px;
-  box-shadow: 0px 3px 81px 0px rgba(216, 216, 216, 0.45);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px -1px;  
+  border-radius: 12px;
+  background-color: #F5FAFD;
+}
+
+.pricing_part .single_pricing_part:hover {
+  box-shadow: 0px 12px 19px -7px rgba(0, 0, 0, 0.3);
+  -webkit-transform: translateY(-10px);
+  transform: translateY(-10px);
+  -ms-transform: translateY(-10px);
 }
 
 @media (max-width: 576px) {
@@ -3281,8 +3290,19 @@ ul {
 
 /* line 74, ../../01 cl html template/03_jun 2019/184_SAAS_template/sass/_pricing_plan.scss */
 .pricing_part .single_pricing_part .btn_1 {
-  padding: 18.5px 38px;
+  padding: 12px 30px;
+  border-radius: 50px;
+  background-image: none;
+  border: 1px solid #00b4ff;
+  color: #00b4ff;
 }
+
+.pricing_part .single_pricing_part .btn_1:hover {
+  color: #0056b3 !important;
+  border-color: #0056b3;
+}
+
+
 
 @media (max-width: 991px) {
   /* line 74, ../../01 cl html template/03_jun 2019/184_SAAS_template/sass/_pricing_plan.scss */
