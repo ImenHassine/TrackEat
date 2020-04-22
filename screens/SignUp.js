@@ -289,8 +289,8 @@ export default class SignUp extends React.Component {
                 <Text h5>o</Text>
                 {this.renderFbBtn()}
               </Block>
-              
-              <Block style={{marginVertical: 15, display: "flex", flexDirection: "column",  alignItems: "center"}}>
+
+              <Block style={{marginTop: 15, display: "flex", flexDirection: "column",  alignItems: "center"}}>
                 <Text style={styles.link} onPress={() => navigation.navigate('Sign In')}>Ya tengo cuenta</Text>
               </Block>
             </Block>              
@@ -304,12 +304,15 @@ export default class SignUp extends React.Component {
 const styles = StyleSheet.create({
   components: {
     backgroundColor: "#46494C",
-    paddingHorizontal: theme.SIZES.BASE * 1.2
+    paddingHorizontal: theme.SIZES.BASE * 1.2,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: 'center',
   },
   signup: {
     backgroundColor: "white",
     marginHorizontal: "2.5%",
-    marginVertical: "15%",
+    marginVertical: 85,
     borderRadius: 20,
     paddingHorizontal: "5%",
   },
