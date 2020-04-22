@@ -228,21 +228,26 @@ export default class SignIn extends React.Component {
 
     return (
       <Block flex style={styles.components}>
+        <Block flex style={styles.signin}>
           {this.renderText()}
-          {this.renderInputs()}
 
-          <Block style={{marginVertical: 20, flex: 1/3, flexDirection: "row",  alignItems: "center"}}>
-            {this.renderCrearBtn()}
-            <Text h5>o</Text>
-            {this.renderFbBtn()}
-          </Block>
-          <Block style={{marginVertical: 80, display: "flex", flexDirection: "column",  alignItems: "center"}}>
-            <Text  style={styles.link} onPress={() => navigation.navigate('Sign Up')}>¿Olvidaste tu contraseña?</Text>
+          <Block flex style={styles.inputs}>
+            {this.renderInputs()}
 
-            <Text  style={[styles.link, {marginTop: 20}]} onPress={() => navigation.navigate('Sign Up')}>Crear una cuenta</Text>
+            <Block style={{marginTop: "10%"}}>
+              <Block style={{marginVertical: 10, display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
+                {this.renderCrearBtn()}
+                <Text h5>o</Text>
+                {this.renderFbBtn()}
+              </Block>
+
+              <Block style={{marginVertical: 40, display: "flex", flexDirection: "column",  alignItems: "center"}}>
+                <Text  style={styles.link} onPress={() => navigation.navigate('Sign Up')}>¿Olvidaste tu contraseña?</Text>
+                <Text  style={[styles.link, {marginTop: 20}]} onPress={() => navigation.navigate('Sign Up')}>Crear una cuenta nueva</Text>
+              </Block>
+            </Block>
           </Block>
-          
-        
+        </Block>
       </Block>
     );
   }
@@ -250,8 +255,15 @@ export default class SignIn extends React.Component {
 
 const styles = StyleSheet.create({
   components: {
-    backgroundColor: "white",
+    backgroundColor: "#46494C",
     paddingHorizontal: theme.SIZES.BASE * 2
+  },
+  signin: {
+    backgroundColor: "white",
+    marginVertical: "15%",
+    marginHorizontal: "2.5%",
+    borderRadius: 20,
+    paddingHorizontal: "5%",
   },
   inputs: {
     display: "flex",
@@ -276,7 +288,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   social: {
-    width: theme.SIZES.BASE * 10,
+    width: theme.SIZES.BASE * 3,
     height: theme.SIZES.BASE * 3,
     justifyContent: 'center',
   },

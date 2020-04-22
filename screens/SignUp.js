@@ -279,19 +279,22 @@ export default class SignUp extends React.Component {
       <Block flex style={styles.components}>
         <Block flex style={styles.signup}>
           {this.renderText()}
+
           <Block flex style={styles.inputs}>
             {this.renderInputs()}
 
-            <Block style={{marginVertical: "2%", display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
-              {this.renderCrearBtn()}
-              <Text h5>o</Text>
-              {this.renderFbBtn()}
-            </Block>
-            <Block style={{margin: "5%", display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
-              <Text style={styles.link} onPress={() => navigation.navigate('Sign In')}>Ya tengo cuenta</Text>
-            </Block>
+            <Block style={{marginTop: "10%"}}>
+              <Block style={{marginVertical: 10, display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
+                {this.renderCrearBtn()}
+                <Text h5>o</Text>
+                {this.renderFbBtn()}
+              </Block>
+              
+              <Block style={{marginVertical: 15, display: "flex", flexDirection: "column",  alignItems: "center"}}>
+                <Text style={styles.link} onPress={() => navigation.navigate('Sign In')}>Ya tengo cuenta</Text>
+              </Block>
+            </Block>              
           </Block>
-          
         </Block>
       </Block>
     );
@@ -300,15 +303,15 @@ export default class SignUp extends React.Component {
 
 const styles = StyleSheet.create({
   components: {
-    backgroundColor: "white",
+    backgroundColor: "#46494C",
     paddingHorizontal: theme.SIZES.BASE * 1.2
   },
   signup: {
     backgroundColor: "white",
-    marginHorizontal: 10,
+    marginHorizontal: "2.5%",
+    marginVertical: "15%",
     borderRadius: 20,
-    marginTop: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: "5%",
   },
   inputs: {
     display: "flex",
