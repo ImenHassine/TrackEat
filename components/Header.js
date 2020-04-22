@@ -174,10 +174,10 @@ class Header extends React.Component {
           rightStyle={{ alignItems: 'center' }}
           leftStyle={{ flex: 0.3, paddingTop: 2  }}
           leftIconName={(back ? 'chevron-left' : 'navicon')}
-          leftIconColor={white ? theme.COLORS.WHITE : theme.COLORS.ICON}
+          leftIconColor={"#FFF"}
           titleStyle={[
             styles.title,
-            {color: theme.COLORS[white ? 'WHITE' : 'ICON']},
+            {color: "#FFF"},
           ]}
           onLeftPress={this.handleLeftPress}
         />
@@ -196,14 +196,14 @@ const styles = StyleSheet.create({
   },
   title: {
     width: '100%',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   navbar: {
-    paddingVertical: 0,
     paddingBottom: theme.SIZES.BASE * 1.5,
-    paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE,
+    paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : 0,
     zIndex: 5,
+    backgroundColor: "#002F6E"
   },
   shadow: {
     backgroundColor: theme.COLORS.WHITE,
