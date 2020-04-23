@@ -13,6 +13,7 @@ const { width } = Dimensions.get('screen');
 import { materialTheme} from '../constants/';
 import Constants from 'expo-constants';
 import StepIndicator from 'react-native-step-indicator';
+import * as TrackWorker from '../TrackWorker';
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
@@ -49,8 +50,13 @@ export default class TrackingOrdenes extends React.Component {
     this.state = {
         currentPosition: 1
     }
+
+    this.getOrders()
 }
-    
+    getOrders = async () => {
+      const result = await TrackWorker.getUserOrders(1);
+      console.log(result);
+    }
     renderText = () => {
         return (
           <Card
