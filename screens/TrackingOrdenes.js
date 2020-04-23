@@ -107,7 +107,7 @@ export default class TrackingOrdenes extends React.Component {
                 return (
                   <Block style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text size={19} style={{ fontFamily:"Avenir" }}>{index + 1}. {product.producto}</Text>
-                    <Text size={19} style={{ fontFamily:"Avenir" }}>Q. {product.precio}</Text>
+                    <Text size={19} style={{ fontFamily:"Avenir" }}>Q {product.precio}.00</Text>
                   </Block>
                 )
               })
@@ -121,7 +121,7 @@ export default class TrackingOrdenes extends React.Component {
                   <Text size={19} style={{ fontFamily:"Avenir" }}>Total</Text>
                 </Block>
                 <Block style={{ textAlign: 'right'}}>
-                  <Text size={19} style={{ fontFamily:"Avenir" }}>Q. {this.getTotal()}</Text>
+                  <Text size={19} style={{ fontFamily:"Avenir" }}>Q {this.getTotal()}.00</Text>
                 </Block>
               </Block>
             </View>
