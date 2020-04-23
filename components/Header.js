@@ -93,7 +93,6 @@ class Header extends React.Component {
         <Block center>
           {/* {search ? this.renderSearch() : null}
           {tabs ? this.renderTabs() : null} */}
-          <h1></h1>
         </Block>
       )
     }
