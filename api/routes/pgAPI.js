@@ -40,7 +40,7 @@ router.get("/password/:password/email/:email",function(req, res, next){
   const params = req.params
   const email = params.email;
   const password = params.password;
-  const query = { text: 'SELECT id, email, name, image FROM usuario WHERE email = $1 and password = $2' ,
+  const query = { text: 'SELECT id, email, nombre, image FROM usuario WHERE email = $1 and password = $2' ,
   values: [email, password] }
   const response = res;
   pool.query(query, (err, res) => {
