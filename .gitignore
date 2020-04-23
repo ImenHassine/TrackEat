@@ -9,3 +9,5 @@ yarn.lock
 *.p12
 *.key
 *.mobileprovision
+constants/utils.js
+api/bin/www

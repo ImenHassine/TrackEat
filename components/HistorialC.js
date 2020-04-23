@@ -10,8 +10,8 @@ class HistorialC extends React.Component {
   render() {
     const { navigation, product, horizontal, full, style, priceColor, imageStyle } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-    console.log(product)
-    console.log("hola")
+    //console.log(product)
+    //console.log("hola")
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
@@ -21,9 +21,9 @@ class HistorialC extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={14} style={styles.productTitle, {fontFamily:"Avenir"}}>{product.codigo}</Text>
-            <Text size={14} style={{fontFamily:"Avenir"}} color={priceColor}>{product.nombre} </Text>
-            <Text size={14} style={{fontFamily:"Avenir"}} color={priceColor}>{product.fecha} </Text>
+            <Text size={18} style={styles.productTitle, {fontFamily:"Avenir"}}>{product.nombre}</Text>
+            <Text size={18} style={{fontFamily:"Avenir"}} color={priceColor}>{product.total} </Text>
+            <Text size={18} style={{fontFamily:"Avenir"}} color={priceColor}>{product.fecha} </Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
-    minHeight: 114,
+    minHeight: 130,
   },
   productTitle: {
     flex: 1,
@@ -52,9 +52,9 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   image: {
-    borderRadius: 3,
+    borderRadius: 5,
     marginHorizontal: theme.SIZES.BASE / 2,
-    marginTop: -16,
+    marginTop: 4,
   },
   horizontalImage: {
     height: 122,
