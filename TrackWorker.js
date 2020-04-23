@@ -19,7 +19,22 @@ export const getUserInfo = (email, password) => {
     })  
 }
 
-export const getUserOrders = (email) => {
+export const getUserOrders = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        await axios.get(utils.trackeatUrl + `orders/userId/${userId}` , {withCredentials: true})
+            .then(({status, data}) => {
+                if(status === 200){
+                    resolve(data);
+                } else {
+                    console.log("Error de conexión")
+                }
+                
+            })
+            .catch(reject)            
+    })  
+}
+
+export const getOrdersByEmail = (email) => {
     return new Promise(async (resolve, reject) => {
         await axios.get(utils.trackeatUrl + `orders/email/${email}` , {withCredentials: true})
             .then(({status, data}) => {
