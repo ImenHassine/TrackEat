@@ -36,6 +36,7 @@ const assetImages = [
   Images.Onboarding,
 ];
 
+
 // cache product images
 products.map(product => assetImages.push(product.image));
 historialP.map(product => assetImages.push(product.image));
@@ -52,6 +53,10 @@ function cacheImages(images) {
 
 
 export default class App extends React.Component {
+  constructor(){
+    super();
+    global.isLogged = false;
+  }
   state = {
     isLoadingComplete: false,
     apiResponse: "",

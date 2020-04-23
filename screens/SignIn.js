@@ -46,6 +46,7 @@ export default class SignIn extends React.Component {
         const password = " ";
         const user = this.checkUser(email,password)
         if (user) {
+          global.isLogged = true;
           navigation.navigate(
             'App',
             { name, email },
@@ -103,6 +104,7 @@ export default class SignIn extends React.Component {
       if(user) {
        const name = user.nombre;
         const email = user.email;
+        global.isLogged = true;
         navigation.navigate(
           'App',
           { name, email },
