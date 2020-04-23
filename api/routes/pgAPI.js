@@ -93,23 +93,4 @@ router.get("/puntos/:puntos",function(req, res, next){
 })
 
 
-//obtener canjeables dada la cantidad de puntos de un usuario
-router.get("/puntos/:puntos",function(req, res, next){
-  next();
-}, function(req, res) {
-
-  const params = req.params
-  const puntos = params.puntos;
-  const query = { text: 'SELECT descripcion FROM canjeables WHERE cantidad = $1' ,
-  values: [puntos] }
-  const response = res;
-  pool.query(query, (err, res) => {
-    if(err) {
-      response.send(err.stack)
-    } else { 
-      response.send(res.rows[0])
-    }
-  })
-})
-
 module.exports = router;
