@@ -51,6 +51,7 @@ export default class SignIn extends React.Component {
           global.nameLogged = name;
           global.emailLogged = email;
           global.imageLogged =  image;
+          global.password = password;
           navigation.navigate(
             'App',
             { name, email },
@@ -109,6 +110,10 @@ export default class SignIn extends React.Component {
        const name = user.nombre;
         const email = user.email;
         global.isLogged = true;
+        global.nameLogged = name;
+        global.emailLogged = email;
+        global.imageLogged =  image;
+        global.password = password;
         navigation.navigate(
           'App',
           { name, email },

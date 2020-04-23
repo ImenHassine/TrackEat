@@ -34,7 +34,9 @@ class Historial extends React.Component {
     }
     async getOrders(){
       try{
-        const user_orders = await TrackWorker.getUserOrders(135); //id usuario estatico para mientras
+        const userinfo = await TrackWorker.getUserInfo(global.email, global.passwordLogged)
+        const userid = userinfo.id
+        const user_orders = await TrackWorker.getUserOrders(userid); //id usuario estatico para mientras
         const order_cards = []
         for(let i = 0; i < user_orders.length; i++) {
           const product = {
