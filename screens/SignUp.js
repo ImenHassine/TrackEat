@@ -76,7 +76,7 @@ export default class SignUp extends React.Component {
           global.imageLogged =  image;
           global.password = password;
           navigation.navigate(
-            'Profile',
+            'App',
             { name, email },
           );
         } else {
