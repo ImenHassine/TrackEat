@@ -20,9 +20,7 @@ export default class FAQ extends React.Component {
     return (
       <Block flex style={styles.group}>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-
           <Text h4 style={{marginBottom: theme.SIZES.BASE / 2,   textAlign: "center", fontWeight: 'bold', color: 'white', fontFamily:"Avenir"}}>Preguntas Frecuentes</Text>
-
         </Block>
       </Block>
     )
@@ -41,15 +39,10 @@ export default class FAQ extends React.Component {
     return (
          <Block flex center style={styles.components }>
           <ScrollView
-            
             showsVerticalScrollIndicator={false}>
-
             {this.renderText()}
             {this.renderAlgo()}
-
-            
           </ScrollView>
-          
         </Block>
     );
   }

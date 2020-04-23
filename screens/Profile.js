@@ -14,9 +14,12 @@ const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
 export default class Profile extends React.Component {
+  constructor(props){
+    super(props)
+  }
+
   componentDidMount(){
-    //const nombre = this.props.navigation.getParam('nombre', '');
-    //const correo = this.props.navigation.getParam('correo', '');
+    
     //console.log(this.props.navigation)
     //console.log(this.route.params)
   }
@@ -27,16 +30,20 @@ export default class Profile extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props;
+    // const nombre = JSON.stringify(navigation.getParam('name'))//this.props.navigation.navigate
+    // const email = JSON.stringify(navigation.getParam('email'))
+    //const correo = this.props.navigation.getParam('correo', '');
     return (
       <Block flex style={styles.profile}>
         <Block flex>
           <ImageBackground
-            source={{uri: Images.ProfileP}}
+            source={{uri: global.imageLogged}}
             style={styles.profileContainer}
             imageStyle={styles.profileImage}>
             <Block flex style={styles.profileDetails}>
               <Block style={styles.profileTexts}>
-                <Text color="white" size={28} style={{ paddingBottom: 8}}>dj barrios</Text>
+    <Text color="white" size={28} style={{ paddingBottom: 8}}>{global.nameLogged} </Text>
                 <Block row space="between">
                   <Block row>
                     <Text color="white" size={16} muted style={styles.seller} onPress={() => this.logout()}>Cerrar Sesión</Text>
