@@ -40,7 +40,7 @@ router.get("/password/:password/email/:email",function(req, res, next){
   const params = req.params
   const email = params.email;
   const password = params.password;
-  const query = { text: 'SELECT nombre, image, email FROM usuario WHERE email = $1 and password = $2' ,
+  const query = { text: 'SELECT id, email, name, image FROM usuario WHERE email = $1 and password = $2' ,
   values: [email, password] }
   const response = res;
   pool.query(query, (err, res) => {
@@ -107,30 +107,10 @@ router.get("/orders/productId/:productId", function(req, res, next) {
     }
   })
 })
-/**
- *  Obtener los puntos de un usuario 
- */
-router.get("/pgAPI/userId/:userId", function(req, res, next) {
-  next();
-}, function(req, res) {
-  const params = re.params
-  const userid = params.userId
-  const query = { text: 'SELECT puntos FROM usuario WHERE id = $1', values: [userid] }
-  const response = res
-  pool.query(query, (err, res) => {
-    if(err){
-      response.send(err.stack)
-    } else {
-      response.send(res.rows[0])
-    }
-  })
-})
-
-/**
- * Obtener los canjeables de un usuario 
- */
-
-// router.get("/pgAPI/puntos/:puntos", function(req, res, next) {
+// /**
+//  *  Obtener los puntos de un usuario 
+//  */
+// router.get("/pgAPI/userId/:userId", function(req, res, next) {
 //   next();
 // }, function(req, res) {
 //   const params = re.params
@@ -145,5 +125,43 @@ router.get("/pgAPI/userId/:userId", function(req, res, next) {
 //     }
 //   })
 // })
+
+//obtener los puntos de un usuario
+router.get("/userId/:userId",function(req, res, next){
+  next();
+}, function(req, res) {
+
+  const params = req.params
+  const userId = params.userId;
+  const query = { text: 'SELECT puntos FROM usuario WHERE id = $1' ,
+  values: [userId] }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows[0])
+    }
+  })
+})
+
+//obtener canjeables dada la cantidad de puntos de un usuario
+router.get("/puntos/:puntos",function(req, res, next){
+  next();
+}, function(req, res) {
+
+  const params = req.params
+  const puntos = params.puntos;
+  const query = { text: 'SELECT descripcion FROM canjeables WHERE cantidad = $1' ,
+  values: [puntos] }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows[0])
+    }
+  })
+})
 
 module.exports = router;
