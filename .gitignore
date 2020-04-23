@@ -11,3 +11,4 @@ yarn.lock
 *.mobileprovision
 constants/utils.js
 api/bin/www
+.DS_Store
