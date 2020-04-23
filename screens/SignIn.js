@@ -39,14 +39,18 @@ export default class SignIn extends React.Component {
         permissions: ['public_profile', 'email'],
       });
       if (type === 'success') {
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture.type(normal)`);
         const userInfo = await response.json()
         const email = userInfo.email;
         const name = userInfo.name;
+        const image = userInfo.picture.data.url;
         const password = " ";
         const user = this.checkUser(email,password)
         if (user) {
           global.isLogged = true;
+          global.nameLogged = name;
+          global.emailLogged = email;
+          global.imageLogged =  image;
           navigation.navigate(
             'App',
             { name, email },
