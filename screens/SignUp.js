@@ -70,7 +70,7 @@ export default class SignUp extends React.Component {
         console.log(user)
         if(user){
           navigation.navigate(
-            'Profile',
+            'App',
             { name, email },
           );
         } else {
