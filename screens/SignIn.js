@@ -48,7 +48,7 @@ export default class SignIn extends React.Component {
         if (user) {
           global.isLogged = true;
           navigation.navigate(
-            'Profile',
+            'App',
             { name, email },
           );
         } else {
@@ -106,7 +106,7 @@ export default class SignIn extends React.Component {
         const email = user.email;
         global.isLogged = true;
         navigation.navigate(
-          'Profile',
+          'App',
           { name, email },
         ); 
         this.setState({
