@@ -16,43 +16,66 @@ const { width, height } = Dimensions.get('screen');
 
 import { materialTheme, historialP, Images, products } from '../constants/';
 const thumbMeasure = (width - 48 - 32) / 3;
+import * as TrackWorker from '../TrackWorker';
 
-export default class Historial extends React.Component {
+class Historial extends React.Component {
+    constructor() {
+      super();
+      this.state = { orders: [] };
+    }
+    async componentDidMount() {
+      try {
+        const o = await this.getOrders()
+        this.setState({ orders: o });
+      }
+      catch (error) {
+        throw new Error(error);
+      }
+    }
+    async getOrders(){
+      try{
+        const user_orders = await TrackWorker.getUserOrders(135); //id usuario estatico para mientras
+        const order_cards = []
+        for(let i = 0; i < user_orders.length; i++) {
+          const product = {
+            codigo: user_orders[i].id,
+            image: historialP[Math.floor(Math.random() * 5)].image, //jalar una imagen random para mientras
+            nombre: "Orden No. " + user_orders[i].id,
+            fecha: user_orders[i].fechaentrega.split("T")[0]
+          }
+          order_cards.push(product)
+        }
+        return order_cards
+      } catch(error) {
+        throw new Error(error);
+      }
 
-  
-
-    renderCards = () => {
+    }
+    renderCards() {
+        const { orders } = this.state;
         return (
           <Block flex style={styles.group}>
             <Text h4 style={{fontFamily:"Avenir"}} >Tus pedidos xd</Text>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
-              { historialP.map((product) => {
-                return(
-                  <HistorialC product={product} horizontal />
-                    
-                )
-              })}
-              
-              {/* <Product product={products[0]} horizontal />
-              <Product product={products[0]} horizontal /> */}
+              { orders.length === 0 ? 
+                  <Text>Loading</Text> :
+                orders.map((product) => (
+                  <HistorialC key={product.codigo} product={product} horizontal />
+                ))}
             </Block>
           </Block>
         )
-    }
-
-    
-
+      }
     render() {
         return (
           <Block style={[styles.content]}>
             <ScrollView
               showsVerticalScrollIndicator={false}
             >
-             
-              {this.renderCards()}
+             { this.renderCards() }
             </ScrollView>
           </Block>
-        );
+        )
     }
 }
 
@@ -170,3 +193,5 @@ const styles = StyleSheet.create({
       height: thumbMeasure
     },
 })
+
+export default Historial;
