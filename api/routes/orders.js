@@ -65,6 +65,21 @@ router.get("/newState/:newState/orderId/:orderId",function(req, res, next){
     }
   })
 })
+router.get("/productos",function(req, res, next){
+  next();
+}, function(req, res) {
+
+  const params = req.params
+  const query = { text: 'SELECT * FROM productos' }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows[0])
+    }
+  })
+})
 
 
 module.exports = router;

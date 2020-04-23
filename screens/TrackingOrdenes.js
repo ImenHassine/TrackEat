@@ -56,10 +56,10 @@ export default class TrackingOrdenes extends React.Component {
 
     this.getOrders()
 }
-    getOrders = async () => {
-      const result = await TrackWorker.getUserOrders(1);
-      console.log(result);
-    }
+  getOrders = async () => {
+    const result = await TrackWorker.getUserOrders(1);
+    console.log(result);
+  }
 
   getTotal = () => {
     return track.map(t => t.precio).reduce((a, b) => a + b, 0);
