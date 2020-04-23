@@ -29,7 +29,7 @@ export default class Puntos extends React.Component {
     renderCards = () => {
         return (
           <Block flex style={styles.group}>
-            <Text h4 style={{fontFamily:"Avenir"}}>Promociones</Text>
+            <Text h4 style={{fontFamily:"Avenir", textAlign: "center"}}>Promociones</Text>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
               { products.map((product) => {
                 return(

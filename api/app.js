@@ -9,12 +9,13 @@ var usersRouter = require('./routes/orders');
 var testAPIRouter = require("./routes/testAPI");
 var pgAPIRouter = require("./routes/pgAPI");
 var restaurantRouter = require("./routes/restaurant");
+var newOrderRouter = require("./routes/newOrder");
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use('/orders', usersRouter);
 app.use("/testAPI", testAPIRouter);
 app.use("/pgAPI", pgAPIRouter);
 app.use("/restaurant", restaurantRouter);
+app.use("/newOrder", newOrderRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

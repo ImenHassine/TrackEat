@@ -55,7 +55,7 @@ class Historial extends React.Component {
         const { orders } = this.state;
         return (
           <Block flex style={styles.group}>
-            <Text h4 style={{fontFamily:"Avenir"}} >Tus pedidos xd</Text>
+            <Text h4 style={{fontFamily:"Avenir", textAlign: "center"}} >Historial de ordenes</Text>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
               { orders.length === 0 ? 
                   <Text>Loading</Text> :

@@ -8,42 +8,42 @@ const { width } = Dimensions.get('screen');
 import products from '../constants/products';
 
 export default class Home extends React.Component {
-  renderSearch = () => {
-    const { navigation } = this.props;
-    const iconCamera = <Icon size={16} color={theme.COLORS.MUTED} name="zoom-in" family="material" />
+  // renderSearch = () => {
+  //   const { navigation } = this.props;
+  //   const iconCamera = <Icon size={16} color={theme.COLORS.MUTED} name="zoom-in" family="material" />
 
-    return (
-      <Input
-        right
-        color="black"
-        style={styles.search, {fontFamily: "Avenir"}}
-        iconContent={iconCamera}
-        placeholder="What are you looking for?"
-        onFocus={() => navigation.navigate('Pro')}
-      />
-    )
-  }
+  //   return (
+  //     <Input
+  //       right
+  //       color="black"
+  //       style={styles.search, {fontFamily: "Avenir"}}
+  //       iconContent={iconCamera}
+  //       placeholder="What are you looking for?"
+  //       onFocus={() => navigation.navigate('Pro')}
+  //     />
+  //   )
+  // }
   
-  renderTabs = () => {
-    const { navigation } = this.props;
+  // renderTabs = () => {
+  //   const { navigation } = this.props;
 
-    return (
-      <Block row style={styles.tabs}>
-        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon name="grid" family="feather" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle, {fontFamily: "Avenir"}}>Categories</Text>
-          </Block>
-        </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon size={16} name="camera-18" family="GalioExtra" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle, {fontFamily: "Avenir"}}>Best Deals</Text>
-          </Block>
-        </Button>
-      </Block>
-    )
-  }
+  //   return (
+  //     <Block row style={styles.tabs}>
+  //       <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
+  //         <Block row middle>
+  //           <Icon name="grid" family="feather" style={{ paddingRight: 8 }} />
+  //           <Text size={16} style={styles.tabTitle, {fontFamily: "Avenir"}}>Categories</Text>
+  //         </Block>
+  //       </Button>
+  //       <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
+  //         <Block row middle>
+  //           <Icon size={16} name="camera-18" family="GalioExtra" style={{ paddingRight: 8 }} />
+  //           <Text size={16} style={styles.tabTitle, {fontFamily: "Avenir"}}>Best Deals</Text>
+  //         </Block>
+  //       </Button>
+  //     </Block>
+  //   )
+  // }
 
   renderProducts = () => {
     const cards = [];
