@@ -9,7 +9,6 @@ var usersRouter = require('./routes/orders');
 var testAPIRouter = require("./routes/testAPI");
 var pgAPIRouter = require("./routes/pgAPI");
 var restaurantRouter = require("./routes/restaurant");
-var newOrderRouter = require("./routes/newOrder");
 
 var app = express();
 
@@ -28,7 +27,6 @@ app.use('/orders', usersRouter);
 app.use("/testAPI", testAPIRouter);
 app.use("/pgAPI", pgAPIRouter);
 app.use("/restaurant", restaurantRouter);
-app.use("/newOrder", newOrderRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
