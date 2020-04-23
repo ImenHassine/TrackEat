@@ -10,13 +10,13 @@ import {
 import { Block, Text, theme} from 'galio-framework';
 import {Card} from 'react-native-elements';
 const { width } = Dimensions.get('screen');
-import { materialTheme} from '../constants/';
+import { materialTheme, track } from '../constants/';
 import Constants from 'expo-constants';
 import StepIndicator from 'react-native-step-indicator';
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-const labels = ["Orden Puesta","En preparación", "En cocción","Lista para recoger"];
+const labels = ["Orden Puesta", "En preparación", "En cocción", "Lista para recoger"];
 const customStyles = {
   stepIndicatorSize: 45,
   currentStepIndicatorSize: 65,
@@ -42,77 +42,101 @@ const customStyles = {
   labelFontFamily:"Avenir"
 }
 
+const steps = 4;
+let timeOut;
+
 export default class TrackingOrdenes extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-        currentPosition: 1
+      currentPosition: 0
     }
-}
-    
-    renderText = () => {
-        return (
-          <Card
-                title="panitos' tracker"
-                titleStyle={styles.name}
-                containerStyle={styles.car}
-                image={require('../assets/images/planta-baja.jpg')}>
+  }
 
-              <StepIndicator
-                customStyles={customStyles}
-                currentPosition={this.state.currentPosition}
-                labels={labels}
-                stepCount={4}
-            />
-
-              </Card>
-        )
-      }
-    
-      renderOrden = () => {
-        return (
-          <Block>
-              
-              <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
-              <View
-                style={{
-                flexDirection: 'row',
-                height: 500,
-                padding: 20
-                }}>
-                <View style={{backgroundColor: '#FFCC00', flex: 1, borderRadius: 70, borderWidth: 0, height:300}}>
-                  <View style={{paddingTop:45, paddingRight:40, justifyContent:"flex-end" , textAlign:"justify"}}>
-                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>Sandwich 3 Quesos             Q24</Text>
-                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>Ensalada Santa Fe               Q21</Text>
-                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>Pan Chorizo y Queso           Q26</Text>
-                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>Licuado de Banano              Q15</Text>
-                  </View>
-                  <View style={{paddingHorizontal:20}}>
-                    <View style={{borderBottomColor: 'black',borderBottomWidth: 6, paddingTop:15}}/>
-                  </View>
-                  <View style={{paddingRight:40, paddingTop:20}}>
-                    <Text size={19} style={{textAlign: "right", fontFamily:"Avenir"}}>   Total                     Q86</Text>
-                  </View>
-                </View>
-              </View>
-            </Block>
-        )
-      }
-
-    render() {
+  getTotal = () => {
+    return track.map(t => t.precio).reduce((a, b) => a + b, 0);
+  }
+  
+  increment = () => {
+    if ( this.state.currentPosition < steps ) this.setState({ currentPosition: this.state.currentPosition += 1 });
+    else clearTimeout(timeOut);
+  }
+      
+  renderText = () => {
+    timeOut = setTimeout(() => this.increment(), 5000);
     return (
-         <Block  style={{backgroundColor:"white"}} >
-           <ScrollView>
-             {this.renderText()}
-             {this.renderOrden()}
-           </ScrollView>
-         </Block>
+      <Card
+        title="panitos' tracker"
+        titleStyle={styles.name}
+        containerStyle={styles.car}
+        image={require('../assets/images/planta-baja.jpg')}
+      >
+        <StepIndicator
+          customStyles={customStyles}
+          currentPosition={this.state.currentPosition}
+          labels={labels}
+          stepCount={steps}
+        />
+      </Card>
+    )
+  }
+      
+  renderOrden = () => {
+    return (
+      <Block>
+        <Text>{"\n"}</Text>
+        <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingHorizontal: 20,
+            marginVertical: 20
+          }}
+        >
+          <Block style={{ boxSizing: 'border-box', width: '100%', backgroundColor: '#FFCC00', borderRadius: 50, borderWidth: 0, paddingTop: 30, paddingBottom: 30, paddingHorizontal: 40, }}>
+            {
+              track.map((product, index) => {
+                return (
+                  <Block style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Text size={19} style={{ fontFamily:"Avenir" }}>{index + 1}. {product.producto}</Text>
+                    <Text size={19} style={{ fontFamily:"Avenir" }}>Q. {product.precio}</Text>
+                  </Block>
+                )
+              })
+            }
+            <View style={{paddingHorizontal:0}}>
+              <View style={{borderBottomColor: 'black', borderBottomWidth: 6, paddingTop:15 }}/>
+            </View>
+            <View style={{paddingRight: 40, paddingTop:20}}>
+              <Block style={{display: 'flex', flexDirection: 'row', paddingLeft: 50, justifyContent: 'space-around' }}>
+                <Block style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                  <Text size={19} style={{ fontFamily:"Avenir" }}>Total</Text>
+                </Block>
+                <Block style={{ textAlign: 'right'}}>
+                  <Text size={19} style={{ fontFamily:"Avenir" }}>Q. {this.getTotal()}</Text>
+                </Block>
+              </Block>
+            </View>
+          </Block>
+        </View>
+      </Block>
+    )
+  }
+
+  render() {
+    return (
+      <Block  style={{backgroundColor:"white"}} >
+        <ScrollView>
+          {this.renderText()}
+          {this.renderOrden()}
+        </ScrollView>
+      </Block>
     );
   }
 }
+
 const styles = StyleSheet.create({
-    
     container: {
       flex: 1,
       justifyContent: 'center',
