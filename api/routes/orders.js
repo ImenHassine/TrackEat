@@ -7,18 +7,16 @@ pool.on('connect', client =>{
     connection_proof = "Si conecto soy el papa de Gustavo x2"
 })
 
-router.get("/email/:email/password/:password/image/:image/name/:name",function(req, res, next){
+//obtenie las ordenes de un usuario por userId
+router.get("/userId/:userId",function(req, res, next){
     next();
 }, function(req, res) {
 
   const params = req.params
-  const email = params.email;
-  const password = params.password;
-  const name = params.name;
-  const image = params.image;
+  const userId = params.userId;
 
-  const query = { text: 'INSERT INTO usuario(nombre,email,password,image) VALUES($1, $2, $3, $4) RETURNING *' ,
-  values: [name, email, password, image] }
+  const query = { text: 'select o.idusr, o.total , o.total, o.fechasolicitada, o.fechaentrega, o.descripcion, o.idestado , e.nombre , e.nombre from orden o left join estado e on o.idestado = e.id left join establecimiento l on o.lugar = l.id where o.idusr = $1' ,
+  values: [userId] }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
@@ -29,19 +27,15 @@ router.get("/email/:email/password/:password/image/:image/name/:name",function(r
   })
 })
 
-/*
-    obtener informacion de un usuario 
- */
-
-router.get("/password/:password/email/:email",function(req, res, next){
+//obtiene el nombre de un producto por su id 
+router.get("/productId/:productId",function(req, res, next){
   next();
 }, function(req, res) {
 
   const params = req.params
-  const email = params.email;
-  const password = params.password;
-  const query = { text: 'SELECT id, email, name, image FROM usuario WHERE email = $1 and password = $2' ,
-  values: [email, password] }
+  const productId = params.productId;
+  const query = { text: 'SELECT nombre FROM producto WHERE productId = $1' ,
+  values: [productId] }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
@@ -52,16 +46,16 @@ router.get("/password/:password/email/:email",function(req, res, next){
   })
 })
 
-
-//obtener canjeables dada la cantidad de puntos de un usuario
-router.get("/puntos/:puntos",function(req, res, next){
+//actualiza una orden
+router.get("/newState/:newState/orderId/:orderId",function(req, res, next){
   next();
 }, function(req, res) {
 
   const params = req.params
-  const puntos = params.puntos;
-  const query = { text: 'SELECT descripcion FROM canjeables WHERE cantidad = $1' ,
-  values: [puntos] }
+  const newState = params.newState;
+  const orderId = params.orderId;
+  const query = { text: 'update orden set idestado = $1 where id = $2' ,
+  values: [newState, orderId] }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
@@ -71,5 +65,6 @@ router.get("/puntos/:puntos",function(req, res, next){
     }
   })
 })
+
 
 module.exports = router;
