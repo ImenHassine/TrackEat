@@ -19,9 +19,9 @@ export const getUserInfo = (email, password) => {
     })  
 }
 
-export const getUserOrders = (userId) => {
+export const getUserOrders = (email) => {
     return new Promise(async (resolve, reject) => {
-        await axios.get(utils.trackeatUrl + `orders/userId/${userId}` , {withCredentials: true})
+        await axios.get(utils.trackeatUrl + `orders/email/${email}` , {withCredentials: true})
             .then(({status, data}) => {
                 if(status === 200){
                     resolve(data);
@@ -94,4 +94,5 @@ export const getAllProducts = () => {
             .catch(reject)            
     })  
 }
+
 

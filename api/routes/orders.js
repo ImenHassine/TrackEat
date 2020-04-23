@@ -8,21 +8,21 @@ pool.on('connect', client =>{
 })
 
 //obtenie las ordenes de un usuario por userId
-router.get("/userId/:userId",function(req, res, next){
+router.get("/email/:email",function(req, res, next){
     next();
 }, function(req, res) {
 
   const params = req.params
-  const userId = params.userId;
+  const email = params.email;
 
-  const query = { text: 'select o.idusr, o.total , o.total, o.fechasolicitada, o.fechaentrega, o.descripcion, o.idestado , e.nombre , e.nombre from orden o left join estado e on o.idestado = e.id left join establecimiento l on o.lugar = l.id where o.idusr = $1' ,
-  values: [userId] }
+  const query = { text: 'select o.total, o.descripcion, o.fechasolicitada from orden o left join estado e on o.idestado = e.id left join establecimiento l on o.lugar = l.id left join usuario u on u.id = o.idusr where u.email = $1' ,
+  values: [email] }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
       response.send(err.stack)
     } else { 
-      response.send(res.rows[0])
+      response.send(res.rows)
     }
   })
 })
@@ -41,7 +41,7 @@ router.get("/productId/:productId",function(req, res, next){
     if(err) {
       response.send(err.stack)
     } else { 
-      response.send(res.rows[0])
+      response.send(res.rows)
     }
   })
 })
@@ -65,18 +65,33 @@ router.get("/newState/:newState/orderId/:orderId",function(req, res, next){
     }
   })
 })
+
 router.get("/productos",function(req, res, next){
   next();
 }, function(req, res) {
 
   const params = req.params
-  const query = { text: 'SELECT * FROM productos' }
+  const query = { text: 'SELECT * FROM producto' }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
       response.send(err.stack)
     } else { 
-      response.send(res.rows[0])
+      response.send(res.rows)
+    }
+  })
+})
+
+router.get("/getAllOrders",function(req, res, next){
+  next();
+}, function(req, res) {
+  const query = { text: 'SELECT * FROM orden' }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows)
     }
   })
 })

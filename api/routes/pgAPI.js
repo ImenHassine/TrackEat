@@ -52,5 +52,22 @@ router.get("/password/:password/email/:email",function(req, res, next){
   })
 })
 
+/*
+    obtener informacion de un usuario 
+ */
+
+router.get("/getAllUsers",function(req, res, next){
+  next();
+}, function(req, res) {
+  const query = { text: 'SELECT * FROM usuario' }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows)
+    }
+  })
+})
 
 module.exports = router;
