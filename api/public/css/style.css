@@ -5901,4 +5901,51 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin: 40px 0 10px 0;
+  padding: none;
+
+}
+
+#form-container {
+  max-width: 700px;
+  margin: auto;
+  padding: 0 1% 0 1%;
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  max-width: 100%;
+}
+
+input {
+  font-family: 'Droid Sans', helvetica , sans-serif;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  font-size: 1rem;
+  text-indent: 5px;
+  width: 100%;
+  height: 3rem;
+  margin: 2%;
+  padding: 1%;
+}
+
+input[type=submit] {
+  margin-left: 20%;
+  width: 54%;
+  border-radius: 4px;
+  font-size: 22px;
+  background: #F34B61;
+  color: #FFFFFF;
+  text-align: center;
+
+  }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  opacity: 0.8; /* Firefox */
+}
+
 /*# sourceMappingURL=style.css.map */

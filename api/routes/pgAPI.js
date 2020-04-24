@@ -16,9 +16,8 @@ router.get("/email/:email/password/:password/image/:image/name/:name",function(r
   const password = params.password;
   const name = params.name;
   const image = params.image;
-
-  const query = { text: 'INSERT INTO usuario(email,password,nombre, puntos, image) VALUES($1, $2, $3, 0, $4) RETURNING *' ,
-  values: [email, password, name, image] }
+  const query = { text: 'INSERT INTO usuario(nombre,email,password,image) VALUES($1, $2, $3, $4, $5) RETURNING *' ,
+  values: [id, name, email, password, image] }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
