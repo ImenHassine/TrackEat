@@ -45,7 +45,7 @@ export default class SignUp extends React.Component {
 
 
   checkUser = async (email, password, image, name) => {
-    const user = TrackWorker.createAcount(email, password, name, image);
+    const user = TrackWorker.createAccount(email, password, name, image);
     return user;
   }
 
@@ -60,16 +60,15 @@ export default class SignUp extends React.Component {
         permissions: ['public_profile', 'email'],
       });
       if (type === 'success') {
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name`);
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture.type(normal)`);
         const userInfo = await response.json()
         const email = userInfo.email;
         const name = userInfo.name;
         const password = " ";
-        const image = "default"
+        const image = userInfo.picture.data.url;
         const user = this.checkUser(email, password, image, name);
         console.log(user)
         if(user){
-
           global.isLogged = true;
           global.nameLogged = name;
           global.emailLogged = email;
@@ -101,7 +100,7 @@ export default class SignUp extends React.Component {
     const {isEmailValid, isPasswordValid, isConfirmationPasswordValid} = this.state
 
     if(isEmailValid && isPasswordValid && isConfirmationPasswordValid) {
-      const user = await TrackWorker.createAcount(email, password, name, image);
+      const user = await TrackWorker.createAccount(email, password, name, image);
       const email = user.email;
       const name = user.name;
       if(user){
