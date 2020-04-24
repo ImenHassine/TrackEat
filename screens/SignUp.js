@@ -45,7 +45,7 @@ export default class SignUp extends React.Component {
 
 
   checkUser = async (email, password, image, name) => {
-    const user = TrackWorker.createAccount(email, password, name, image);
+    const user = TrackWorker.createAccount(email, password, image, name);
     return user;
   }
 
@@ -100,7 +100,7 @@ export default class SignUp extends React.Component {
     const {isEmailValid, isPasswordValid, isConfirmationPasswordValid} = this.state
 
     if(isEmailValid && isPasswordValid && isConfirmationPasswordValid) {
-      const user = await TrackWorker.createAccount(email, password, name, image);
+      const user = await TrackWorker.createAccount(email, password, image, name);
       const email = user.email;
       const name = user.name;
       if(user){
