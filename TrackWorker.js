@@ -125,5 +125,20 @@ export const getAllProducts = () => {
             .catch(reject)            
     })  
 }
+/* Asignara un usuario a una orden */
+export const joinUserOrder = (id,idusr) => {
+    return new Promise(async (resolve, reject) => {
+        await axios.get(utils.trackeatUrl + `pgAPI/id/${id}/idusr/${idusr}` , {withCredentials: true})
+            .then(({status, data}) => {
+                if(status === 200){
+                    resolve(data);
+                } else {
+                    console.log("Error de conexión")
+                }
+                
+            })
+            .catch(reject)            
+    })  
+}
 
 

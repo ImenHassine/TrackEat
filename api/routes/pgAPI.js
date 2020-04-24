@@ -69,4 +69,28 @@ router.get("/getAllUsers",function(req, res, next){
   })
 })
 
+/*
+  Ingresar id para orden el usuario
+*/
+
+router.get("/id/:id/idusr/:idusr",function(req, res, next){
+  next();
+}, function(req, res) {
+
+  const params = req.params
+  const id = params.id;
+  const iduser = params.idusr;
+  const query = { text: 'UPDATE orden SET idusr = $1 WHERE id = $2 RETURNING *' ,
+  values: [iduser, id] }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows[0])
+    }
+  })
+})
+
+
 module.exports = router;
