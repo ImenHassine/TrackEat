@@ -1,4 +1,6 @@
 import React from 'react';
+import * as TrackWorker from '../TrackWorker';
+
 import {
   ScrollView,
   StyleSheet,
@@ -25,6 +27,7 @@ export default class Confirm extends React.Component {
   }
   _handlePress() {
     console.log(this.state.codigo);
+    TrackWorker.joinUserOrder(parseInt(this.state.codigo),global.IdLogged);
     //AQUI MANDAR EK CODIGO A LA BD
     
  }
