@@ -1,40 +1,68 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
 
 <style>
   #qrcode {
-  width:160px;
-  height:160px;
+  width:600px;
+  height:400px;
   margin-top:15px;
 }
 </style>
 
-{{#if form}}
-<form method="post" class="form-group">
-      
-      <input
-        type="text"
-        name="lugar"
-      />
-      <input
-        name="total"
-        type="number"
-      />
-      <input
-        name="date"
-        type="date"
-      />
-      <input type="submit"/>
-</form>
-{{/if}}
+<body>
+    <header class="main_menu home_menu menu_fixed animated fadeInDow">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <br>
+                        <br>
+                        <br>
+                        
+                    </nav>
+                </div>
+            </div>
+        </div>
+        
+    </header>
 
-<label>{{show}}</label>
-{{#if show}}
-  <label>{{orderID}}</label>
-  <input id="text" type="text" value="exp://192.168.0.3:19000" style="width:80%; display: none" /><br />
-  <div id="qrcode"></div>
-{{/if}}
+    <br>
+    <br>
+    
+    {{#if form}}
+    <h1>Simulacion de ingreso y generación de orden de un restaurante</h1>
+    <div id="form-container">
+      <form method="post" class="form-group">
+            <input
+              placeholder="Establecimiento"
+              type="text"
+              name="lugar"
+            />
+            <input
+              placeholder="Total de orden"
+              name="total"
+              type="number"
+            />
+            <input
+              placeholder="Fecha de creacion"
+              name="date"
+              type="date"
+            />
+            <input type="submit"/>
+      </form>
+    </div>
+    {{/if}}
 
+    {{#if show}}
+      <h1>Tu número de orden es: {{orderID}}</h1>
+      <div id="form-container">
+        <input id="text" type="text" value="exp://192.168.0.3:19000" style="width:80%; display: none" /><br />
+        <div id="qrcode"></div>
+        <h3 style="margin-top: 100px; margin-left: 20px">Escanea el código QR e ingresa tu número de orden para poder ver el tracking</h3>
+      </div>
+    {{/if}}
+</body>
 
 <script>
   /**
