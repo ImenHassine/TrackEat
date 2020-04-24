@@ -22,7 +22,8 @@ function CustomDrawerContent({
     "Puntos",
     "FAQ",
     "Home",
-    "Tracking de Órdenes"
+    "Tracking de Órdenes",
+    "Confirm"
   ];
   return (
     <Block
@@ -47,6 +48,10 @@ function CustomDrawerContent({
           />
           <DrawerCustomItem
             title="Tracking de Órdenes"
+            navigation={navigation}
+          />
+           <DrawerCustomItem
+            title="Confirm"
             navigation={navigation}
           />
           {global.isLogged &&

@@ -145,6 +145,15 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
+        case "Confirm":
+          return (
+            <Icon
+              size={16}
+              name="ios-log-in"
+              family="ionicon"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          );
       case "Sign Up":
         return (
           <Icon

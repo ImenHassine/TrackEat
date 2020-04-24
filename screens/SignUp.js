@@ -69,6 +69,12 @@ export default class SignUp extends React.Component {
         const user = this.checkUser(email, password, image, name);
         console.log(user)
         if(user){
+
+          global.isLogged = true;
+          global.nameLogged = name;
+          global.emailLogged = email;
+          global.imageLogged =  image;
+          global.password = password;
           navigation.navigate(
             'App',
             { name, email },

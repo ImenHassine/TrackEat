@@ -19,6 +19,22 @@ export const getUserInfo = (email, password) => {
     })  
 }
 
+// endpoint para crear un usuario 
+export const createAccount = (email, password, image, name) => {
+    return new Promise(async (resolve, reject) => {
+        await axios.get( utils.trackeatUrl + `pgAPI/email/${email}/password/${password}/image/${image}/name/${name}` , {withCredentials: true})
+            .then(({status, data}) => {
+                if(status === 200){
+                    resolve(data);
+                } else {
+                    console.log("Error de conexión")
+                }
+                
+            })
+            .catch(reject)            
+    })  
+}
+
 export const getUserOrders = (userId) => {
     return new Promise(async (resolve, reject) => {
         await axios.get(utils.trackeatUrl + `orders/userId/${userId}` , {withCredentials: true})
