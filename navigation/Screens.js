@@ -17,6 +17,7 @@ import PuntosScreen from '../screens/Puntos';
 import PruebaScreen from '../screens/Prueba';
 import FAQScreen from '../screens/FAQ';
 import TrackingOrdenesScreen from '../screens/TrackingOrdenes';
+import ConfirmScreen from '../screens/Confirm';
 
 import CustomDrawerContent from './Menu';
 import { Icon, Header } from '../components';
@@ -89,6 +90,26 @@ function TrackingOrdenesStack(props) {
           header: ({ navigation, scene }) => (
             <Header
               title="Tracking de Órdenes"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: false
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+function ConfirmStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="Confirm" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Confirm"
+        component={ConfirmScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Confirm"
               scene={scene}
               navigation={navigation}
             />
@@ -256,6 +277,20 @@ function AppStack(props) {
       <Drawer.Screen 
         name="Historial"
         component={HistorialStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon 
+              size={16}
+              name="md-book"
+              family="ionicon"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen 
+        name="Confirm"
+        component={ConfirmStack}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon 

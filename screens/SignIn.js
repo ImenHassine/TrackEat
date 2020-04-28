@@ -45,12 +45,15 @@ export default class SignIn extends React.Component {
         const name = userInfo.name;
         const image = userInfo.picture.data.url;
         const password = " ";
+        const id = userInfo.id;
         const user = this.checkUser(email,password)
         if (user) {
           global.isLogged = true;
           global.nameLogged = name;
           global.emailLogged = email;
           global.imageLogged =  image;
+          global.password = password;
+          global.IdLogged = id;
           navigation.navigate(
             'App',
             { name, email },
@@ -108,7 +111,13 @@ export default class SignIn extends React.Component {
       if(user) {
        const name = user.nombre;
         const email = user.email;
+        const id = user.id;
         global.isLogged = true;
+        global.nameLogged = name;
+        global.emailLogged = email;
+        global.imageLogged =  image;
+        global.password = password;
+        global.IdLogged = id;
         navigation.navigate(
           'App',
           { name, email },
