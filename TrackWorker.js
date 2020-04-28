@@ -49,7 +49,7 @@ export const getOrdersByEmail = (email) => {
     })  
 }
 
-export const getProductsName = (productId) => {
+export const getProductById = (productId) => {
     return new Promise(async (resolve, reject) => {
         await axios.get(utils.trackeatUrl + `orders/productId/${productId}` , {withCredentials: true})
             .then(({status, data}) => {
@@ -62,6 +62,21 @@ export const getProductsName = (productId) => {
             })
             .catch(reject)            
     })  
+}
+
+export const getLastOrder = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        await axios.get(utils.trackeatUrl + `orders/lastOrder/${userId}` , {withCredentials: true})
+            .then(({status, data}) => {
+                if(status === 200){
+                    resolve(data);
+                } else {
+                    console.log("Error de conexión")
+                }
+                
+            }).catch(reject)
+        }
+    )  
 }
 
 export const getUserPoints = (userId) => {
@@ -94,10 +109,39 @@ export const getCanjeables = (puntos) => {
     })  
 }
 
+export const getRandomProduct = (random) => {
+    return new Promise(async (resolve, reject) => {
+        await axios.get(utils.trackeatUrl + `orders/randomProduct/${random}` , {withCredentials: true})
+            .then(({status, data}) => {
+                if(status === 200){
+                    resolve(data);
+                } else {
+                    console.log("Error de conexión")
+                }
+                
+            })
+            .catch(reject)            
+    })  
+}
 
 export const getAllProducts = () => {
     return new Promise(async (resolve, reject) => {
         await axios.get(utils.trackeatUrl + `orders/productos/` , {withCredentials: true})
+            .then(({status, data}) => {
+                if(status === 200){
+                    resolve(data);
+                } else {
+                    console.log("Error de conexión")
+                }
+                
+            })
+            .catch(reject)            
+    })  
+}
+
+export const removerOrder = (orderId) => {
+    return new Promise(async (resolve, reject) => {
+        await axios.get(utils.trackeatUrl + `orders/removerOrder/${orderId}` , {withCredentials: true})
             .then(({status, data}) => {
                 if(status === 200){
                     resolve(data);

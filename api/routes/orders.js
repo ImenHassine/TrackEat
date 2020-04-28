@@ -48,20 +48,55 @@ router.get("/email/:email",function(req, res, next){
 })
 
 //obtiene el nombre de un producto por su id 
+router.get("/randomProduct/:random",function(req, res, next){
+  next();
+}, function(req, res) {
+
+  const params = req.params
+  const random = params.random;
+  const query = { text: 'SELECT getRandom($1)', values: [random] }
+  const response = res;
+
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows[0])
+    }
+  })
+})
+
+//obtiene el nombre de un producto por su id 
 router.get("/productId/:productId",function(req, res, next){
   next();
 }, function(req, res) {
 
   const params = req.params
   const productId = params.productId;
-  const query = { text: 'SELECT nombre FROM producto WHERE productId = $1' ,
-  values: [productId] }
+  const query = { text: 'SELECT * FROM producto WHERE id = $1', values: [productId] }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
       response.send(err.stack)
     } else { 
-      response.send(res.rows)
+      response.send(res.rows[0])
+    }
+  })
+})
+
+router.get("/lastOrder/:userId",function(req, res, next){
+  next();
+}, function(req, res) {
+
+  const params = req.params
+  const userId = params.userId;
+  const query = { text: 'select total, descripcion, lugar, fechasolicitada, idestado from public.orden where idusr = $1 order by fechasolicitada desc', values: [userId] }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows[0])
     }
   })
 })
@@ -92,6 +127,23 @@ router.get("/productos",function(req, res, next){
 
   const params = req.params
   const query = { text: 'SELECT * FROM producto' }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows)
+    }
+  })
+})
+
+router.get("/removerOrder/:id",function(req, res, next){
+  next();
+}, function(req, res) {
+
+  const params = req.params
+  const orderId = params.id;
+  const query = { text: 'DELETE FROM orden WHERE id = $1', values: [orderId] }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
