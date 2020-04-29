@@ -9,6 +9,6 @@ yarn.lock
 *.p12
 *.key
 *.mobileprovision
-constants/utils.js
+/constants/utils.js
 api/bin/www
 .DS_Store
