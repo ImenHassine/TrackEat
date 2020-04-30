@@ -5,7 +5,6 @@ import { Block, theme } from 'galio-framework';
 import { Product } from '../components/';
 
 const { width } = Dimensions.get('screen');
-import { historialP } from '../constants';
 
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -22,8 +21,6 @@ export default class Home extends React.Component {
 
   async componentDidMount() {
     try {
-
-      console.log (this.state.canInteract)
       const p = await this.getProducts()
       this.setState({
         productos: p
@@ -31,8 +28,6 @@ export default class Home extends React.Component {
       this.setState({
         canInteract: true
       })
-
-      console.log (this.state.canInteract)
     }
     catch (error) {
       throw new Error(error);
