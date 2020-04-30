@@ -26,7 +26,7 @@ export default class Profile extends React.Component {
 
   logout = () => {
     global.isLogged = false;
-    this.props.navigation.navigate('Home')
+    this.props.navigation.navigate('Sign In')
   }
 
   render() {
