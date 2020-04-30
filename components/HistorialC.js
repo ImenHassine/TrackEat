@@ -2,13 +2,14 @@ import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
-
+import { DataNavigation } from 'react-data-navigation';
 
 const { width } = Dimensions.get('screen');
 
 class HistorialC extends React.Component {
   render() {
     const { navigation, order, horizontal, full, style, priceColor, imageStyle } = this.props;
+    DataNavigation.setData('incomingOrder', order.productos); 
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
     //console.log(order)
     //console.log("hola")
