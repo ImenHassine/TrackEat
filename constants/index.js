@@ -4,6 +4,7 @@ import materialTheme from './Theme';
 import utils from './utils';
 import historialP from './historialP';
 import track from './track';
+import faq from './FAQ';
 
 export {
   Images,
@@ -11,5 +12,6 @@ export {
   materialTheme,
   utils,
   historialP,
-  track
+  track,
+  faq
 }
