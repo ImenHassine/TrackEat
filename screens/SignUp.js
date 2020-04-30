@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {  Input } from 'react-native-elements';
 import * as TrackWorker from '../TrackWorker';
 import { showMessage } from "react-native-flash-message";
+import axios from 'axios';
 
 
 
@@ -45,8 +46,23 @@ export default class SignUp extends React.Component {
 
 
   checkUser = async (email, password, image, name) => {
-    const user = TrackWorker.createAccount(email, password, image, name);
+    const user = await TrackWorker.createAccount(email, password, image, name);
     return user;
+  }
+
+  getFBPic = (temp_url) => {
+    return new Promise(async (resolve, reject) => {
+      await axios.get( temp_url , {withCredentials: true})
+          .then(({status, data}) => {
+              if(status === 200){
+                  resolve(data);
+              } else {
+                  console.log("No se pudo obtener la profile picture.")
+              }
+              
+          })
+          .catch(reject)            
+    })  
   }
 
   onFBLogin = async () => {
@@ -60,19 +76,18 @@ export default class SignUp extends React.Component {
         permissions: ['public_profile', 'email'],
       });
       if (type === 'success') {
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture.type(normal)`);
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture.type(normal).redirect(false)`);
         const userInfo = await response.json()
         const email = userInfo.email;
         const name = userInfo.name;
         const password = " ";
-        const image = userInfo.picture.data.url;
-        const user = this.checkUser(email, password, image, name);
-        console.log(user)
+        const image = encodeURIComponent(userInfo.picture.data.url);
+        const user = await this.checkUser(email, password, image, name);
         if(user){
           global.isLogged = true;
           global.nameLogged = name;
           global.emailLogged = email;
-          global.imageLogged =  image;
+          global.imageLogged =  userInfo.picture.data.url;
           global.password = password;
           navigation.navigate(
             'App',
