@@ -249,6 +249,11 @@ const styles = StyleSheet.create({
       backgroundColor: 'red',
       color: 'white',
       fontFamily:"Avenir"
+    },
+
+    spinnerTextStyle: {
+      color: '#FFF',
+      fontFamily: 'Avenir'
     }
 })
 

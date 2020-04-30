@@ -24,17 +24,20 @@ export default class Puntos extends React.Component {
 
     this.state = {
       productos: [],
-      canInteract: false
+      canInteract: false,
+      puntos : 0
     }
   }
 
   async componentDidMount() {
     try {
       const pro = await this.getProducts()
-
+      const user = await TrackWorker.getUserInfo(global.emailLogged, global.password)
+      const points = user.puntos
       this.setState({
         productos: pro,
-        canInteract: true
+        canInteract: true,
+        puntos: points
       })
     } catch(error) {
       throw new Error(error);
@@ -114,7 +117,7 @@ export default class Puntos extends React.Component {
           </Block>
           <Block style={{marginVertical: "2%", display: "flex", alignItems: "center"}}>
             <Text h4 style={{fontFamily:"Avenir"}} color="white">
-              {misPuntos}
+              {this.state.puntos}
             </Text>
           </Block>
         </Block>
@@ -136,7 +139,7 @@ export default class Puntos extends React.Component {
   }
 }
 
-const misPuntos = Math.floor((Math.random()*1000) + 100);
+// const misPuntos = Math.floor((Math.random()*1000) + 100);
 
 const styles = StyleSheet.create({
     content: {
