@@ -17,6 +17,9 @@ const { width, height } = Dimensions.get('screen');
 import { materialTheme, historialP, Images, products } from '../constants/';
 const thumbMeasure = (width - 48 - 32) / 3;
 import * as TrackWorker from '../TrackWorker';
+import Spinner from 'react-native-loading-spinner-overlay';
+
+
 class Warning extends React.Component {
   render() {
     // const { navigation, product, horizontal, full, style, priceColor, imageStyle } = this.props;
@@ -35,7 +38,7 @@ class Warning extends React.Component {
 class Historial extends React.Component {
     constructor() {
       super();
-      this.state = { orders: [] };
+      this.state = { orders: null };
     }
     async componentDidMount() {
       try {
@@ -88,18 +91,29 @@ class Historial extends React.Component {
     }
     renderCards() {
         const { orders } = this.state;
-        return (
-          <Block flex style={styles.group}>
-            <Text h4 style={{fontFamily:"Avenir", textAlign: "center"}} >Historial de órdenes</Text>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
-              { orders.length === 0 ? 
-                  <Warning /> :
-                orders.map((order) => (
-                  <HistorialC key={order.codigo} order={order} horizontal />
-                ))}
+        if (orders === null) {
+          return(
+            <Spinner
+              visible={!this.state.canInteract}
+              textContent={'Cargando...'}
+              textStyle={styles.spinnerTextStyle}
+            />
+          )
+        }
+        else {
+          return (
+            <Block flex style={styles.group}>
+              <Text h4 style={{fontFamily:"Avenir", textAlign: "center"}} >Historial de órdenes</Text>
+              <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
+                { orders.length === 0 ? 
+                    <Warning /> :
+                  orders.map((order) => (
+                    <HistorialC key={order.codigo} order={order} horizontal />
+                  ))}
+              </Block>
             </Block>
-          </Block>
-        )
+          )
+        }
       }
     render() {
         return (
