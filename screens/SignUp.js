@@ -114,7 +114,7 @@ export default class SignUp extends React.Component {
           isConfirmationPasswordValid: true
         });
         navigation.navigate(
-          'App',
+          'Sign In',
           { userName, userEmail },
         );
       } else {

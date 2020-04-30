@@ -112,6 +112,7 @@ export default class SignIn extends React.Component {
        const name = user.nombre;
         const email = user.email;
         const id = user.id;
+        const image = user.image;
         global.isLogged = true;
         global.nameLogged = name;
         global.emailLogged = email;
