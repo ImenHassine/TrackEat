@@ -101,8 +101,8 @@ export default class SignUp extends React.Component {
 
     if(isEmailValid && isPasswordValid && isConfirmationPasswordValid) {
       const user = await TrackWorker.createAccount(email, password, image, name);
-      const email = user.email;
-      const name = user.name;
+      const userEmail = user.email;
+      const userName = user.name;
       if(user){
         this.setState({
           email: "",
@@ -114,8 +114,8 @@ export default class SignUp extends React.Component {
           isConfirmationPasswordValid: true
         });
         navigation.navigate(
-          'Profile',
-          { name, email },
+          'App',
+          { userName, userEmail },
         );
       } else {
         console.log("segui mañana")
