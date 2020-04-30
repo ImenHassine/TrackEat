@@ -40,8 +40,9 @@ export default class Home extends React.Component {
   }
 
   async getProducts(){
+    let productsInfo = [];
+
     try {
-      let productsInfo = [];
       let productsIds = [];
 
       const totalProducts = Math.floor(Math.random() * 5) + 5;
@@ -61,22 +62,8 @@ export default class Home extends React.Component {
         const producto = await TrackWorker.getProductById(idProducto.getrandom);
         productsInfo.push(producto);
       }
-
-      const p_image = []
-
-      for(let i = 0; i < productsInfo.length; i++) {
-        const product = {
-          id: productsInfo[i].id,
-          nombre: productsInfo[i].nombre,
-          image: historialP[Math.floor(Math.random() * 4)].image, //jalar una imagen random para mientras
-          precio: productsInfo[i].precio,
-          puntos: productsInfo[i].puntos
-        }
-
-        p_image.push(product)
-      }
-
-      return p_image
+      
+      return productsInfo;
 
     } catch(error) {
       throw new Error(error);
