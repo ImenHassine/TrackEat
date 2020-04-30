@@ -8,20 +8,92 @@ import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Product } from '../components/';
 import { products } from '../constants/';
+import Spinner from 'react-native-loading-spinner-overlay';
+import * as TrackWorker from '../TrackWorker';
 
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
-
+const userid = 97
+// const userid = global.IdLogged
+class ProfileOrder extends React.Component {
+  
+  render() {
+    const { navigation, order, horizontal, full, style, priceColor, imageStyle } = this.props;
+    const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
+    return(
+      <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
+          <Block flex style={[styles.imageContainer, styles.shadow]}>
+            <Image source={{ uri: order.image }} style={imageStyles} />
+          </Block>
+          <Block flex space="between" style={styles.productDescription}>
+            <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
+            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>Total: {order.total} </Text>
+            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>{order.fecha} </Text>
+          </Block>
+      </Block>
+    )
+  }
+}
 export default class Profile extends React.Component {
   constructor(props){
     super(props)
+    this.state = {
+      orders: null,
+      points: 0,
+      orders_qty: 0
+    }
   }
 
-  componentDidMount(){
-    
-    //console.log(this.props.navigation)
-    //console.log(this.route.params)
+  async componentDidMount() {
+    try {
+      const o = await this.getOrders()
+      const user = await TrackWorker.getUserInfo(global.emailLogged, global.password)
+      const p = user.puntos
+      this.setState({ 
+        orders: o,
+        points: p
+      });
+    }
+    catch (error) {
+      throw new Error(error);
+    }
+  }
+  async getOrders(){
+    try{
+      // const user_orders = await TrackWorker.getUserOrders(global.IdLogged); 
+      const user_orders = await TrackWorker.getUserOrders(userid); //id estatico en lo que se termina lo de hacer una orden
+      this.setState({
+        orders_qty: user_orders.length
+      })
+      const order_cards = []
+      let order_points = 0
+      const products  = []
+      let orders_displayed = 0 //cantidad de ordenes para hacer display (max 3)
+      if(user_orders.length > 3){
+        orders_displayed = 3
+      }
+      else{
+        orders_displayed = user_orders.length
+      }
+      for(let i = 0; i < orders_displayed; i++) { // solo se presentan las últimas 3 órdenes
+        const p = await (TrackWorker.getProductById(user_orders[i].descripcion[1]['productid']))
+        const order = {
+          codigo: user_orders[i].id,
+          image: p.image, //jalar una imagen random para mientras
+          nombre: "Orden No. " + user_orders[i].id,
+          fecha: user_orders[i].fechaentrega.split("T")[0],
+          total: user_orders[i].total,
+          puntos: order_points,
+          productos: products
+        }
+        order_cards.push(order)
+      }
+      return order_cards
+    } catch(error) {
+      throw new Error(error);
+    }
+
   }
 
   logout = () => {
@@ -30,73 +102,73 @@ export default class Profile extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props;
-    // const nombre = JSON.stringify(navigation.getParam('name'))//this.props.navigation.navigate
-    // const email = JSON.stringify(navigation.getParam('email'))
-    //const correo = this.props.navigation.getParam('correo', '');
-    return (
-      <Block flex style={styles.profile}>
-        <Block flex>
-          <ImageBackground
-            source={{uri: global.imageLogged}}
-            style={styles.profileContainer}
-            imageStyle={styles.profileImage}>
-            <Block flex style={styles.profileDetails}>
-              <Block style={styles.profileTexts}>
-    <Text color="white" size={28} style={{ paddingBottom: 8}}>{global.nameLogged} </Text>
-                <Block row space="between">
-                  <Block row>
-                    <Text color="white" size={16} muted style={styles.seller} onPress={() => this.logout()}>Cerrar Sesión</Text>
-                    
-                  </Block>
-                  <Block>
-                    <Text color={theme.COLORS.MUTED} size={16}>
-                      <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-                      {` `} Guatemala, GT
-                      </Text>
+    const { navigation } = this.props
+    const { orders, points, orders_qty } = this.state
+    if(orders === null){
+      return(
+        <Spinner
+          visible={!this.state.canInteract}
+          textContent={'Cargando...'}
+          textStyle={styles.spinnerTextStyle}
+        />
+      )
+    }
+    else{
+      return (
+        <Block flex style={styles.profile}>
+          <Block flex>
+            <ImageBackground
+              source={{uri: global.imageLogged}}
+              style={styles.profileContainer}
+              imageStyle={styles.profileImage}>
+              <Block flex style={styles.profileDetails}>
+                <Block style={styles.profileTexts}>
+                  <Text color="white" size={28} style={{ paddingBottom: 8}}>{global.nameLogged} </Text>
+                  <Block row space="between">
+                    <Block row>
+                      <Text color="white" size={16} muted style={styles.seller} onPress={() => this.logout()}>Cerrar Sesión</Text>
+                    </Block>
+                    <Block>
+                      <Text color={theme.COLORS.MUTED} size={16}>
+                        <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
+                        {` `} Guatemala, GT
+                        </Text>
+                    </Block>
                   </Block>
                 </Block>
+                <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']} style={styles.gradient} />
               </Block>
-              <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']} style={styles.gradient} />
-            </Block>
-          </ImageBackground>
+            </ImageBackground>
+          </Block>
+          <Block flex style={styles.options}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Block row space="evenly" style={{ padding: theme.SIZES.BASE, }}>
+                <Block middle>
+                  <Text bold size={12} style={{marginBottom: 8, fontFamily:"Avenir"}}>{orders_qty}</Text>
+                  <Text muted style={{fontFamily:"Avenir"}} size={12}>Órdenes</Text>
+                </Block>
+                <Block middle>
+                  <Text bold size={12} style={{marginBottom: 8, fontFamily:"Avenir"}}>{points}</Text>
+                  <Text muted style={{fontFamily:"Avenir"}} size={12}>Puntos</Text>
+                </Block>
+              </Block>
+              <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
+                <Text size={16} style={{fontFamily:"Avenir"}}>Órdenes recientes</Text>
+                <Text size={12} style={{fontFamily:"Avenir"}} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
+              </Block>
+              <Block style={{ paddingBottom: -HeaderHeight}}>
+                { orders.length === 0 ? 
+                        <Text> No se han registrado órdenes </Text> :
+                      orders.map((order) => (
+                        <ProfileOrder key={order.codigo} order={order} horizontal />
+                      ))}
+              </Block>
+            </ScrollView>
+          </Block>
         </Block>
-        <Block flex style={styles.options}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Block row space="evenly" style={{ padding: theme.SIZES.BASE, }}>
-              <Block middle>
-                <Text bold size={12} style={{marginBottom: 8, fontFamily:"Avenir"}}>36</Text>
-                <Text muted style={{fontFamily:"Avenir"}} size={12}>Órdenes</Text>
-              </Block>
-              <Block middle>
-                <Text bold size={12} style={{marginBottom: 8, fontFamily:"Avenir"}}>5</Text>
-                <Text muted style={{fontFamily:"Avenir"}} size={12}>Puntos</Text>
-              </Block>
-            </Block>
-            <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-              <Text size={16} style={{fontFamily:"Avenir"}}>Órdenes recientes</Text>
-              <Text size={12} style={{fontFamily:"Avenir"}} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
-            </Block>
-            <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-              <Product key={1} product={products[0]} horizontal />
-              <Product key={2} product={products[1]} horizontal />
-              <Product key={3} product={products[2]} horizontal />
-              <Product key={4} product={products[3]} horizontal />
-              {/*<Block row space="between" style={{ flexWrap: 'wrap' }} >
-                {Images.Viewed.map((img, imgIndex) => (
-                  <Image
-                    source={{ uri: img }}
-                    key={`viewed-${img}`}  
-                    resizeMode="cover"
-                    style={styles.thumb}
-                  />
-                ))}
-                </Block>*/}
-            </Block>
-          </ScrollView>
-        </Block>
-      </Block>
-    );
+      );
+    }
+    
   }
 }
 
@@ -162,5 +234,44 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: '30%',
     position: 'absolute',
+  },
+
+  product: {
+    backgroundColor: theme.COLORS.WHITE,
+    marginVertical: theme.SIZES.BASE,
+    borderWidth: 0,
+    minHeight: 90,
+    maxHeight: 110,
+  },
+  productTitle: {
+    flex: 1,
+    flexWrap: 'wrap',
+    paddingBottom: 6,
+  },
+  productDescription: {
+    padding: theme.SIZES.BASE / 2,
+  },
+  imageContainer: {
+    elevation: 1,
+  },
+  image: {
+    borderRadius: 5,
+    marginHorizontal: theme.SIZES.BASE / 2,
+    margin: 4,
+  },
+  horizontalImage: {
+    height: 90,
+    width: 'auto',
+  },
+  fullImage: {
+    height: 215,
+    width: width - theme.SIZES.BASE * 3,
+  },
+  shadow: {
+    shadowColor: theme.COLORS.BLACK,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 0.1,
+    elevation: 2,
   },
 });

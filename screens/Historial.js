@@ -57,11 +57,10 @@ class Historial extends React.Component {
         let order_points = 0
         const products  = []
         for(let i = 0; i < user_orders.length; i++) {
-          const p_id = Math.floor(Math.random() * Object.keys(user_orders[i].descripcion).length) + 1
           let image = ''
           for (let p = 1; p < Object.keys(user_orders[i].descripcion).length+1; p ++){
             const product_info = await (TrackWorker.getProductById(user_orders[i].descripcion[p]['productid']))
-            if(p === parseInt(p_id))
+            if(p === 1)
               image = product_info.image
             order_points += parseInt(product_info.puntos)
             const prod = {
