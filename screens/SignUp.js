@@ -50,21 +50,6 @@ export default class SignUp extends React.Component {
     return user;
   }
 
-  getFBPic = (temp_url) => {
-    return new Promise(async (resolve, reject) => {
-      await axios.get( temp_url , {withCredentials: true})
-          .then(({status, data}) => {
-              if(status === 200){
-                  resolve(data);
-              } else {
-                  console.log("No se pudo obtener la profile picture.")
-              }
-              
-          })
-          .catch(reject)            
-    })  
-  }
-
   onFBLogin = async () => {
     const {navigation} = this.props;
     try {
@@ -76,19 +61,21 @@ export default class SignUp extends React.Component {
         permissions: ['public_profile', 'email'],
       });
       if (type === 'success') {
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture.type(normal).redirect(false)`);
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture.type(normal)`);
         const userInfo = await response.json()
         const email = userInfo.email;
         const name = userInfo.name;
         const password = " ";
         const image = encodeURIComponent(userInfo.picture.data.url);
         const user = await this.checkUser(email, password, image, name);
+        // const id = user.id
         if(user){
           global.isLogged = true;
           global.nameLogged = name;
           global.emailLogged = email;
           global.imageLogged =  userInfo.picture.data.url;
           global.password = password;
+          global.IdLogged = user.id;
           navigation.navigate(
             'App',
             { name, email },

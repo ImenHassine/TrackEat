@@ -17,6 +17,20 @@ const { width, height } = Dimensions.get('screen');
 import { materialTheme, historialP, Images, products } from '../constants/';
 const thumbMeasure = (width - 48 - 32) / 3;
 import * as TrackWorker from '../TrackWorker';
+class Warning extends React.Component {
+  render() {
+    // const { navigation, product, horizontal, full, style, priceColor, imageStyle } = this.props;
+    const { horizontal, style, imageStyle } = this.props
+    return (
+      <Block row={horizontal} card flex style={[styles.shadow, styles.warningNotice]}>
+        {/* <Text size={18} style={{fontFamily:"Avenir"}}>No se han registado productos</Text> */}
+          <Block flex space="between" style={styles.warningNotice}>
+            <Text size={18} style={{fontFamily:"Avenir", color:"white"}}>No se han registrado pedidos</Text>
+          </Block>
+      </Block>
+    );
+  }
+}
 
 class Historial extends React.Component {
     constructor() {
@@ -34,18 +48,37 @@ class Historial extends React.Component {
     }
     async getOrders(){
       try{
-        const userinfo = await TrackWorker.getUserInfo(global.email, global.passwordLogged)
-        const userid = userinfo.id
-        const user_orders = await TrackWorker.getUserOrders(userid); //id usuario estatico para mientras
+        // const user_orders = await TrackWorker.getUserOrders(global.IdLogged); 
+        const user_orders = await TrackWorker.getUserOrders(97); //id estatico en lo que se termina lo de hacer una orden
         const order_cards = []
+        let order_points = 0
+        const products  = []
         for(let i = 0; i < user_orders.length; i++) {
-          const product = {
-            codigo: user_orders[i].id,
-            image: historialP[Math.floor(Math.random() * 5)].image, //jalar una imagen random para mientras
-            nombre: "Orden No. " + user_orders[i].id,
-            fecha: user_orders[i].fechaentrega.split("T")[0]
+          const p_id = Math.floor(Math.random() * Object.keys(user_orders[i].descripcion).length) + 1
+          let image = ''
+          for (let p = 1; p < Object.keys(user_orders[i].descripcion).length+1; p ++){
+            const product_info = await (TrackWorker.getProductById(user_orders[i].descripcion[p]['productid']))
+            if(p === parseInt(p_id))
+              image = product_info.image
+            order_points += parseInt(product_info.puntos)
+            const prod = {
+              producto: product_info.nombre,
+              precio: product_info.precio,
+              cantidad: user_orders[i].descripcion[p]['qty'],
+              tiempo: product_info.tiempo_coccion,
+            }
+            products.push(prod)
           }
-          order_cards.push(product)
+          const order = {
+            codigo: user_orders[i].id,
+            image: image, //jalar una imagen random para mientras
+            nombre: "Orden No. " + user_orders[i].id,
+            fecha: user_orders[i].fechaentrega.split("T")[0],
+            total: user_orders[i].total,
+            puntos: order_points,
+            productos: products
+          }
+          order_cards.push(order)
         }
         return order_cards
       } catch(error) {
@@ -57,12 +90,12 @@ class Historial extends React.Component {
         const { orders } = this.state;
         return (
           <Block flex style={styles.group}>
-            <Text h4 style={{fontFamily:"Avenir", textAlign: "center"}} >Historial de ordenes</Text>
+            <Text h4 style={{fontFamily:"Avenir", textAlign: "center"}} >Historial de órdenes</Text>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE, width: width - (theme.SIZES.BASE * 2) }}>
               { orders.length === 0 ? 
-                  <Text>Loading</Text> :
-                orders.map((product) => (
-                  <HistorialC key={product.codigo} product={product} horizontal />
+                  <Warning /> :
+                orders.map((order) => (
+                  <HistorialC key={order.codigo} order={order} horizontal />
                 ))}
             </Block>
           </Block>
@@ -194,6 +227,15 @@ const styles = StyleSheet.create({
       width: thumbMeasure,
       height: thumbMeasure
     },
+    warningNotice: {
+      borderRadius: 4,
+      marginVertical: 4,
+      marginHorizontal: 10,
+      alignSelf: 'center',
+      backgroundColor: 'red',
+      color: 'white',
+      fontFamily:"Avenir"
+    }
 })
 
 export default Historial;

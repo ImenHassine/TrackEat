@@ -8,22 +8,23 @@ const { width } = Dimensions.get('screen');
 
 class HistorialC extends React.Component {
   render() {
-    const { navigation, product, horizontal, full, style, priceColor, imageStyle } = this.props;
+    const { navigation, order, horizontal, full, style, priceColor, imageStyle } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-    //console.log(product)
+    //console.log(order)
     //console.log("hola")
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-            <Image source={{ uri: product.image }} style={imageStyles} />
+            <Image source={{ uri: order.image }} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos })}>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={18} style={styles.productTitle, {fontFamily:"Avenir"}}>{product.nombre}</Text>
-            <Text size={18} style={{fontFamily:"Avenir"}} color={priceColor}>{product.total} </Text>
-            <Text size={18} style={{fontFamily:"Avenir"}} color={priceColor}>{product.fecha} </Text>
+            <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
+            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>Total: {order.total} </Text>
+            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>{order.fecha} </Text>
+            <Text size={16} style={{fontFamily:"Avenir"}} muted color={priceColor}>{order.puntos} TrackPuntos</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
