@@ -243,14 +243,13 @@ export default class SignIn extends React.Component {
 
     return (
       <Block flex style={styles.components}>
-        <Block flex style={styles.signin}>
+        <Block flex >
           {this.renderText()}
 
           <Block flex style={styles.inputs}>
             {this.renderInputs()}
 
-            <Block style={{marginTop: "10%"}}>
-              <Block style={{marginVertical: 10, display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
+              <Block style={{marginVertical: 30, display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
                 {this.renderCrearBtn()}
                 <Text h5>o</Text>
                 {this.renderFbBtn()}
@@ -260,7 +259,6 @@ export default class SignIn extends React.Component {
                 <Text  style={styles.link} onPress={() => navigation.navigate('Sign Up')}>¿Olvidaste tu contraseña?</Text>
                 <Text  style={[styles.link, {marginTop: 20}]} onPress={() => navigation.navigate('Sign Up')}>Crear una cuenta nueva</Text>
               </Block>
-            </Block>
           </Block>
         </Block>
       </Block>
@@ -270,18 +268,12 @@ export default class SignIn extends React.Component {
 
 const styles = StyleSheet.create({
   components: {
-    backgroundColor: "#46494C",
-    paddingHorizontal: theme.SIZES.BASE * 2,
+    paddingHorizontal: theme.SIZES.BASE * 1.2,
+    paddingVertical: theme.SIZES.BASE * 6,
+    backgroundColor: "white",
     display: "flex",
     flexDirection: "row",
     alignItems: 'center',
-  },
-  signin: {
-    backgroundColor: "white",
-    marginVertical: "15%",
-    marginHorizontal: "2.5%",
-    borderRadius: 20,
-    paddingHorizontal: "5%",
   },
   inputs: {
     display: "flex",
