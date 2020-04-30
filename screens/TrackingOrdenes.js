@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Image,
   View,
   Dimensions,
-  Animated 
 } from 'react-native';
-import { Block, Text, theme} from 'galio-framework';
+import { Block, Text, theme, Toast, Button} from 'galio-framework';
 import {Card} from 'react-native-elements';
 const { width } = Dimensions.get('screen');
-import { materialTheme, track } from '../constants/';
+import { materialTheme, track, products } from '../constants/';
 import Constants from 'expo-constants';
 import StepIndicator from 'react-native-step-indicator';
 import * as TrackWorker from '../TrackWorker';
 
+import Spinner from 'react-native-loading-spinner-overlay';
+import { Product } from '../components';
+
 const thumbMeasure = (width - 48 - 32) / 3;
+const userId = 171;
 
 const labels = ["Orden Puesta", "En preparación", "En cocción", "Lista para recoger"];
 const customStyles = {
@@ -48,30 +50,102 @@ let timeOut;
 
 export default class TrackingOrdenes extends React.Component {
 
+  static defaultProps = {
+    idOrden: -1
+  }
+
   constructor(props) {
     super(props)
     this.state = {
-      currentPosition: 0
+      currentPosition: -1,
+      total: 0,
+      currentOrden: [],
+      canInteract: false,
+      coccion: 0
     }
+  }
 
-    this.getOrders()
-}
-  getOrders = async () => {
-    const result = await TrackWorker.getUserOrders(1);
-    console.log(result);
+  async componentDidMount () {
+    try {
+      let currentOrden = []
+
+      currentOrden = await this.getLastOrder();
+      this.setState({
+        currentOrden: currentOrden,
+        canInteract: true
+      });
+
+      this.setState({
+        coccion: this.getTotalTime()
+      })
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async getLastOrder () {
+    try {
+      const lastOrder = await TrackWorker.getLastOrder(userId);
+      const something = Object.keys(lastOrder.descripcion)
+
+      const promises = something.map(async key => {
+        const idP = lastOrder.descripcion[key].productid;
+
+        const p = await TrackWorker.getProductById(idP)
+
+        const prod = {
+          producto: p.nombre,
+          precio: p.precio,
+          cantidad: lastOrder.descripcion[key].qty,
+          tiempo: p.tiempo_coccion
+        }
+        return prod;
+      })
+
+      const algo = await Promise.all(promises);
+      return algo;
+    } catch(error) {
+      throw new Error(error);
+    }
+    
+  }
+
+  // async getOrderById () {
+  //   console.log("Hey: order by id")
+  // }
+
+  getTotalTime = () => {
+    return this.state.currentOrden.reduce((total, prod) => total + prod.tiempo, 0);
   }
 
   getTotal = () => {
-    return track.map(t => t.precio).reduce((a, b) => a + b, 0);
+    return this.state.currentOrden.reduce((total, prod) => total + prod.cantidad * prod.precio, 0);
   }
   
   increment = () => {
-    if ( this.state.currentPosition < steps ) this.setState({ currentPosition: this.state.currentPosition += 1 });
-    else clearTimeout(timeOut);
+    if ( this.state.currentPosition <= steps ) this.setState({ currentPosition: this.state.currentPosition += 1 });
+    clearTimeout(timeOut);
+
+    if (this.state.currentPosition == 1) {
+      console.log("Orden puesta")
+      timeOut = setTimeout(() => this.increment(), 10000);
+    } else if (this.state.currentPosition == 2) {
+      console.log("En preparacion")
+      timeOut = setTimeout(() => this.increment(), this.state.currentOrden.length * 7500);
+    } else if (this.state.currentPosition == 3) {
+      console.log("En coccion")
+      timeOut = setTimeout(() => this.increment(), this.state.coccion * 1000);
+    } else if (this.state.currentPosition == 4) {
+      console.log("Lista")
+      timeOut = setTimeout(() => this.increment(), 1000);
+    } else {
+      console.log("Fin")
+    } 
   }
       
   renderText = () => {
-    timeOut = setTimeout(() => this.increment(), 5000);
+    if (this.state.canInteract) timeOut = setTimeout(() => this.increment(), 7500);
+
     return (
       <Card
         title="panitos' tracker"
@@ -93,7 +167,9 @@ export default class TrackingOrdenes extends React.Component {
     return (
       <Block>
         <Text>{"\n"}</Text>
+
         <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
+        
         <View
           style={{
             flexDirection: 'row',
@@ -101,30 +177,41 @@ export default class TrackingOrdenes extends React.Component {
             marginVertical: 20
           }}
         >
-          <Block style={{ boxSizing: 'border-box', width: '100%', backgroundColor: '#FFCC00', borderRadius: 50, borderWidth: 0, paddingTop: 30, paddingBottom: 30, paddingHorizontal: 40, }}>
-            {
-              track.map((product, index) => {
-                return (
-                  <Block style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text size={19} style={{ fontFamily:"Avenir" }}>{index + 1}. {product.producto}</Text>
-                    <Text size={19} style={{ fontFamily:"Avenir" }}>Q {product.precio}.00</Text>
-                  </Block>
-                )
-              })
+          <Block>
+              <Block style={{ boxSizing: 'border-box', width: '100%', backgroundColor: '#FFCC00', borderRadius: 50, borderWidth: 0, paddingTop: 30, paddingBottom: 30, paddingHorizontal: 40, }}>
+              { this.state.currentOrden.length > 0 ? <Block>
+                {
+                  this.state.currentOrden.map((product, index) => {
+                    return (
+                      <Block key={product + "_" + index} style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Block style={{width: '70%', wordBreak: 'break-all'}}>
+                          <Text size={19} style={{ fontFamily:"Avenir" }}>{product.cantidad} x {product.producto}</Text>
+                        </Block>
+                        <Block style={{width: '30%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                          <Text size={19} style={{ fontFamily:"Avenir" }}>Q.</Text>
+                          <Text size={19} style={{ fontFamily:"Avenir" }}>{Math.floor(product.precio * product.cantidad)}.00</Text>
+                        </Block>
+                      </Block>
+                    )
+                  })
+                }
+              </Block> : null 
             }
-            <View style={{paddingHorizontal:0}}>
-              <View style={{borderBottomColor: 'black', borderBottomWidth: 6, paddingTop:15 }}/>
-            </View>
-            <View style={{paddingRight: 40, paddingTop:20}}>
-              <Block style={{display: 'flex', flexDirection: 'row', paddingLeft: 50, justifyContent: 'space-around' }}>
-                <Block style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                  <Text size={19} style={{ fontFamily:"Avenir" }}>Total</Text>
+            
+              <View style={{paddingHorizontal:0}}>
+                <View style={{borderBottomColor: 'black', borderBottomWidth: 6, paddingTop:15 }}/>
+              </View>
+              <View style={{paddingRight: 40, paddingTop:20}}>
+                <Block style={{display: 'flex', flexDirection: 'row', paddingLeft: 50, justifyContent: 'space-around' }}>
+                  <Block style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                    <Text size={19} style={{ fontFamily:"Avenir" }}>Total</Text>
+                  </Block>
+                  <Block style={{ textAlign: 'right'}}>
+                    {this.state.canInteract ? <Text size={19} style={{ fontFamily:"Avenir" }}>Q. {Math.floor(this.getTotal())}.00</Text> : null}
+                  </Block>
                 </Block>
-                <Block style={{ textAlign: 'right'}}>
-                  <Text size={19} style={{ fontFamily:"Avenir" }}>Q {this.getTotal()}.00</Text>
-                </Block>
-              </Block>
-            </View>
+              </View>
+            </Block>
           </Block>
         </View>
       </Block>
@@ -135,6 +222,11 @@ export default class TrackingOrdenes extends React.Component {
     return (
       <Block  style={{backgroundColor:"white"}} >
         <ScrollView>
+          <Spinner
+            visible={!this.state.canInteract}
+            textContent={'Cargando...'}
+            textStyle={styles.spinnerTextStyle}
+          />
           {this.renderText()}
           {this.renderOrden()}
         </ScrollView>
@@ -151,6 +243,10 @@ const styles = StyleSheet.create({
       paddingTop: Constants.statusBarHeight,
       backgroundColor: 'white',
       padding: 8,
+    },
+    spinnerTextStyle: {
+      color: '#FFF',
+      fontFamily: 'Avenir'
     },
     car: {
       elevation: 0,
