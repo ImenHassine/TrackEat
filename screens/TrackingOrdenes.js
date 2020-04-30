@@ -51,7 +51,8 @@ let timeOut;
 export default class TrackingOrdenes extends React.Component {
 
   static defaultProps = {
-    idOrden: -1
+    idOrden: -1,
+    incomingOrder: []
   }
 
   constructor(props) {
@@ -67,17 +68,24 @@ export default class TrackingOrdenes extends React.Component {
 
   async componentDidMount () {
     try {
-      let currentOrden = []
 
-      currentOrden = await this.getLastOrder();
-      this.setState({
-        currentOrden: currentOrden,
-        canInteract: true
-      });
+      if (this.props.idOrden == -1) {
+        let currentOrden = []
 
-      this.setState({
-        coccion: this.getTotalTime()
-      })
+        currentOrden = await this.getLastOrder();
+        this.setState({
+          currentOrden: currentOrden,
+          canInteract: true
+        });
+
+        this.setState({
+          coccion: this.getTotalTime()
+        })
+      } else if (this.props.incomingOrder.length > 0) {
+        this.setState({
+          currentOrden: this.props.incomingOrder
+        })
+      }
     } catch (error) {
       throw new Error(error);
     }
