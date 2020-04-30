@@ -1,8 +1,9 @@
 import React from 'react';
 import {
   StyleSheet,
-  Dimensions,
+  View
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Block, Text, theme, Button} from 'galio-framework';
 import * as Facebook from 'expo-facebook';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -11,7 +12,6 @@ import * as TrackWorker from '../TrackWorker';
 import { showMessage } from "react-native-flash-message";
 
 
-const { width } = Dimensions.get('screen');
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -101,8 +101,8 @@ export default class SignUp extends React.Component {
 
     if(isEmailValid && isPasswordValid && isConfirmationPasswordValid) {
       const user = await TrackWorker.createAccount(email, password, image, name);
-      const email = user.email;
-      const name = user.name;
+      const userEmail = user.email;
+      const userName = user.name;
       if(user){
         this.setState({
           email: "",
@@ -114,8 +114,8 @@ export default class SignUp extends React.Component {
           isConfirmationPasswordValid: true
         });
         navigation.navigate(
-          'Profile',
-          { name, email },
+          'App',
+          { userName, userEmail },
         );
       } else {
         console.log("segui mañana")
@@ -281,8 +281,8 @@ export default class SignUp extends React.Component {
     const { navigation } = this.props;
 
     return (
-      <Block flex style={styles.components}>
-        <Block flex style={styles.signup}>
+      <KeyboardAwareScrollView enableOnAndroid extraHeight = {50} style={styles.components}>
+        <View>
           {this.renderText()}
 
           <Block flex style={styles.inputs}>
@@ -300,26 +300,18 @@ export default class SignUp extends React.Component {
               </Block>
             </Block>              
           </Block>
-        </Block>
-      </Block>
+        </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   components: {
-    backgroundColor: "#46494C",
-    paddingHorizontal: theme.SIZES.BASE * 1.2,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: 'center',
-  },
-  signup: {
     backgroundColor: "white",
-    marginHorizontal: "2.5%",
-    marginVertical: 85,
-    borderRadius: 20,
-    paddingHorizontal: "5%",
+    paddingHorizontal: theme.SIZES.BASE * 1.2,
+    paddingVertical: theme.SIZES.BASE * 5,
+  
   },
   inputs: {
     display: "flex",
