@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {  Input } from 'react-native-elements';
 import * as TrackWorker from '../TrackWorker';
 import { showMessage } from "react-native-flash-message";
+import axios from 'axios';
 
 
 
@@ -45,7 +46,7 @@ export default class SignUp extends React.Component {
 
 
   checkUser = async (email, password, image, name) => {
-    const user = TrackWorker.createAccount(email, password, image, name);
+    const user = await TrackWorker.createAccount(email, password, image, name);
     return user;
   }
 
@@ -65,15 +66,16 @@ export default class SignUp extends React.Component {
         const email = userInfo.email;
         const name = userInfo.name;
         const password = " ";
-        const image = userInfo.picture.data.url;
-        const user = this.checkUser(email, password, image, name);
-        console.log(user)
+        const image = encodeURIComponent(userInfo.picture.data.url);
+        const user = await this.checkUser(email, password, image, name);
+        // const id = user.id
         if(user){
           global.isLogged = true;
           global.nameLogged = name;
           global.emailLogged = email;
-          global.imageLogged =  image;
+          global.imageLogged =  userInfo.picture.data.url;
           global.password = password;
+          global.IdLogged = user.id;
           navigation.navigate(
             'App',
             { name, email },

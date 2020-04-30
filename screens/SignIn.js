@@ -45,15 +45,14 @@ export default class SignIn extends React.Component {
         const name = userInfo.name;
         const image = userInfo.picture.data.url;
         const password = " ";
-        const id = userInfo.id;
-        const user = this.checkUser(email,password)
+        const user = await this.checkUser(email,password)
         if (user) {
           global.isLogged = true;
           global.nameLogged = name;
           global.emailLogged = email;
           global.imageLogged =  image;
           global.password = password;
-          global.IdLogged = id;
+          global.IdLogged = user.id;
           navigation.navigate(
             'App',
             { name, email },
