@@ -15,7 +15,7 @@ import * as TrackWorker from '../TrackWorker';
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 // const userid = 97
-const userid = global.IdLogged
+// const userid = global.IdLogged
 class ProfileOrder extends React.Component {
   
   render() {
@@ -61,8 +61,8 @@ export default class Profile extends React.Component {
   }
   async getOrders(){
     try{
-      // const user_orders = await TrackWorker.getUserOrders(global.IdLogged); 
-      const user_orders = await TrackWorker.getUserOrders(userid); //id estatico en lo que se termina lo de hacer una orden
+      const user_orders = await TrackWorker.getUserOrders(global.IdLogged); 
+      // const user_orders = await TrackWorker.getUserOrders(97); //id estatico en lo que se termina lo de hacer una orden
       this.setState({
         orders_qty: user_orders.length
       })
