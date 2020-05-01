@@ -15,6 +15,7 @@ import * as TrackWorker from '../TrackWorker';
 
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Product } from '../components';
+import { DataNavigation } from 'react-data-navigation';
 
 const thumbMeasure = (width - 48 - 32) / 3;
 const userId = 171;
@@ -50,10 +51,6 @@ let timeOut;
 
 export default class TrackingOrdenes extends React.Component {
 
-  static defaultProps = {
-    incomingOrder: []
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -66,11 +63,19 @@ export default class TrackingOrdenes extends React.Component {
   }
 
   async componentDidMount () {
+    let incoming = []
+    try { 
+      incoming = DataNavigation.getData('incomingOrder')
+    } catch(error) {
+      incoming = []
+    }
+
     try {
-      if (this.props.incomingOrder.length > 0) {
+      if (incoming.length > 0) {
         this.setState({
-          currentOrden: this.props.incomingOrder
-        })
+          currentOrden: incoming,
+          canInteract: true
+        });
       } else {
         let currentOrden = []
 
