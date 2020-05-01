@@ -25,10 +25,11 @@ export default class Confirm extends React.Component {
       codigo: ""
     }
   }
-  _handlePress() {
+  _handlePress = async () => {
+    const {navigation} = this.props 
     console.log(this.state.codigo);
-    TrackWorker.joinUserOrder(parseInt(this.state.codigo),global.IdLogged);
-    //AQUI MANDAR EK CODIGO A LA BD
+    await TrackWorker.joinUserOrder(parseInt(this.state.codigo),global.IdLogged);
+    navigation.navigate('Tracking de Órdenes');
     
  }
 
