@@ -15,6 +15,7 @@ import * as TrackWorker from '../TrackWorker';
 
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Product } from '../components';
+// import { withNavigation } from "react-navigation";
 import { DataNavigation } from 'react-data-navigation';
 
 const thumbMeasure = (width - 48 - 32) / 3;
@@ -63,19 +64,28 @@ export default class TrackingOrdenes extends React.Component {
   }
 
   async componentDidMount () {
+
+    // const { navigation } = this.props;
+    // this.focusListener = navigation.addListener("didFocus", () => {
+    //   console.log("FOCUSSS")
+    // });
+
     let incoming = []
     try { 
       incoming = DataNavigation.getData('incomingOrder')
     } catch(error) {
+      console.log("error")
       incoming = []
     }
 
     try {
-      if (incoming.length > 0) {
-        this.setState({
-          currentOrden: incoming,
-          canInteract: true
-        });
+      if (incoming != undefined) {
+        if (incoming.length > 0){
+          this.setState({
+            currentOrden: incoming,
+            canInteract: true
+          });
+        }
       } else {
         let currentOrden = []
 
@@ -93,6 +103,10 @@ export default class TrackingOrdenes extends React.Component {
       throw new Error(error);
     }
   }
+
+  // componentWillUnmount() {
+  //   this.focusListener.remove()
+  // }
 
   async getLastOrder () {
     try {
