@@ -14,8 +14,8 @@ import * as TrackWorker from '../TrackWorker';
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
-const userid = 97
-// const userid = global.IdLogged
+// const userid = 97
+const userid = global.IdLogged
 class ProfileOrder extends React.Component {
   
   render() {
