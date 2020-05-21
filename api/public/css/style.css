@@ -293,7 +293,6 @@ a:focus, .button:focus, button:focus, .btn:focus {
 /* line 161, ../../01 cl html template/03_jun 2019/184_SAAS_template/sass/_common.scss */
 .section_tittle p {
   color: #556172;
-  text-transform: capitalize;
   line-height: 30px;
   font-family: "Poppins", sans-serif;
 }
@@ -462,7 +461,6 @@ ul {
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;
-  text-transform: capitalize;
   background-size: 200% auto;
   border: 1px solid transparent;
 }
@@ -510,7 +508,6 @@ ul {
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;
-  text-transform: capitalize;
   border: 1px solid #8f9091;
   background-size: 200% auto;
 }
@@ -2446,7 +2443,6 @@ ul {
 /* line 30, ../../01 cl html template/03_jun 2019/184_SAAS_template/sass/_banner.scss */
 .banner_part .banner_text h1 {
   font-size: 55px;
-  text-transform: capitalize;
   font-weight: 700;
   margin-bottom: 55px;
   line-height: 1.18;
