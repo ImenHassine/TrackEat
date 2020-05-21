@@ -3,7 +3,6 @@ import { withNavigation } from '@react-navigation/compat';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 
-import materialTheme from '../constants/Theme';
 
 const { width } = Dimensions.get('screen');
 
@@ -21,8 +20,8 @@ class Product extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={14} style={styles.productTitle, {fontFamily:"Avenir"}}>{product.nombre}</Text>
-            <Text size={14} style={{fontFamily:"Avenir"}} muted color={priceColor}>{Math.floor(product.precio)} TrackPuntos</Text>
+            <Text size={16} style={styles.productTitle}>{product.nombre}</Text>
+            <Text size={14} muted color={priceColor}>{Math.floor(product.precio)} TrackPuntos</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
-    minHeight: 114,
   },
   productTitle: {
     flex: 1,
@@ -51,15 +49,17 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   image: {
+    resizeMode: 'stretch',
     borderRadius: 3,
     marginHorizontal: theme.SIZES.BASE / 2,
-    marginTop: -16,
   },
   horizontalImage: {
+    resizeMode: 'contain',
     height: 122,
     width: 'auto',
   },
   fullImage: {
+    resizeMode: 'contain',
     height: 215,
     width: width - theme.SIZES.BASE * 3,
   },

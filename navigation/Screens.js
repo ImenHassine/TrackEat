@@ -52,7 +52,30 @@ function ProfileStack(props) {
               navigation={navigation}
             />
           ),
-          headerTransparent: true
+          headerTransparent: false
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function TrackingOrdenesStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="TrackingOrdenes" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="TrackingOrdenes"
+        component={TrackingOrdenesScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              white
+              transparent
+              title="Tracking de Órdenes"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: false
         }}
       />
     </Stack.Navigator>
@@ -80,26 +103,7 @@ function PruebaStack(props) {
     </Stack.Navigator>
   );
 }
-function TrackingOrdenesStack(props) {
-  return (
-    <Stack.Navigator initialRouteName="TrackingOrdenes" mode="card" headerMode="screen">
-      <Stack.Screen
-        name="TrackingOrdenes"
-        component={TrackingOrdenesScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title="Tracking de Órdenes"
-              scene={scene}
-              navigation={navigation}
-            />
-          ),
-          headerTransparent: false
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
+
 function ConfirmStack(props) {
   return (
     <Stack.Navigator initialRouteName="Confirm" mode="card" headerMode="screen">

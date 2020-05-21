@@ -20,11 +20,10 @@ class ProfileOrder extends React.Component {
   
   render() {
     const { navigation, order, horizontal, full, style, priceColor, imageStyle } = this.props;
-    const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
     return(
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-            <Image source={{ uri: order.image }} style={imageStyles} />
+            <Image source={{ uri: order.image }} style={styles.imageStyle} />
           </Block>
           <Block flex space="between" style={styles.productDescription}>
             <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
@@ -177,13 +176,8 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
     marginBottom: -HeaderHeight * 2,
   },
-  profileImage: {
-    width: width * 1.1,
-    height: 'auto',
-  },
   profileContainer: {
-    width: width,
-    height: height / 2,
+    height: height/2 ,
   },
   profileDetails: {
     paddingTop: theme.SIZES.BASE * 4,

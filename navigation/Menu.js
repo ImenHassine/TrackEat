@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#ff9c6e',
+    backgroundColor: '#CDA162',
   },
   footer: {
     paddingHorizontal: 28,
