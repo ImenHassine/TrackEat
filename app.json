@@ -22,10 +22,29 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/*"
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "com.Negocios.TrackEat",
+      "versionCode": 1
+    },
+    "packagerOpts": { 
+      "sourceExts": [ 
+        "expo.ts", 
+        "expo.tsx", 
+        "expo.js", 
+        "expo.jsx", 
+        "ts", 
+        "tsx", 
+        "js", 
+        "jsx", 
+        "json", 
+        "wasm", 
+        "svg" 
+        ] 
+      }
   }
 }
