@@ -90,7 +90,7 @@ router.get("/lastOrder/:userId",function(req, res, next){
 
   const params = req.params
   const userId = params.userId;
-  const query = { text: 'select total, descripcion, lugar, fechasolicitada, idestado from public.orden where idusr = $1 order by fechasolicitada desc', values: [userId] }
+  const query = { text: 'select id, total, descripcion, lugar, fechasolicitada, idestado from public.orden where idusr = $1 order by fechasolicitada desc', values: [userId] }
   const response = res;
   pool.query(query, (err, res) => {
     if(err) {
