@@ -48,12 +48,13 @@ class Header extends React.Component {
           style={styles.navbar}
           transparent={transparent}
           rightStyle={{ alignItems: 'center' }}
-          leftStyle={{ flex: 0.3, paddingTop: 2  }}
+          leftStyle={{ flex: 0.3, paddingTop: 2 }}
           leftIconName={(back ? 'chevron-left' : 'navicon')}
-          leftIconColor={"#000"}
+          leftIconColor={"#fff"}
+          leftIconSize={theme.SIZES.BASE * 4}
           titleStyle={[
             styles.title,
-            {color: "#000"},
+            {color: "#fff"},
           ]}
           onLeftPress={this.handleLeftPress}
         />
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     paddingBottom: theme.SIZES.BASE * 1.5,
     paddingTop: iPhoneX ? theme.SIZES.BASE * 2 : 0,
     zIndex: 5,
+    backgroundColor: '#4686c8'
   },
   shadow: {
     backgroundColor: theme.COLORS.WHITE,
