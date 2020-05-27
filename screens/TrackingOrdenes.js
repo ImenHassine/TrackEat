@@ -66,6 +66,18 @@ function TrackingOrdenes({ navigation }) {
     []
   )
 
+
+  const sendNotification = (title, body) => {
+    const localNotification = { title: title, body: body };
+    const schedulingOptions = {
+      time: new Date().getTime() + Number(1),
+    };
+    Notifications.scheduleLocalNotificationAsync(
+      localNotification,
+      schedulingOptions,
+    );
+  };
+
   const start = async() => {
 
     let incoming = []
@@ -149,22 +161,11 @@ function TrackingOrdenes({ navigation }) {
     return order.reduce((tot, prod) => tot + prod.tiempo, 0);
   }
 
-  sendNotificacition = (title, body) => {
-    const localNotification = { title: title, body: body };
-    const schedulingOptions = {
-      time: new Date().getTime() + Number(1),
-    };
-    Notifications.scheduleLocalNotificationAsync(
-      localNotification,
-      schedulingOptions,
-    );
-  };
-
-  handleNotification = () => {
+  const handleNotification = () => {
     console.warn('ok! got your notif');
   };
 
-  askNotification = async () => {
+  const askNotification = async () => {
     // permiso para notificaciones en ios
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     if (Constants.isDevice && status === 'granted')
@@ -201,15 +202,15 @@ function TrackingOrdenes({ navigation }) {
     if (deltaTime >= 50000) {
       currentPosition = 0
       setPosition(0)
-      sendNotificacition('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+      sendNotification('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
     } else if (deltaTime >= 35000) {
       currentPosition = 1
       setPosition(1)
-      sendNotificacition('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+      sendNotification('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
     } else if (deltaTime >= 20000) {
       currentPosition = 2
       setPosition(2)
-      sendNotificacition('Lista', 'Tu orden se encuentra lista para ser recogida')
+      sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
     } else {
       currentPosition = 3
       setPosition(3)
@@ -219,13 +220,13 @@ function TrackingOrdenes({ navigation }) {
     // if (this.state.currentPosition == 1) {
     //   console.log("Orden puesta")
     //   console.log("En preparacion")
-    //   sendNotificacition('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+    //   sendNotification('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
     //   timeOut = setTimeout(() => this.increment(), 10000);
     // } else if (this.state.currentPosition == 2) {
-    //   sendNotificacition('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+    //   sendNotification('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
     //   timeOut = setTimeout(() => this.increment(), this.state.currentOrden.length * 7500);
     // } else if (this.state.currentPosition == 3) {
-    //   sendNotificacition('Lista', 'Tu orden se encuentra lista para ser recogida')
+    //   sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
     //   console.log("En coccion")
     //   timeOut = setTimeout(() => this.increment(), this.state.coccion * 1000);
     // } else if (this.state.currentPosition == 4) {
