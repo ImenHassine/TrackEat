@@ -169,10 +169,6 @@ function TrackingOrdenes({ navigation }) {
       console.log('Notification permissions granted.');
   };
 
-  getTotalTime = () => {
-    return this.state.currentOrden.reduce((total, prod) => total + prod.tiempo, 0);
-  }
-
   const getTotal = () => {
     return currentOrden.reduce((tot, prod) => tot + prod.cantidad * prod.precio, 0);
   }
@@ -198,15 +194,15 @@ function TrackingOrdenes({ navigation }) {
     if (deltaTime >= 50000) {
       currentPosition = 0
       setPosition(0)
-      this.sendNotificacition('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+      sendNotificacition('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
     } else if (deltaTime >= 35000) {
       currentPosition = 1
       setPosition(1)
-      this.sendNotificacition('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+      sendNotificacition('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
     } else if (deltaTime >= 20000) {
       currentPosition = 2
       setPosition(2)
-      this.sendNotificacition('Lista', 'Tu orden se encuentra lista para ser recogida')
+      sendNotificacition('Lista', 'Tu orden se encuentra lista para ser recogida')
     } else {
       currentPosition = 3
       setPosition(3)
@@ -216,13 +212,13 @@ function TrackingOrdenes({ navigation }) {
     // if (this.state.currentPosition == 1) {
     //   console.log("Orden puesta")
     //   console.log("En preparacion")
-    //   this.sendNotificacition('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+    //   sendNotificacition('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
     //   timeOut = setTimeout(() => this.increment(), 10000);
     // } else if (this.state.currentPosition == 2) {
-    //   this.sendNotificacition('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+    //   sendNotificacition('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
     //   timeOut = setTimeout(() => this.increment(), this.state.currentOrden.length * 7500);
     // } else if (this.state.currentPosition == 3) {
-    //   this.sendNotificacition('Lista', 'Tu orden se encuentra lista para ser recogida')
+    //   sendNotificacition('Lista', 'Tu orden se encuentra lista para ser recogida')
     //   console.log("En coccion")
     //   timeOut = setTimeout(() => this.increment(), this.state.coccion * 1000);
     // } else if (this.state.currentPosition == 4) {
