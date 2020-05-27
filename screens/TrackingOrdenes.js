@@ -76,6 +76,7 @@ function TrackingOrdenes({ navigation }) {
     }
 
     try {
+      // console.log(incoming)
       if (incoming != undefined) {
         if (incoming.length > 0){
           console.log('HISTORIAL')
@@ -106,8 +107,9 @@ function TrackingOrdenes({ navigation }) {
         // deadline = new Date().getTime() + 60000 + (current.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
         deadline = new Date().getTime() + 60000
 
+        const interval_num = Object.keys(global.user_orders).length
         timeOut = setInterval(() => {
-          increment()
+          increment(interval_num)
         }, 1000)
       }
     } catch (error) {
@@ -180,7 +182,8 @@ function TrackingOrdenes({ navigation }) {
     }
     const today = new Date()
     const deltaTime = deadline - today
-    console.log(global.user_orders[interval_num-1], deltaTime)
+    // console.log(global.user_orders[interval_num], deltaTime)
+    // console.log(global.user_orders, interval_num)
     // if (deltaTime >= ((currentLenght * totalTime * 100 + 120000) + (totalTime * 3000) + 60000)) {
     //   currentPosition = 0
     //   setPosition(0)
@@ -231,8 +234,8 @@ function TrackingOrdenes({ navigation }) {
     // }
 
     if (deltaTime < 0) {
-      console.log('termine', global.user_orders[interval_num-1])
-      clearInterval(global.user_orders[interval_num-1])
+      console.log('termine', global.user_orders[interval_num])
+      clearInterval(global.user_orders[interval_num])
       currentPosition = 4
       setPosition(4)
     }
