@@ -5,21 +5,19 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import { Block, Text, theme, Toast, Button} from 'galio-framework';
+import { Block, Text, theme } from 'galio-framework';
 import {Card} from 'react-native-elements';
 const { width } = Dimensions.get('screen');
-import { materialTheme, track, products } from '../constants/';
+import { materialTheme } from '../constants/';
 import Constants from 'expo-constants';
 import StepIndicator from 'react-native-step-indicator';
 import * as TrackWorker from '../TrackWorker';
 
 import Spinner from 'react-native-loading-spinner-overlay';
-import { Product } from '../components';
-// import { withNavigation } from "react-navigation";
 import { DataNavigation } from 'react-data-navigation';
 
 const thumbMeasure = (width - 48 - 32) / 3;
-const userId = 171;
+const userId = global.IdLogged;
 
 const labels = ["Orden Puesta", "En preparación", "En cocción", "Lista para recoger"];
 const customStyles = {
@@ -47,68 +45,75 @@ const customStyles = {
   labelFontFamily:"Avenir"
 }
 
-const steps = 4;
-let timeOut;
+const steps = 4
+let timeOut
+let deadline
+let currentLenght = 0
+let currentPosition = 0
+let total = 0
+let totalTime = 0
 
-export default class TrackingOrdenes extends React.Component {
+function TrackingOrdenes({ navigation }) {
+  const [currentOrden, setCurrentOrden] = useState([])
+  const [canInteract, setCanInteract] = useState(false)
+  const [coccion, setCoccion] = useState(0)
+  const [position, setPosition] = useState(0)
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      currentPosition: -1,
-      total: 0,
-      currentOrden: [],
-      canInteract: false,
-      coccion: 0
-    }
-  }
+  React.useEffect(
+    () => navigation.addListener('focus', () =>  start()),
+    []
+  )
 
-  async componentDidMount () {
-
-    // const { navigation } = this.props;
-    // this.focusListener = navigation.addListener("didFocus", () => {
-    //   console.log("FOCUSSS")
-    // });
+  const start = async() => {
 
     let incoming = []
-    try { 
+    try {
       incoming = DataNavigation.getData('incomingOrder')
     } catch(error) {
-      console.log("error")
       incoming = []
     }
 
     try {
       if (incoming != undefined) {
         if (incoming.length > 0){
-          this.setState({
-            currentOrden: incoming,
-            canInteract: true
-          });
+          console.log('HISTORIAL')
+          setCurrentOrden(incoming)
+          currentLenght = incoming.length
+          setCanInteract(true)
+
+          totalTime = getTotalTime(incoming)
+
+          // deadline = new Date().getTime() + 60000 + (incoming.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
+          deadline = new Date().getTime() + 60000
+
+          timeOut = setInterval(() => {
+            increment()
+          }, 1000)
         }
       } else {
-        let currentOrden = []
+        let current = []
 
-        currentOrden = await this.getLastOrder();
-        this.setState({
-          currentOrden: currentOrden,
-          canInteract: true
-        });
+        current = await getLastOrder();
 
-        this.setState({
-          coccion: this.getTotalTime()
-        })
+        currentLenght = current.length
+        setCurrentOrden(current)
+        setCanInteract(true)
+
+        totalTime = getTotalTime(current)
+
+        // deadline = new Date().getTime() + 60000 + (current.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
+        deadline = new Date().getTime() + 60000
+
+        timeOut = setInterval(() => {
+          increment()
+        }, 1000)
       }
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  // componentWillUnmount() {
-  //   this.focusListener.remove()
-  // }
-
-  async getLastOrder () {
+  const getLastOrder = async () => {
     try {
       const lastOrder = await TrackWorker.getLastOrder(userId);
       const something = Object.keys(lastOrder.descripcion)
@@ -135,42 +140,55 @@ export default class TrackingOrdenes extends React.Component {
     
   }
 
-  // async getOrderById () {
-  //   console.log("Hey: order by id")
-  // }
-
-  getTotalTime = () => {
-    return this.state.currentOrden.reduce((total, prod) => total + prod.tiempo, 0);
+  const getTotalTime = (order) => {
+    return order.reduce((tot, prod) => tot + prod.tiempo, 0);
   }
 
-  getTotal = () => {
-    return this.state.currentOrden.reduce((total, prod) => total + prod.cantidad * prod.precio, 0);
+  const getTotal = () => {
+    return currentOrden.reduce((tot, prod) => tot + prod.cantidad * prod.precio, 0);
   }
   
-  increment = () => {
-    if ( this.state.currentPosition <= steps ) this.setState({ currentPosition: this.state.currentPosition += 1 });
-    clearTimeout(timeOut);
+  const increment = () => {
+    const today = new Date()
+    const deltaTime = deadline - today
+    console.log(timeOut, deltaTime)
+    // if (deltaTime >= ((currentLenght * totalTime * 100 + 120000) + (totalTime * 3000) + 60000)) {
+    //   currentPosition = 0
+    //   setPosition(0)
+    // } else if (deltaTime >= ((totalTime * 3000) + 60000)) {
+    //   currentPosition = 1
+    //   setPosition(1)
+    // } else if (deltaTime >= 60000) {
+    //   currentPosition = 2
+    //   setPosition(2)
+    // } else {
+    //   currentPosition = 3
+    //   setPosition(3)
+    // }
 
-    if (this.state.currentPosition == 1) {
-      console.log("Orden puesta")
-      timeOut = setTimeout(() => this.increment(), 10000);
-    } else if (this.state.currentPosition == 2) {
-      console.log("En preparacion")
-      timeOut = setTimeout(() => this.increment(), this.state.currentOrden.length * 7500);
-    } else if (this.state.currentPosition == 3) {
-      console.log("En coccion")
-      timeOut = setTimeout(() => this.increment(), this.state.coccion * 1000);
-    } else if (this.state.currentPosition == 4) {
-      console.log("Lista")
-      timeOut = setTimeout(() => this.increment(), 1000);
+    if (deltaTime >= 50000) {
+      currentPosition = 0
+      setPosition(0)
+    } else if (deltaTime >= 35000) {
+      currentPosition = 1
+      setPosition(1)
+    } else if (deltaTime >= 20000) {
+      currentPosition = 2
+      setPosition(2)
     } else {
-      console.log("Fin")
-    } 
+      currentPosition = 3
+      setPosition(3)
+    }
+
+    if (deltaTime < 0) {
+      console.log('termine', timeOut)
+      clearInterval(timeOut)
+      currentPosition = 4
+      setPosition(4)
+    }
   }
       
-  renderText = () => {
-    if (this.state.canInteract) timeOut = setTimeout(() => this.increment(), 7500);
-
+  const renderText = () => {
     return (
       <Card
         title="panitos' tracker"
@@ -180,7 +198,7 @@ export default class TrackingOrdenes extends React.Component {
       >
         <StepIndicator
           customStyles={customStyles}
-          currentPosition={this.state.currentPosition}
+          currentPosition={currentPosition}
           labels={labels}
           stepCount={steps}
         />
@@ -188,11 +206,10 @@ export default class TrackingOrdenes extends React.Component {
     )
   }
       
-  renderOrden = () => {
+  const renderOrden = () => {
     return (
       <Block>
         <Text>{"\n"}</Text>
-
         <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
         
         <View
@@ -203,10 +220,10 @@ export default class TrackingOrdenes extends React.Component {
           }}
         >
           <Block>
-              <Block style={{ boxSizing: 'border-box', width: '100%', backgroundColor: '#FFCC00', borderRadius: 50, borderWidth: 0, paddingTop: 30, paddingBottom: 30, paddingHorizontal: 40, }}>
-              { this.state.currentOrden.length > 0 ? <Block>
+            <Block style={{ boxSizing: 'border-box', width: '100%', backgroundColor: '#FFCC00', borderRadius: 50, borderWidth: 0, paddingTop: 30, paddingBottom: 30, paddingHorizontal: 40, }}>
+              { currentOrden.length > 0 ? <Block>
                 {
-                  this.state.currentOrden.map((product, index) => {
+                  currentOrden.map((product, index) => {
                     return (
                       <Block key={product + "_" + index} style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Block style={{width: '70%', wordBreak: 'break-all'}}>
@@ -232,7 +249,7 @@ export default class TrackingOrdenes extends React.Component {
                     <Text size={19} style={{ fontFamily:"Avenir" }}>Total</Text>
                   </Block>
                   <Block style={{ textAlign: 'right'}}>
-                    {this.state.canInteract ? <Text size={19} style={{ fontFamily:"Avenir" }}>Q. {Math.floor(this.getTotal())}.00</Text> : null}
+                    {canInteract ? <Text size={19} style={{ fontFamily:"Avenir" }}>Q. {Math.floor(getTotal())}.00</Text> : null}
                   </Block>
                 </Block>
               </View>
@@ -243,22 +260,22 @@ export default class TrackingOrdenes extends React.Component {
     )
   }
 
-  render() {
-    return (
-      <Block  style={{backgroundColor:"white"}} >
-        <ScrollView>
-          <Spinner
-            visible={!this.state.canInteract}
-            textContent={'Cargando...'}
-            textStyle={styles.spinnerTextStyle}
-          />
-          {this.renderText()}
-          {this.renderOrden()}
-        </ScrollView>
-      </Block>
-    );
-  }
+  return (
+    <Block  style={{backgroundColor:"white"}} >
+      <ScrollView>
+        <Spinner
+          visible={!canInteract}
+          textContent={'Cargando...'}
+          textStyle={styles.spinnerTextStyle}
+        />
+        {renderText()}
+        {renderOrden()}
+      </ScrollView>
+    </Block>
+  );
 }
+
+export default TrackingOrdenes;
 
 const styles = StyleSheet.create({
     container: {
