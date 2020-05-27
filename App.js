@@ -56,6 +56,7 @@ export default class App extends React.Component {
   constructor(){
     super();
     global.isLogged = false;
+    
   }
   state = {
     isLoadingComplete: false,

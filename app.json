@@ -13,6 +13,12 @@
     "version": "1.5.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "notification": {
+      "icon": "./assets/images/icon.png",
+      "color": "#4A4A4A",
+      "androidMode": "default",
+      "androidCollapsedTitle": "Tu orden ha cambiado de estado ingresa para ver su estado actual"
+    },
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",

@@ -12,6 +12,8 @@ import { materialTheme } from '../constants/';
 import Constants from 'expo-constants';
 import StepIndicator from 'react-native-step-indicator';
 import * as TrackWorker from '../TrackWorker';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 import Spinner from 'react-native-loading-spinner-overlay';
 import { DataNavigation } from 'react-data-navigation';
@@ -139,9 +141,36 @@ function TrackingOrdenes({ navigation }) {
     }
     
   }
+  
 
   const getTotalTime = (order) => {
     return order.reduce((tot, prod) => tot + prod.tiempo, 0);
+  }
+
+  sendNotificacition = (title, body) => {
+    const localNotification = { title: title, body: body };
+    const schedulingOptions = {
+      time: new Date().getTime() + Number(1),
+    };
+    Notifications.scheduleLocalNotificationAsync(
+      localNotification,
+      schedulingOptions,
+    );
+  };
+
+  handleNotification = () => {
+    console.warn('ok! got your notif');
+  };
+
+  askNotification = async () => {
+    // permiso para notificaciones en ios
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (Constants.isDevice && status === 'granted')
+      console.log('Notification permissions granted.');
+  };
+
+  getTotalTime = () => {
+    return this.state.currentOrden.reduce((total, prod) => total + prod.tiempo, 0);
   }
 
   const getTotal = () => {
@@ -169,16 +198,37 @@ function TrackingOrdenes({ navigation }) {
     if (deltaTime >= 50000) {
       currentPosition = 0
       setPosition(0)
+      this.sendNotificacition('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
     } else if (deltaTime >= 35000) {
       currentPosition = 1
       setPosition(1)
+      this.sendNotificacition('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
     } else if (deltaTime >= 20000) {
       currentPosition = 2
       setPosition(2)
+      this.sendNotificacition('Lista', 'Tu orden se encuentra lista para ser recogida')
     } else {
       currentPosition = 3
       setPosition(3)
+      console.log("Lista")
     }
+
+    // if (this.state.currentPosition == 1) {
+    //   console.log("Orden puesta")
+    //   console.log("En preparacion")
+    //   this.sendNotificacition('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+    //   timeOut = setTimeout(() => this.increment(), 10000);
+    // } else if (this.state.currentPosition == 2) {
+    //   this.sendNotificacition('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+    //   timeOut = setTimeout(() => this.increment(), this.state.currentOrden.length * 7500);
+    // } else if (this.state.currentPosition == 3) {
+    //   this.sendNotificacition('Lista', 'Tu orden se encuentra lista para ser recogida')
+    //   console.log("En coccion")
+    //   timeOut = setTimeout(() => this.increment(), this.state.coccion * 1000);
+    // } else if (this.state.currentPosition == 4) {
+    //   console.log("Lista")
+    //   timeOut = setTimeout(() => this.increment(), 1000);
+    // }
 
     if (deltaTime < 0) {
       console.log('termine', timeOut)
