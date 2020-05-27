@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   StyleSheet,
-  View
+  View, 
+  Image
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Block, Text, theme, Button} from 'galio-framework';
@@ -123,7 +124,16 @@ export default class SignUp extends React.Component {
         console.log("segui mañana")
       }
     } 
+  }
 
+  renderImage = () => {
+    return (
+      <Block style={styles.group}>
+        <Image
+          source={require('../assets/images/trackeat.png')}
+          style={{ height: 150, width: 210, bottom: 15 }} />
+      </Block>
+    )
   }
 
   renderText = () => {
@@ -139,12 +149,12 @@ export default class SignUp extends React.Component {
   renderInputs = () => {
     const {name, email, password, confirmPassword, isEmailValid, isConfirmationPasswordValid, isPasswordValid} = this.state
     return (
-      <Block style={styles.content}>
+      <Block style={styles.content, {bottom: 15}}>
           <Input
             leftIcon={
               <Icon
                 name="user"
-                color="#444"
+                color="#000"
                 size={20}
               />
             }
@@ -161,12 +171,12 @@ export default class SignUp extends React.Component {
             maxLength={32}
           />
 
-          <Block style={{marginTop: 20}}>
+          <Block style={{marginTop: 10}}>
             <Input
               leftIcon={
                 <Icon
                   name="envelope"
-                  color="#444"
+                  color="#000"
                   size={20}
                 />
               }
@@ -187,12 +197,12 @@ export default class SignUp extends React.Component {
             />
           </Block>
 
-          <Block style={{marginTop: 20}}>
+          <Block style={{marginTop: 10}}>
             <Input
               leftIcon={
                 <Icon
                   name="lock"
-                  color="#444"
+                  color="#000"
                   size={30}
                 />
               }
@@ -215,12 +225,12 @@ export default class SignUp extends React.Component {
             />
           </Block>
 
-          <Block style={{marginTop: 20}}>
+          <Block style={{marginTop: 10}}>
             <Input
               leftIcon={
                 <Icon
                   name="lock"
-                  color="#444"
+                  color="#000"
                   size={30}
                 />
               }
@@ -258,7 +268,7 @@ export default class SignUp extends React.Component {
         iconColor={theme.COLORS.WHITE}
         iconSize={theme.SIZES.BASE * 1.45}
         color={theme.COLORS.FACEBOOK}
-        style={[styles.social, styles.shadow]}
+        style={[styles.social, styles.shadow, {margin: 20}]}
         onPress={this.onFBLogin}
       />
     )
@@ -285,19 +295,19 @@ export default class SignUp extends React.Component {
     return (
       <KeyboardAwareScrollView enableOnAndroid extraHeight = {50} style={styles.components}>
         <View>
+          {this.renderImage()}
           {this.renderText()}
 
           <Block flex style={styles.inputs}>
             {this.renderInputs()}
 
             <Block style={{marginTop: "10%"}}>
-              <Block style={{marginVertical: 10, display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
+              <Block style={{marginVertical: 30, display: "inline-block", justifyContent: "space-around", alignItems: "center", padding: 10, bottom: 70}}>
                 {this.renderCrearBtn()}
-                <Text h5>o</Text>
                 {this.renderFbBtn()}
               </Block>
 
-              <Block style={{marginTop: 15, display: "flex", flexDirection: "column",  alignItems: "center"}}>
+              <Block style={{marginTop: 15, display: "flex", flexDirection: "column",  alignItems: "center", bottom: 120}}>
                 <Text style={styles.link} onPress={() => navigation.navigate('Sign In')}>Ya tengo cuenta</Text>
               </Block>
             </Block>              
@@ -310,7 +320,7 @@ export default class SignUp extends React.Component {
 
 const styles = StyleSheet.create({
   components: {
-    backgroundColor: "white",
+    backgroundColor: "#f7f7f7",
     paddingHorizontal: theme.SIZES.BASE * 1.2,
     paddingVertical: theme.SIZES.BASE * 5,
   
@@ -320,7 +330,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   group: {
-    paddingTop: theme.SIZES.BASE * 1.75,
+    bottom: 30,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",

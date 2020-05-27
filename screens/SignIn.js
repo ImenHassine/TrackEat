@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   StyleSheet,
+  Image,
 } from 'react-native';
 import { Block, Text, theme, Button } from 'galio-framework';
 import * as Facebook from 'expo-facebook';
@@ -76,6 +77,16 @@ export default class SignIn extends React.Component {
     }
   }
   
+  renderImage = () => {
+    return (
+      <Block style={styles.group}>
+        <Image
+          source={require('../assets/images/trackeat.png')}
+          style={{ height: 150, width: 210, bottom: 20 }} />
+      </Block>
+    )
+  }
+
   renderText = () => {
     return (
       <Block style={styles.group}>
@@ -149,12 +160,12 @@ export default class SignIn extends React.Component {
   renderInputs = () => {
     const {email, password, isEmailValid, isPasswordValid} = this.state
     return (
-      <Block style={styles.content}>
+      <Block style={styles.content, {top: 10}}>
           <Input
             leftIcon={
               <Icon
                 name="envelope"
-                color="#444"
+                color="#000"
                 size={20}
               />
             }
@@ -179,7 +190,7 @@ export default class SignIn extends React.Component {
               leftIcon={
                 <Icon
                   name="lock"
-                  color="#444"
+                  color="#000"
                   size={30}
                 />
               }
@@ -198,7 +209,6 @@ export default class SignIn extends React.Component {
               errorMessage={
                 isPasswordValid ? null : 'Ingresa una contraseña'
               }
-             
             />
           </Block>
       </Block>
@@ -211,13 +221,13 @@ export default class SignIn extends React.Component {
         round
         onlyIcon
         shadowless
-        size="small"
         icon="facebook"
         iconFamily="font-awesome"
+        size="small"
         iconColor={theme.COLORS.WHITE}
-        iconSize={theme.SIZES.BASE * 1.45}
+        iconSize={theme.SIZES.BASE * 2.2}
         color={theme.COLORS.FACEBOOK}
-        style={[styles.social, styles.shadow]}
+        style={[styles.social, styles.shadow, {margin: 20}]}
         onPress={this.onFBLogin}
       />
     )
@@ -244,18 +254,18 @@ export default class SignIn extends React.Component {
     return (
       <Block flex style={styles.components}>
         <Block flex >
+        {this.renderImage()}
           {this.renderText()}
 
           <Block flex style={styles.inputs}>
             {this.renderInputs()}
 
-              <Block style={{marginVertical: 30, display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center"}}>
+              <Block style={{marginVertical: 30, display: "inline-block", justifyContent: "space-around", alignItems: "center", padding: 10}}>
                 {this.renderCrearBtn()}
-                <Text h5>o</Text>
                 {this.renderFbBtn()}
               </Block>
 
-              <Block style={{marginVertical: 40, display: "flex", flexDirection: "column",  alignItems: "center"}}>
+              <Block style={{marginVertical: 40, bottom:70, display: "flex", flexDirection: "column",  alignItems: "center"}}>
                 <Text  style={styles.link} onPress={() => navigation.navigate('Sign Up')}>¿Olvidaste tu contraseña?</Text>
                 <Text  style={[styles.link, {marginTop: 20}]} onPress={() => navigation.navigate('Sign Up')}>Crear una cuenta nueva</Text>
               </Block>
@@ -270,7 +280,7 @@ const styles = StyleSheet.create({
   components: {
     paddingHorizontal: theme.SIZES.BASE * 1.2,
     paddingVertical: theme.SIZES.BASE * 6,
-    backgroundColor: "white",
+    backgroundColor: "#f7f7f7",
     display: "flex",
     flexDirection: "row",
     alignItems: 'center',
@@ -280,7 +290,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   group: {
-    marginTop: theme.SIZES.BASE * 3,
+    bottom: 20,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
@@ -298,8 +308,8 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   social: {
-    width: theme.SIZES.BASE * 3,
-    height: theme.SIZES.BASE * 3,
+    width: theme.SIZES.BASE * 3.5,
+    height: theme.SIZES.BASE * 3.5,
     justifyContent: 'center',
   },
   containetInput: {
@@ -308,7 +318,7 @@ const styles = StyleSheet.create({
     borderRadius: 15
   },
   input: {
-    color: "#111",
+    color: "black",
     marginTop: 10,
     marginLeft: 10,
     marginBottom: 2,
