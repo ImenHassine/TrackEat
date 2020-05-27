@@ -54,6 +54,7 @@ export default class SignIn extends React.Component {
           global.imageLogged =  image;
           global.password = password;
           global.IdLogged = user.id;
+          global.user_orders = {};
           navigation.navigate(
             'App',
             { name, email },

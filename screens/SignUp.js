@@ -77,6 +77,7 @@ export default class SignUp extends React.Component {
           global.imageLogged =  userInfo.picture.data.url;
           global.password = password;
           global.IdLogged = user.id;
+          global.user_orders = {};
           navigation.navigate(
             'App',
             { name, email },
