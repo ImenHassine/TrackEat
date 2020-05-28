@@ -19,8 +19,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { DataNavigation } from 'react-data-navigation';
 
 const thumbMeasure = (width - 48 - 32) / 3;
-const userId = global.IdLogged;
-
+var userId = global.IdLogged;
 const labels = ["Orden Puesta", "En preparación", "En cocción", "Lista para recoger"];
 const customStyles = {
   stepIndicatorSize: 45,
@@ -65,7 +64,7 @@ function TrackingOrdenes({ navigation }) {
     () => navigation.addListener('focus', () =>  start()),
     []
   )
-
+  
 
   const sendNotification = (title, body) => {
     const localNotification = { title: title, body: body };
@@ -79,7 +78,7 @@ function TrackingOrdenes({ navigation }) {
   };
 
   const start = async() => {
-
+    
     let incoming = []
     try {
       incoming = DataNavigation.getData('incomingOrder')
@@ -131,7 +130,9 @@ function TrackingOrdenes({ navigation }) {
 
   const getLastOrder = async () => {
     try {
-      const lastOrder = await TrackWorker.getLastOrder(userId);
+      // console.log(userId)
+      // console.log(global.IdLogged)
+      const lastOrder = await TrackWorker.getLastOrder(global.IdLogged);
       const something = Object.keys(lastOrder.descripcion)
 
       const promises = something.map(async key => {
