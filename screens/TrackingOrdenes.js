@@ -264,7 +264,7 @@ function TrackingOrdenes({ navigation }) {
       <Block>
         <Text>{"\n"}</Text>
         <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
-        
+        {this.askNotification()}
         <View
           style={{
             flexDirection: 'row',
