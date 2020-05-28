@@ -11,17 +11,18 @@
 
 */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform, StatusBar, Image } from 'react-native';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import { Block, GalioProvider } from 'galio-framework';
 import FlashMessage from "react-native-flash-message";
+import { Linking } from "expo";
 
 
 import { Images, products, historialP, materialTheme } from './constants/';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useLinking } from '@react-navigation/native';
 import Screens from './navigation/Screens';
 
 // Before rendering any navigation stack
@@ -36,7 +37,7 @@ const assetImages = [
   Images.Onboarding,
 ];
 
-
+const prefix = Linking.makeUrl("/");
 // cache product images
 products.map(product => assetImages.push(product.image));
 historialP.map(product => assetImages.push(product.image));
@@ -51,66 +52,83 @@ function cacheImages(images) {
   });
 }
 
+const App = (props) =>{
+  const ref = React.useRef();
 
-export default class App extends React.Component {
-  constructor(){
-    super();
-    global.isLogged = false;
-    
-  }
-  state = {
-    isLoadingComplete: false,
-    apiResponse: "",
-  };
+  console.log(prefix)
+  global.isLogged = false;
+  const [isLoadingComplete, setisLoadingComplete] = useState(false);
+  const [apiResponse, setapiResponse] = useState('');
 
-  callAPI(){
-      fetch("http://localhost:9000/testAPI")
-        .then(res=> res.text())
-        .then(res=> this.setState({ apiResponse: res }))
-        .catch(err => err);
-  }
-
-  componentDidMount(){
-    this.callAPI();
-  }
-
-  render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-      return (
-        <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
-        />
-      );
-    } else {
-      return (
-        <NavigationContainer>
-          <GalioProvider theme={materialTheme}>
-            <Block flex>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <Screens />
-            </Block>
-          </GalioProvider>
-          <FlashMessage position="top" />
-        </NavigationContainer>
-      );
+  const { getInitialState } = useLinking(ref, {
+    prefixes: [prefix],
+    config: {
+      Confirm: "confirm",
+      FAQ: "FAQ"
     }
+  });
+  const [isReady, setIsReady] = React.useState(false);
+  const [initialState, setInitialState] = React.useState();
+
+  useEffect(()=>{
+    fetch("http://localhost:9000/testAPI")
+        .then(res=> res.text())
+        .then(res=> setapiResponse( res ))
+        .catch(err => err);
+    
+    getInitialState()
+        .catch(() => {})
+        .then(state => {
+          if (state !== undefined) {
+            setInitialState(state);
+          }
+
+          setIsReady(true);
+        });
+  },[[getInitialState]])
+
+  if (!isReady) {
+    return null;
   }
 
-  _loadResourcesAsync = async () => {
+  const _loadResourcesAsync = async () => {
     return Promise.all([
       ...cacheImages(assetImages),
     ]);
   };
 
-  _handleLoadingError = error => {
+  const _handleLoadingError = error => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);
   };
 
-  _handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
+  const _handleFinishLoading = () => {
+    setisLoadingComplete(true);
   };
+
+
+  if (!isLoadingComplete && !props.skipLoadingScreen) {
+    return (
+      <AppLoading
+        startAsync={_loadResourcesAsync}
+        onError={_handleLoadingError}
+        onFinish={_handleFinishLoading}
+      />
+    );
+  } else {
+    return (
+      <NavigationContainer initialState={initialState} ref={ref}>
+        <GalioProvider theme={materialTheme}>
+          <Block flex>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <Screens />
+          </Block>
+        </GalioProvider>
+        <FlashMessage position="top" />
+      </NavigationContainer>
+    );
+  }
 }
+
+export default App;

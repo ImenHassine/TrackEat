@@ -54,17 +54,22 @@ let currentPosition = 0
 let total = 0
 let totalTime = 0
 
+let hasSend0 = false
+let hasSend1 = false
+let hasSend2 = false
+let hasSend3 = false
+
 function TrackingOrdenes({ navigation }) {
   const [currentOrden, setCurrentOrden] = useState([])
   const [canInteract, setCanInteract] = useState(false)
   const [coccion, setCoccion] = useState(0)
   const [position, setPosition] = useState(0)
+  const [hayOrden, setHayOrden] = useState(false)
 
   React.useEffect(
     () => navigation.addListener('focus', () =>  start()),
     []
   )
-  
 
   const sendNotification = (title, body) => {
     const localNotification = { title: title, body: body };
@@ -97,6 +102,7 @@ function TrackingOrdenes({ navigation }) {
           currentLenght = incoming.length
           setCanInteract(true)
 
+          setHayOrden(true)
           totalTime = getTotalTime(incoming)
 
           // deadline = new Date().getTime() + 60000 + (incoming.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
@@ -111,19 +117,25 @@ function TrackingOrdenes({ navigation }) {
 
         current = await getLastOrder();
 
-        currentLenght = current.length
-        setCurrentOrden(current)
-        setCanInteract(true)
+        if (current.length > 0) {
+          currentLenght = current.length
+          setCurrentOrden(current)
+          setCanInteract(true)
+          setHayOrden(true)
 
-        totalTime = getTotalTime(current)
+          totalTime = getTotalTime(current)
 
-        // deadline = new Date().getTime() + 60000 + (current.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
-        deadline = new Date().getTime() + 60000
+          // deadline = new Date().getTime() + 60000 + (current.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
+          deadline = new Date().getTime() + 60000
 
-        const interval_num = Object.keys(global.user_orders).length
-        timeOut = setInterval(() => {
-          increment(interval_num)
-        }, 1000)
+          const interval_num = Object.keys(global.user_orders).length
+          timeOut = setInterval(() => {
+            increment(interval_num)
+          }, 1000)
+        } else {
+          setCanInteract(true)
+          setHayOrden(false)
+        }
       }
     } catch (error) {
       throw new Error(error);
@@ -132,48 +144,39 @@ function TrackingOrdenes({ navigation }) {
 
   const getLastOrder = async () => {
     try {
-      // console.log(userId)
-      // console.log(global.IdLogged)
       const lastOrder = await TrackWorker.getLastOrder(global.IdLogged);
-      const something = Object.keys(lastOrder.descripcion)
+      console.log('LAST:', lastOrder)
+      if (lastOrder != '') {
+        const something = Object.keys(lastOrder.descripcion)
 
-      const promises = something.map(async key => {
-        const idP = lastOrder.descripcion[key].productid;
+        const promises = something.map(async key => {
+          const idP = lastOrder.descripcion[key].productid;
 
-        const p = await TrackWorker.getProductById(idP)
+          const p = await TrackWorker.getProductById(idP)
 
-        const prod = {
-          producto: p.nombre,
-          precio: p.precio,
-          cantidad: lastOrder.descripcion[key].qty,
-          tiempo: p.tiempo_coccion
-        }
-        return prod;
-      })
+          const prod = {
+            producto: p.nombre,
+            precio: p.precio,
+            cantidad: lastOrder.descripcion[key].qty,
+            tiempo: p.tiempo_coccion
+          }
+          return prod;
+        })
 
-      const algo = await Promise.all(promises);
-      return algo;
+        const algo = await Promise.all(promises);
+        return algo;
+      } else {
+        return []
+      }
+      
     } catch(error) {
       throw new Error(error);
     }
-    
   }
-  
 
   const getTotalTime = (order) => {
     return order.reduce((tot, prod) => tot + prod.tiempo, 0);
   }
-
-  const handleNotification = () => {
-    console.warn('ok! got your notif');
-  };
-
-  const askNotification = async () => {
-    // permiso para notificaciones en ios
-    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    if (Constants.isDevice && status === 'granted')
-      console.log('Notification permissions granted.');
-  };
 
   const getTotal = () => {
     return currentOrden.reduce((tot, prod) => tot + prod.cantidad * prod.precio, 0);
@@ -186,56 +189,38 @@ function TrackingOrdenes({ navigation }) {
     }
     const today = new Date()
     const deltaTime = deadline - today
-    // console.log(global.user_orders[interval_num], deltaTime)
-    // console.log(global.user_orders, interval_num)
-    // if (deltaTime >= ((currentLenght * totalTime * 100 + 120000) + (totalTime * 3000) + 60000)) {
-    //   currentPosition = 0
-    //   setPosition(0)
-    // } else if (deltaTime >= ((totalTime * 3000) + 60000)) {
-    //   currentPosition = 1
-    //   setPosition(1)
-    // } else if (deltaTime >= 60000) {
-    //   currentPosition = 2
-    //   setPosition(2)
-    // } else {
-    //   currentPosition = 3
-    //   setPosition(3)
-    // }
 
     if (deltaTime >= 50000) {
       currentPosition = 0
       setPosition(0)
-      sendNotification('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+      if (!hasSend0) {
+        sendNotification('Orden puesta', 'Tu orden ha sido puesta para su preparación.')
+        hasSend0 = true
+      }
     } else if (deltaTime >= 35000) {
       currentPosition = 1
       setPosition(1)
-      sendNotification('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+      if (!hasSend1) {
+        sendNotification('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+        
+        hasSend1 = true
+      }
     } else if (deltaTime >= 20000) {
       currentPosition = 2
       setPosition(2)
-      sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
+      if (!hasSend2) {
+        sendNotification('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+        hasSend2 = true
+      }
     } else {
       currentPosition = 3
       setPosition(3)
+      if(!hasSend3) {
+        sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
+        hasSend3 = true
+      }
       console.log("Lista")
     }
-
-    // if (this.state.currentPosition == 1) {
-    //   console.log("Orden puesta")
-    //   console.log("En preparacion")
-    //   sendNotification('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
-    //   timeOut = setTimeout(() => this.increment(), 10000);
-    // } else if (this.state.currentPosition == 2) {
-    //   sendNotification('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
-    //   timeOut = setTimeout(() => this.increment(), this.state.currentOrden.length * 7500);
-    // } else if (this.state.currentPosition == 3) {
-    //   sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
-    //   console.log("En coccion")
-    //   timeOut = setTimeout(() => this.increment(), this.state.coccion * 1000);
-    // } else if (this.state.currentPosition == 4) {
-    //   console.log("Lista")
-    //   timeOut = setTimeout(() => this.increment(), 1000);
-    // }
 
     if (deltaTime < 0) {
       console.log('termine', global.user_orders[interval_num])
@@ -267,8 +252,8 @@ function TrackingOrdenes({ navigation }) {
     return (
       <Block>
         <Text>{"\n"}</Text>
+
         <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
-        
         <View
           style={{
             flexDirection: 'row',
