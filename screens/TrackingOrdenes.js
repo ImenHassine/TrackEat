@@ -54,6 +54,11 @@ let currentPosition = 0
 let total = 0
 let totalTime = 0
 
+let hasSend0 = false
+let hasSend1 = false
+let hasSend2 = false
+let hasSend3 = false
+
 function TrackingOrdenes({ navigation }) {
   const [currentOrden, setCurrentOrden] = useState([])
   const [canInteract, setCanInteract] = useState(false)
@@ -184,56 +189,38 @@ function TrackingOrdenes({ navigation }) {
     }
     const today = new Date()
     const deltaTime = deadline - today
-    // console.log(global.user_orders[interval_num], deltaTime)
-    // console.log(global.user_orders, interval_num)
-    // if (deltaTime >= ((currentLenght * totalTime * 100 + 120000) + (totalTime * 3000) + 60000)) {
-    //   currentPosition = 0
-    //   setPosition(0)
-    // } else if (deltaTime >= ((totalTime * 3000) + 60000)) {
-    //   currentPosition = 1
-    //   setPosition(1)
-    // } else if (deltaTime >= 60000) {
-    //   currentPosition = 2
-    //   setPosition(2)
-    // } else {
-    //   currentPosition = 3
-    //   setPosition(3)
-    // }
 
     if (deltaTime >= 50000) {
       currentPosition = 0
       setPosition(0)
-      sendNotification('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+      if (!hasSend0) {
+        sendNotification('Orden puesta', 'Tu orden ha sido puesta para su preparación.')
+        hasSend0 = true
+      }
     } else if (deltaTime >= 35000) {
       currentPosition = 1
       setPosition(1)
-      sendNotification('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+      if (!hasSend1) {
+        sendNotification('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
+        
+        hasSend1 = true
+      }
     } else if (deltaTime >= 20000) {
       currentPosition = 2
       setPosition(2)
-      sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
+      if (!hasSend2) {
+        sendNotification('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
+        hasSend2 = true
+      }
     } else {
       currentPosition = 3
       setPosition(3)
+      if(!hasSend3) {
+        sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
+        hasSend3 = true
+      }
       console.log("Lista")
     }
-
-    // if (this.state.currentPosition == 1) {
-    //   console.log("Orden puesta")
-    //   console.log("En preparacion")
-    //   sendNotification('En preparación', 'Tu orden se encuentra en preparación pronto sera puesta en cocción')
-    //   timeOut = setTimeout(() => this.increment(), 10000);
-    // } else if (this.state.currentPosition == 2) {
-    //   sendNotification('Tu orden se esta cocinando', 'Tu orden ya se esta cocinando pronto estara lista para recoger')
-    //   timeOut = setTimeout(() => this.increment(), this.state.currentOrden.length * 7500);
-    // } else if (this.state.currentPosition == 3) {
-    //   sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
-    //   console.log("En coccion")
-    //   timeOut = setTimeout(() => this.increment(), this.state.coccion * 1000);
-    // } else if (this.state.currentPosition == 4) {
-    //   console.log("Lista")
-    //   timeOut = setTimeout(() => this.increment(), 1000);
-    // }
 
     if (deltaTime < 0) {
       console.log('termine', global.user_orders[interval_num])
