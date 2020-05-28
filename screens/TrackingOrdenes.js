@@ -142,7 +142,7 @@ function TrackingOrdenes({ navigation }) {
 
   const getLastOrder = async () => {
     try {
-      const lastOrder = await TrackWorker.getLastOrder(599);
+      const lastOrder = await TrackWorker.getLastOrder(global.IdLogged);
       console.log('LAST:', lastOrder)
       if (lastOrder != '') {
         const something = Object.keys(lastOrder.descripcion)
