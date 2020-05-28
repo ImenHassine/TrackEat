@@ -7,22 +7,28 @@ import { DataNavigation } from 'react-data-navigation';
 const { width } = Dimensions.get('screen');
 
 class HistorialC extends React.Component {
+  changeScreen = (navigation, order) => {
+    DataNavigation.setData('incomingOrder', order.productos); 
+    DataNavigation.setData('orderId', order.codigo); 
+    navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos, id: order.codigo })
+  }
+  
   render() {
     const { navigation, order, horizontal, full, style, priceColor, imageStyle } = this.props;
     // console.log(order)
-    DataNavigation.setData('incomingOrder', order.productos); 
-    DataNavigation.setData('id', order.codigo); 
+    // DataNavigation.setData('incomingOrder', order.productos); 
+    // DataNavigation.setData('orderId', order.codigo); 
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
     //console.log(order)
     //console.log("hola")
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos, id: order.codigo })}>
+        <TouchableWithoutFeedback onPress={() => this.changeScreen(navigation, order)}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
             <Image source={{ uri: order.image }} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos, id: order.codigo })}>
+        <TouchableWithoutFeedback onPress={() => this.changeScreen(navigation, order)}>
           <Block flex space="between" style={styles.productDescription}>
             <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
             <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>Total: {order.total} </Text>

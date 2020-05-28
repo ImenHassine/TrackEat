@@ -87,7 +87,8 @@ function TrackingOrdenes({ navigation }) {
     let incoming = []
     try {
       incoming = DataNavigation.getData('incomingOrder')
-      incoming_order_id = DataNavigation.getData('id')
+      var incoming_order_id = DataNavigation.getData('orderId')
+      // console.log(incoming_order_id)
     } catch(error) {
       incoming = []
     }
@@ -95,7 +96,7 @@ function TrackingOrdenes({ navigation }) {
     try {
       // console.log(incoming)
       if (incoming != undefined) {
-        console.log(incoming_order_id)
+        // console.log(incoming_order_id)
         if (incoming.length > 0){
           console.log('HISTORIAL')
           setCurrentOrden(incoming)
@@ -107,9 +108,9 @@ function TrackingOrdenes({ navigation }) {
 
           // deadline = new Date().getTime() + 60000 + (incoming.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
           deadline = new Date().getTime() + 60000
-          const interval_num = Object.keys(global.user_orders).length
+          // const interval_num = Object.keys(global.user_orders).length
           timeOut = setInterval(() => {
-            increment(interval_num)
+            increment(incoming_order_id)
           }, 1000)
         }
       } else {
@@ -182,14 +183,14 @@ function TrackingOrdenes({ navigation }) {
     return currentOrden.reduce((tot, prod) => tot + prod.cantidad * prod.precio, 0);
   }
   
-  const increment = (interval_num) => {
-    const user_json_length = Object.keys(global.user_orders).length
-    if(user_json_length == interval_num){
-      global.user_orders[interval_num] = timeOut
+  const increment = (order_id) => {
+    // const user_json_length = Object.keys(global.user_orders).length
+    if(!global.user_orders.hasOwnProperty(order_id)){
+      global.user_orders[order_id] = timeOut
     }
     const today = new Date()
     const deltaTime = deadline - today
-
+    // console.log(global.user_orders)
     if (deltaTime >= 50000) {
       currentPosition = 0
       setPosition(0)
@@ -223,8 +224,8 @@ function TrackingOrdenes({ navigation }) {
     }
 
     if (deltaTime < 0) {
-      console.log('termine', global.user_orders[interval_num])
-      clearInterval(global.user_orders[interval_num])
+      console.log('termine', global.user_orders[order_id])
+      clearInterval(global.user_orders[order_id])
       currentPosition = 4
       setPosition(4)
     }
