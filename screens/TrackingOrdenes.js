@@ -64,12 +64,12 @@ function TrackingOrdenes({ navigation }) {
   const [canInteract, setCanInteract] = useState(false)
   const [coccion, setCoccion] = useState(0)
   const [position, setPosition] = useState(0)
+  const [hayOrden, setHayOrden] = useState(false)
 
   React.useEffect(
     () => navigation.addListener('focus', () =>  start()),
     []
   )
-  
 
   const sendNotification = (title, body) => {
     const localNotification = { title: title, body: body };
@@ -100,6 +100,7 @@ function TrackingOrdenes({ navigation }) {
           currentLenght = incoming.length
           setCanInteract(true)
 
+          setHayOrden(true)
           totalTime = getTotalTime(incoming)
 
           // deadline = new Date().getTime() + 60000 + (incoming.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
@@ -114,19 +115,25 @@ function TrackingOrdenes({ navigation }) {
 
         current = await getLastOrder();
 
-        currentLenght = current.length
-        setCurrentOrden(current)
-        setCanInteract(true)
+        if (current.length > 0) {
+          currentLenght = current.length
+          setCurrentOrden(current)
+          setCanInteract(true)
+          setHayOrden(true)
 
-        totalTime = getTotalTime(current)
+          totalTime = getTotalTime(current)
 
-        // deadline = new Date().getTime() + 60000 + (current.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
-        deadline = new Date().getTime() + 60000
+          // deadline = new Date().getTime() + 60000 + (current.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
+          deadline = new Date().getTime() + 60000
 
-        const interval_num = Object.keys(global.user_orders).length
-        timeOut = setInterval(() => {
-          increment(interval_num)
-        }, 1000)
+          const interval_num = Object.keys(global.user_orders).length
+          timeOut = setInterval(() => {
+            increment(interval_num)
+          }, 1000)
+        } else {
+          setCanInteract(true)
+          setHayOrden(false)
+        }
       }
     } catch (error) {
       throw new Error(error);
@@ -135,48 +142,39 @@ function TrackingOrdenes({ navigation }) {
 
   const getLastOrder = async () => {
     try {
-      // console.log(userId)
-      // console.log(global.IdLogged)
-      const lastOrder = await TrackWorker.getLastOrder(global.IdLogged);
-      const something = Object.keys(lastOrder.descripcion)
+      const lastOrder = await TrackWorker.getLastOrder(599);
+      console.log('LAST:', lastOrder)
+      if (lastOrder != '') {
+        const something = Object.keys(lastOrder.descripcion)
 
-      const promises = something.map(async key => {
-        const idP = lastOrder.descripcion[key].productid;
+        const promises = something.map(async key => {
+          const idP = lastOrder.descripcion[key].productid;
 
-        const p = await TrackWorker.getProductById(idP)
+          const p = await TrackWorker.getProductById(idP)
 
-        const prod = {
-          producto: p.nombre,
-          precio: p.precio,
-          cantidad: lastOrder.descripcion[key].qty,
-          tiempo: p.tiempo_coccion
-        }
-        return prod;
-      })
+          const prod = {
+            producto: p.nombre,
+            precio: p.precio,
+            cantidad: lastOrder.descripcion[key].qty,
+            tiempo: p.tiempo_coccion
+          }
+          return prod;
+        })
 
-      const algo = await Promise.all(promises);
-      return algo;
+        const algo = await Promise.all(promises);
+        return algo;
+      } else {
+        return []
+      }
+      
     } catch(error) {
       throw new Error(error);
     }
-    
   }
-  
 
   const getTotalTime = (order) => {
     return order.reduce((tot, prod) => tot + prod.tiempo, 0);
   }
-
-  const handleNotification = () => {
-    console.warn('ok! got your notif');
-  };
-
-  const askNotification = async () => {
-    // permiso para notificaciones en ios
-    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    if (Constants.isDevice && status === 'granted')
-      console.log('Notification permissions granted.');
-  };
 
   const getTotal = () => {
     return currentOrden.reduce((tot, prod) => tot + prod.cantidad * prod.precio, 0);
@@ -252,8 +250,8 @@ function TrackingOrdenes({ navigation }) {
     return (
       <Block>
         <Text>{"\n"}</Text>
+
         <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
-        {this.askNotification()}
         <View
           style={{
             flexDirection: 'row',
