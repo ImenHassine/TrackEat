@@ -83,25 +83,32 @@ function TrackingOrdenes({ navigation }) {
   };
 
   const start = async() => {
-    
+    console.log('start')
     let incoming = []
     try {
       incoming = DataNavigation.getData('incomingOrder')
-      incoming_order_id = DataNavigation.getData('id')
     } catch(error) {
       incoming = []
     }
 
     try {
+      incoming_order_id = DataNavigation.getData('id')
+    } catch(err) {
+      console.log(err)
+    }
+
+    try {
       // console.log(incoming)
       if (incoming != undefined) {
-        console.log(incoming_order_id)
+        console.log("INCOMING ID:", incoming_order_id)
         if (incoming.length > 0){
           console.log('HISTORIAL')
           setCurrentOrden(incoming)
           currentLenght = incoming.length
           setCanInteract(true)
 
+          DataNavigation.setData('incomingOrder', undefined);
+          DataNavigation.setData('incoming_order_id', undefined);
           setHayOrden(true)
           totalTime = getTotalTime(incoming)
 
@@ -114,7 +121,7 @@ function TrackingOrdenes({ navigation }) {
         }
       } else {
         let current = []
-
+        console.log('confirm')
         current = await getLastOrder();
 
         if (current.length > 0) {
@@ -145,7 +152,6 @@ function TrackingOrdenes({ navigation }) {
   const getLastOrder = async () => {
     try {
       const lastOrder = await TrackWorker.getLastOrder(global.IdLogged);
-      console.log('LAST:', lastOrder)
       if (lastOrder != '') {
         const something = Object.keys(lastOrder.descripcion)
 
