@@ -17,9 +17,12 @@ export default class Home extends React.Component {
       productos: [],
       canInteract: false
     };
+    global.user_orders = {}
+    console.log('GLOBAL:', global.user_orders)
   }
 
   async componentDidMount() {
+    
     try {
       const p = await this.getProducts()
       this.setState({
