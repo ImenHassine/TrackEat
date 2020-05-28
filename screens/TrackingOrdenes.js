@@ -82,6 +82,7 @@ function TrackingOrdenes({ navigation }) {
     let incoming = []
     try {
       incoming = DataNavigation.getData('incomingOrder')
+      incoming_order_id = DataNavigation.getData('id')
     } catch(error) {
       incoming = []
     }
@@ -89,6 +90,7 @@ function TrackingOrdenes({ navigation }) {
     try {
       // console.log(incoming)
       if (incoming != undefined) {
+        console.log(incoming_order_id)
         if (incoming.length > 0){
           console.log('HISTORIAL')
           setCurrentOrden(incoming)

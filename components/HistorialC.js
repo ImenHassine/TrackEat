@@ -9,18 +9,20 @@ const { width } = Dimensions.get('screen');
 class HistorialC extends React.Component {
   render() {
     const { navigation, order, horizontal, full, style, priceColor, imageStyle } = this.props;
+    // console.log(order)
     DataNavigation.setData('incomingOrder', order.productos); 
+    DataNavigation.setData('id', order.codigo); 
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
     //console.log(order)
     //console.log("hola")
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos, id: order.codigo })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
             <Image source={{ uri: order.image }} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Tracking de Órdenes', { incomingOrder: order.productos, id: order.codigo })}>
           <Block flex space="between" style={styles.productDescription}>
             <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
             <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>Total: {order.total} </Text>
