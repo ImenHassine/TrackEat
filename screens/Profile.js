@@ -20,10 +20,11 @@ class ProfileOrder extends React.Component {
   
   render() {
     const { navigation, order, horizontal, full, style, priceColor, imageStyle } = this.props;
+    const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
     return(
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-            <Image source={{ uri: order.image }} style={styles.imageStyle} />
+            <Image source={{ uri: order.image }} style={imageStyles} />
           </Block>
           <Block flex space="between" style={styles.productDescription}>
             <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
@@ -77,6 +78,8 @@ export default class Profile extends React.Component {
       }
       for(let i = 0; i < orders_displayed; i++) { // solo se presentan las últimas 3 órdenes
         const p = await (TrackWorker.getProductById(user_orders[i].descripcion[1]['productid']))
+        // console.log('product info')
+        // console.log(p)
         const order = {
           codigo: user_orders[i].id,
           image: p.image, //jalar una imagen random para mientras
