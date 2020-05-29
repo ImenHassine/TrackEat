@@ -69,6 +69,15 @@ function TrackingOrdenes({ navigation }) {
   const [position, setPosition] = useState(0)
   const [hayOrden, setHayOrden] = useState(false)
 
+  // const getToken = async() => {
+  //   const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+  //   if (status !== 'granted') {
+  //     alert('Hey! You might want to enable notifications for my app, they are good.');
+  //   }
+  //   const token = await Notifications.getExpoPushTokenAsync();
+  //   console.log(token)
+  // }
+  
   React.useEffect(
     () => navigation.addListener('focus', () =>  start()),
     []
@@ -267,6 +276,8 @@ function TrackingOrdenes({ navigation }) {
       clearInterval(global.user_orders['Orden' + order_id])
       currentPosition = 4
       setPosition(4)
+      //request para pasar orden de tablas en DB
+      TrackWorker.removerOrder(order_id)
     }
   }
       
