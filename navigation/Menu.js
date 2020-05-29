@@ -50,10 +50,7 @@ function CustomDrawerContent({
             title="Tracking de Órdenes"
             navigation={navigation}
           />
-           <DrawerCustomItem
-            title="Confirm"
-            navigation={navigation}
-          />
+           
           {global.isLogged &&
              <>
             <DrawerCustomItem
