@@ -14,8 +14,7 @@ import * as TrackWorker from '../TrackWorker';
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
-// const userid = 97
-// const userid = global.IdLogged
+
 class ProfileOrder extends React.Component {
   
   render() {
@@ -27,9 +26,9 @@ class ProfileOrder extends React.Component {
             <Image source={{ uri: order.image }} style={imageStyles} />
           </Block>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>Total: {order.total} </Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>{order.fecha} </Text>
+            <Text size={16} style={styles.productTitle}>{order.nombre}</Text>
+            <Text size={16}  color={priceColor}>Total: Q{order.total} </Text>
+            <Text size={16}  color={priceColor}>Fecha: {order.fecha} </Text>
           </Block>
       </Block>
     )
@@ -155,8 +154,8 @@ export default class Profile extends React.Component {
                 </Block>
               </Block>
               <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-                <Text size={16} style={{fontFamily:"Avenir"}}>Órdenes recientes</Text>
-                <Text size={12} style={{fontFamily:"Avenir"}} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
+                <Text size={16} >Órdenes recientes</Text>
+                <Text size={14}  color={"#4686c8"} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
               </Block>
               <Block style={{ paddingBottom: -HeaderHeight}}>
                 { orders.length === 0 ? 
@@ -252,16 +251,15 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   image: {
-    borderRadius: 5,
-    marginHorizontal: theme.SIZES.BASE / 2,
-    margin: 4,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5
   },
   horizontalImage: {
     height: 90,
-    width: 'auto',
   },
   fullImage: {
-    height: 215,
+    height: 90,
+    resizeMode: 'contain',
     width: width - theme.SIZES.BASE * 3,
   },
   shadow: {
