@@ -101,6 +101,23 @@ router.get("/lastOrder/:userId",function(req, res, next){
   })
 })
 
+router.get("/orderById/:orderId",function(req, res, next){
+  next();
+}, function(req, res) {
+
+  const params = req.params
+  const orderId = params.orderId;
+  const query = { text: 'select * from public.orden where id = $1', values: [orderId] }
+  const response = res;
+  pool.query(query, (err, res) => {
+    if(err) {
+      response.send(err.stack)
+    } else { 
+      response.send(res.rows[0])
+    }
+  })
+})
+
 //actualiza una orden
 router.get("/newState/:newState/orderId/:orderId",function(req, res, next){
   next();

@@ -117,7 +117,7 @@ export default class SignIn extends React.Component {
     this.validateEmail(email);
     this.validatePassword(password);
     const {isEmailValid, isPasswordValid} = this.state
-    console.log(isEmailValid, isPasswordValid)
+    // console.log(isEmailValid, isPasswordValid)
     if(isEmailValid && isPasswordValid) {
       const user = await TrackWorker.getUserInfo(email, password);
       if(user) {
