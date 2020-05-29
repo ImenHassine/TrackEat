@@ -4,11 +4,11 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  Image
+  ImageBackground
 } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import {Card} from 'react-native-elements';
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 import { materialTheme } from '../constants/';
 import Constants from 'expo-constants';
 import StepIndicator from 'react-native-step-indicator';
@@ -16,11 +16,12 @@ import * as TrackWorker from '../TrackWorker';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { HeaderHeight } from "../constants/utils";
+
 
 
 import Spinner from 'react-native-loading-spinner-overlay';
 import { DataNavigation } from 'react-data-navigation';
-
 const thumbMeasure = (width - 48 - 32) / 3;
 var userId = global.IdLogged;
 const labels = ["Orden Puesta", "En preparación", "En cocción", "Lista para recoger"];
@@ -39,10 +40,10 @@ const customStyles = {
   stepIndicatorUnFinishedColor: '#ffffff',
   stepIndicatorCurrentColor: '#4686c8',
   stepIndicatorLabelFontSize: 13,
-  currentStepIndicatorLabelFontSize: 13,
+  currentStepIndicatorLabelFontSize: 20,
   stepIndicatorLabelCurrentColor: '#fff',
   stepIndicatorLabelFinishedColor: '#ffffff',
-  stepIndicatorLabelUnFinishedColor: '#aaaaaa',
+  stepIndicatorLabelUnFinishedColor: '#333',
   labelColor: '#333',
   labelSize: 13,
   currentStepLabelColor: '#333',
@@ -260,11 +261,9 @@ function TrackingOrdenes({ navigation }) {
         sendNotification('Lista', 'Tu orden se encuentra lista para ser recogida')
         hasSend3 = true
       }
-      console.log("Lista")
     }
 
     if (deltaTime < 0) {
-      console.log('termine', global.user_orders['Orden' + order_id])
       clearInterval(global.user_orders['Orden' + order_id])
       currentPosition = 4
       setPosition(4)
@@ -273,15 +272,18 @@ function TrackingOrdenes({ navigation }) {
       
   const renderText = () => {
     return (
-      <Block>
-        <Image
-          source={require('../assets/images/planta-baja.jpg')}
-          style={{ height: 220, bottom: 20 }}
-           />
-        <Text h3 style={{marginHorizontal: 20, marginBottom: 5}}>Panitos - Zona 10</Text>
-        <Text style={{marginHorizontal: 25, marginBottom: 10, color: "#696969"}}>Comida Rápida - Latina</Text>
-        <Text style={{marginHorizontal: 25, marginBottom: 20, color: "#696969"}}> <Icon
-        name='clock-o' />  20 - 30 min</Text>
+        <Block flex>
+          <ImageBackground
+            source={require('../assets/images/planta-baja.jpg')}
+            style={styles.profileContainer}
+            >
+            
+          </ImageBackground>
+
+          <Text h3 style={{marginHorizontal: 20, marginBottom: 5}}>Panitos - Zona 10</Text>
+          <Text style={{marginHorizontal: 25, marginBottom: 10, color: "#696969"}}>Comida Rápida - Latina</Text>
+          <Text style={{marginHorizontal: 25, marginBottom: 20, color: "#696969"}}> <Icon
+          name='clock-o' />  20 - 30 min</Text>
 
         <StepIndicator
           customStyles={customStyles}
@@ -295,9 +297,9 @@ function TrackingOrdenes({ navigation }) {
       
   const renderOrden = () => {
     return (
-      <Block style={{ borderWidth: 1, borderRadius: 8, borderColor: "#DCDCDC", paddingTop: 30, paddingBottom: 30, paddingHorizontal: 10, marginHorizontal: 10, marginTop: 10 }}>
+      <Block style={{ borderWidth: 1, borderRadius: 8, borderColor: "#DCDCDC", paddingTop: 30, paddingBottom: 20, paddingHorizontal: 10, marginHorizontal: 10, marginTop: 10 }}>
 
-        <Text h5 style={{ marginHorizontal: 10}}> Detalles de Orden </Text>
+        <Text h5 > Detalles de Orden </Text>
         <View
           style={{
             flexDirection: 'row',
@@ -327,15 +329,15 @@ function TrackingOrdenes({ navigation }) {
             }
             
               <View style={{paddingHorizontal:0}}>
-                <View style={{borderBottomColor: 'black', borderBottomWidth: 6, paddingTop:15 }}/>
+                <View style={{borderBottomColor: '#333', borderBottomWidth: 2, paddingTop:15 }}/>
               </View>
               <View style={{paddingRight: 40, paddingTop:20}}>
                 <Block style={{display: 'flex', flexDirection: 'row', paddingLeft: 50, justifyContent: 'space-around' }}>
                   <Block style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                    <Text size={19} style={{ fontFamily:"Avenir" }}>Total</Text>
+                    <Text size={19} >Total</Text>
                   </Block>
                   <Block style={{ textAlign: 'right'}}>
-                    {canInteract ? <Text size={19} style={{ fontFamily:"Avenir" }}>Q. {Math.floor(getTotal())}.00</Text> : null}
+                    {canInteract ? <Text size={19} >Q. {Math.floor(getTotal())}.00</Text> : null}
                   </Block>
                 </Block>
               </View>
@@ -347,7 +349,7 @@ function TrackingOrdenes({ navigation }) {
   }
 
   return (
-    <Block  style={{backgroundColor:"white"}} >
+    <Block  style={styles.profile} >
       <ScrollView>
         <Spinner
           visible={!canInteract}
@@ -364,6 +366,19 @@ function TrackingOrdenes({ navigation }) {
 export default TrackingOrdenes;
 
 const styles = StyleSheet.create({
+  profile: {
+    marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
+    marginBottom: -HeaderHeight * 2,
+    backgroundColor: "white"
+  },
+  profileContainer: {
+    height: height/3 ,
+  },
+  profileDetails: {
+    paddingTop: theme.SIZES.BASE * 4,
+    justifyContent: 'flex-end',
+    position: 'relative',
+  },
     container: {
       flex: 1,
       justifyContent: 'center',

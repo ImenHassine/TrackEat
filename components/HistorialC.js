@@ -30,10 +30,10 @@ class HistorialC extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => this.changeScreen(navigation, order)}>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>Total: {order.total} </Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>{order.fecha} </Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} muted color={priceColor}>{order.puntos} TrackPuntos</Text>
+            <Text size={16} style={styles.productTitle}>{order.nombre}</Text>
+            <Text size={16}  color={priceColor}>Total: {order.total} </Text>
+            <Text size={16}  color={priceColor}>{order.fecha} </Text>
+            <Text size={16}  muted color={priceColor}>{order.puntos} TrackPuntos</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>

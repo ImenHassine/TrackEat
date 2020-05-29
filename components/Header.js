@@ -37,7 +37,7 @@ class Header extends React.Component {
     const noShadow = ["Search", "Categories", "Deals", "Pro", "Profile"].includes(title);
     const headerStyles = [
       !noShadow ? styles.shadow : null,
-      transparent ? { backgroundColor: 'transparent' } : null,
+      transparent ? { backgroundColor: 'transparent' } : {backgroundColor: '#4686c8'},
     ];
 
     return (
@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     paddingBottom: theme.SIZES.BASE * 1.5,
     paddingTop: iPhoneX ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 2,
     zIndex: 5,
-    backgroundColor: '#4686c8'
   },
   shadow: {
     backgroundColor: theme.COLORS.WHITE,

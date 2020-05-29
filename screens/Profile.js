@@ -1,21 +1,18 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
-import { LinearGradient } from 'expo-linear-gradient';
 
 //import { Icon } from '../components';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Product } from '../components/';
-import { products } from '../constants/';
+
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as TrackWorker from '../TrackWorker';
 
 
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
-// const userid = 97
-// const userid = global.IdLogged
+
 class ProfileOrder extends React.Component {
   
   render() {
@@ -26,9 +23,9 @@ class ProfileOrder extends React.Component {
             <Image source={{ uri: order.image }} style={styles.imageStyle} />
           </Block>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>Total: {order.total} </Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>{order.fecha} </Text>
+            <Text size={16} style={styles.productTitle}>{order.nombre}</Text>
+            <Text size={16}  color={priceColor}>Total: Q {order.total} </Text>
+            <Text size={16} color={priceColor}>{order.fecha} </Text>
           </Block>
       </Block>
     )
@@ -101,7 +98,6 @@ export default class Profile extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
     const { orders, points, orders_qty } = this.state
     if(orders === null){
       return(
@@ -119,41 +115,25 @@ export default class Profile extends React.Component {
             <ImageBackground
               source={{uri: global.imageLogged}}
               style={styles.profileContainer}
-              imageStyle={styles.profileImage}>
-              <Block flex style={styles.profileDetails}>
-                <Block style={styles.profileTexts}>
-                  <Text color="white" size={28} style={{ paddingBottom: 8}}>{global.nameLogged} </Text>
-                  <Block row space="between">
-                    <Block row>
-                      <Text color="white" size={16} muted style={styles.seller} onPress={() => this.logout()}>Cerrar Sesión</Text>
-                    </Block>
-                    <Block>
-                      <Text color={theme.COLORS.MUTED} size={16}>
-                        <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-                        {` `} Guatemala, GT
-                        </Text>
-                    </Block>
-                  </Block>
-                </Block>
-                <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']} style={styles.gradient} />
-              </Block>
+              >
+              
             </ImageBackground>
           </Block>
           <Block flex style={styles.options}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Block row space="evenly" style={{ padding: theme.SIZES.BASE, }}>
                 <Block middle>
-                  <Text bold size={12} style={{marginBottom: 8, fontFamily:"Avenir"}}>{orders_qty}</Text>
-                  <Text muted style={{fontFamily:"Avenir"}} size={12}>Órdenes</Text>
+                  <Text bold size={12} style={{marginBottom: 8}}>{orders_qty}</Text>
+                  <Text muted  size={12}>Órdenes</Text>
                 </Block>
                 <Block middle>
-                  <Text bold size={12} style={{marginBottom: 8, fontFamily:"Avenir"}}>{points}</Text>
-                  <Text muted style={{fontFamily:"Avenir"}} size={12}>Puntos</Text>
+                  <Text bold size={12} style={{marginBottom: 8}}>{points}</Text>
+                  <Text muted  size={12}>Puntos</Text>
                 </Block>
               </Block>
               <Block row space="between" style={{ paddingVertical: 16, alignItems: 'baseline' }}>
-                <Text size={16} style={{fontFamily:"Avenir"}}>Órdenes recientes</Text>
-                <Text size={12} style={{fontFamily:"Avenir"}} color={theme.COLORS.PRIMARY} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
+                <Text size={16} >Órdenes recientes</Text>
+                <Text size={14}  color={"#4686c8"} onPress={() => this.props.navigation.navigate('Historial')}>Ver todas</Text>
               </Block>
               <Block style={{ paddingBottom: -HeaderHeight}}>
                 { orders.length === 0 ? 
