@@ -95,6 +95,21 @@ export const getLastOrder = (userId) => {
     )  
 }
 
+export const getOrderById = (orderId) => {
+    return new Promise(async (resolve, reject) => {
+        await axios.get(utils.trackeatUrl + `orders/orderById/${orderId}` , {withCredentials: true})
+            .then(({status, data}) => {
+                if(status === 200){
+                    resolve(data);
+                } else {
+                    console.log("Error de conexión")
+                }
+                
+            }).catch(reject)
+        }
+    )  
+}
+
 export const getUserPoints = (userId) => {
     return new Promise(async (resolve, reject) => {
         await axios.get(utils.trackeatUrl + `pgAPI/userId/${userId}` , {withCredentials: true})

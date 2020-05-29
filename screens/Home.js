@@ -18,7 +18,7 @@ export default class Home extends React.Component {
       canInteract: false
     };
     global.user_orders = {}
-    console.log('GLOBAL:', global.user_orders)
+    // console.log('GLOBAL:', global.user_orders)
   }
 
   async componentDidMount() {

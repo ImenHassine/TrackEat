@@ -86,7 +86,7 @@ function TrackingOrdenes({ navigation }) {
 
   const start = async() => {
     let incoming = []
-    let incoming_order_id = 0
+    let incoming_order_id = undefined
     try {
       incoming = DataNavigation.getData('incomingOrder')
       // console.log(incoming_order_id)
@@ -102,26 +102,27 @@ function TrackingOrdenes({ navigation }) {
 
     try {
       // console.log(incoming)
-      if (incoming != undefined) {
-        if (incoming.length > 0){
-          setCurrentOrden(incoming)
-          currentLenght = incoming.length
-          setCanInteract(true)
+      if (incoming_order_id != undefined) {
+        incomingOrder = await getOrderFromHistorial(incoming_order_id)
+        incoming = incomingOrder
 
-          DataNavigation.setData('incomingOrder', undefined);
-          DataNavigation.setData('incoming_order_id', undefined);
-          setHayOrden(true)
-          totalTime = getTotalTime(incoming)
+        setCurrentOrden(incoming)
+        currentLenght = incoming.length
+        setCanInteract(true)
 
-          // deadline = new Date().getTime() + 60000 + (incoming.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
-          deadline = new Date().getTime() + 60000
-          if (!Object.keys(global.user_orders).includes('Orden' + incoming_order_id)) {
-            console.log('ORDEN AGREGADA:', incoming_order_id)
-          // const interval_num = Object.keys(global.user_orders).length
-            timeOut = setInterval(() => {
-              increment(incoming_order_id)
-            }, 1000)
-          }
+        DataNavigation.setData('incomingOrder', undefined);
+        DataNavigation.setData('orderId', undefined);
+        setHayOrden(true)
+        totalTime = getTotalTime(incoming)
+
+        // deadline = new Date().getTime() + 60000 + (incoming.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
+        deadline = new Date().getTime() + 60000
+        if (!Object.keys(global.user_orders).includes('Orden' + incoming_order_id)) {
+          console.log('ORDEN AGREGADA:', incoming_order_id)
+        // const interval_num = Object.keys(global.user_orders).length
+          timeOut = setInterval(() => {
+            increment(incoming_order_id)
+          }, 1000)
         }
       } else {
         let current = []
@@ -150,6 +151,37 @@ function TrackingOrdenes({ navigation }) {
     } catch (error) {
       throw new Error(error);
     }
+  }
+
+  const getOrderFromHistorial = async (orderId) => {
+    try {
+      const lastOrder = await TrackWorker.getOrderById(orderId);
+      if (lastOrder != '') {
+        const something = Object.keys(lastOrder.descripcion)
+
+        const promises = something.map(async key => {
+          const idP = lastOrder.descripcion[key].productid;
+
+          const p = await TrackWorker.getProductById(idP)
+
+          const prod = {
+            producto: p.nombre,
+            precio: p.precio,
+            cantidad: lastOrder.descripcion[key].qty,
+            tiempo: p.tiempo_coccion
+          }
+          return prod;
+        })
+
+        const algo = await Promise.all(promises);
+        return algo;
+      } else {
+        return []
+      }
+      
+    } catch(error) {
+      throw new Error(error);
+    } 
   }
 
   const getLastOrder = async () => {
@@ -232,8 +264,8 @@ function TrackingOrdenes({ navigation }) {
     }
 
     if (deltaTime < 0) {
-      console.log('termine', global.user_orders[order_id])
-      clearInterval(global.user_orders[order_id])
+      console.log('termine', global.user_orders['Orden' + order_id])
+      clearInterval(global.user_orders['Orden' + order_id])
       currentPosition = 4
       setPosition(4)
     }
