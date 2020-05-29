@@ -239,7 +239,6 @@ function HomeStack(props) {
           header: ({ navigation, scene }) => (
             <Header back white transparent title="" navigation={navigation} scene={scene} />
           ),
-          headerTransparent: true
         }}
       />
     </Stack.Navigator>
@@ -519,7 +518,6 @@ function HistorialStack(props) {
           header: ({ navigation, scene }) => (
             <Header
               white
-              transparent
               title="Historial"
               scene={scene}
               navigation={navigation}

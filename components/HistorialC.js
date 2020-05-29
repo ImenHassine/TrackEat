@@ -15,12 +15,9 @@ class HistorialC extends React.Component {
   
   render() {
     const { navigation, order, horizontal, full, style, priceColor, imageStyle } = this.props;
-    // console.log(order)
-    // DataNavigation.setData('incomingOrder', order.productos); 
-    // DataNavigation.setData('orderId', order.codigo); 
+
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
-    //console.log(order)
-    //console.log("hola")
+
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => this.changeScreen(navigation, order)}>
@@ -30,10 +27,10 @@ class HistorialC extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => this.changeScreen(navigation, order)}>
           <Block flex space="between" style={styles.productDescription}>
-            <Text size={16} style={styles.productTitle, {fontFamily:"Avenir"}}>{order.nombre}</Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>Total: {order.total} </Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} color={priceColor}>{order.fecha} </Text>
-            <Text size={16} style={{fontFamily:"Avenir"}} muted color={priceColor}>{order.puntos} TrackPuntos</Text>
+            <Text size={16} style={styles.productTitle}>{order.nombre}</Text>
+            <Text size={16}  color={priceColor}>Total: Q{order.total} </Text>
+            <Text size={16}  color={priceColor}>Fecha: {order.fecha} </Text>
+            <Text size={16}  muted color={priceColor}>{order.puntos} TrackPuntos</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -62,15 +59,14 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   image: {
-    borderRadius: 5,
-    marginHorizontal: theme.SIZES.BASE / 2,
-    marginTop: 4,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5
   },
   horizontalImage: {
-    height: 122,
-    width: 'auto',
+    height: 131,
   },
   fullImage: {
+    resizeMode: 'contain',
     height: 215,
     width: width - theme.SIZES.BASE * 3,
   },
