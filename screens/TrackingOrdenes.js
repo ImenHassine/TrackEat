@@ -83,18 +83,17 @@ function TrackingOrdenes({ navigation }) {
   };
 
   const start = async() => {
-    console.log('start')
     let incoming = []
+    let incoming_order_id = 0
     try {
       incoming = DataNavigation.getData('incomingOrder')
-      var incoming_order_id = DataNavigation.getData('orderId')
       // console.log(incoming_order_id)
     } catch(error) {
       incoming = []
     }
 
     try {
-      incoming_order_id = DataNavigation.getData('id')
+      incoming_order_id = DataNavigation.getData('orderId')
     } catch(err) {
       console.log(err)
     }
@@ -102,9 +101,7 @@ function TrackingOrdenes({ navigation }) {
     try {
       // console.log(incoming)
       if (incoming != undefined) {
-        console.log("INCOMING ID:", incoming_order_id)
         if (incoming.length > 0){
-          console.log('HISTORIAL')
           setCurrentOrden(incoming)
           currentLenght = incoming.length
           setCanInteract(true)
@@ -116,14 +113,16 @@ function TrackingOrdenes({ navigation }) {
 
           // deadline = new Date().getTime() + 60000 + (incoming.length * totalTime * 100 + 120000) + (totalTime * 3000) + 60000
           deadline = new Date().getTime() + 60000
+          if (!Object.keys(global.user_orders).includes('Orden' + incoming_order_id)) {
+            console.log('ORDEN AGREGADA:', incoming_order_id)
           // const interval_num = Object.keys(global.user_orders).length
-          timeOut = setInterval(() => {
-            increment(incoming_order_id)
-          }, 1000)
+            timeOut = setInterval(() => {
+              increment(incoming_order_id)
+            }, 1000)
+          }
         }
       } else {
         let current = []
-        console.log('confirm')
         current = await getLastOrder();
 
         if (current.length > 0) {
@@ -192,8 +191,8 @@ function TrackingOrdenes({ navigation }) {
   
   const increment = (order_id) => {
     // const user_json_length = Object.keys(global.user_orders).length
-    if(!global.user_orders.hasOwnProperty(order_id)){
-      global.user_orders[order_id] = timeOut
+    if(!global.user_orders.hasOwnProperty('Orden' + order_id)){
+      global.user_orders['Orden' + order_id] = timeOut
     }
     const today = new Date()
     const deltaTime = deadline - today
