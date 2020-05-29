@@ -12,9 +12,9 @@
     ],
     "version": "1.5.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/te_icon.png",
     "notification": {
-      "icon": "./assets/images/icon.png",
+      "icon": "./assets/images/te_icon.png",
       "color": "#4A4A4A",
       "androidMode": "default",
       "androidCollapsedTitle": "Tu orden ha cambiado de estado ingresa para ver su estado actual"
@@ -31,7 +31,9 @@
       "assets/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.Negocios.TrackEat",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.Negocios.TrackEat",
