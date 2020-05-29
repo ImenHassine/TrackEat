@@ -48,10 +48,9 @@ class Header extends React.Component {
           style={styles.navbar}
           transparent={transparent}
           rightStyle={{ alignItems: 'center' }}
-          leftStyle={{ flex: 0.3, paddingTop: 2 }}
+          leftStyle={{ flex: 0.3, paddingTop: 22 }}
           leftIconName={(back ? 'chevron-left' : 'navicon')}
           leftIconColor={"#fff"}
-          leftIconSize={theme.SIZES.BASE * 4}
           titleStyle={[
             styles.title,
             {color: "#fff"},
@@ -75,10 +74,11 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: 18,
     fontWeight: 'bold',
+    marginTop: 20
   },
   navbar: {
     paddingBottom: theme.SIZES.BASE * 1.5,
-    paddingTop: iPhoneX ? theme.SIZES.BASE * 2 : 0,
+    paddingTop: iPhoneX ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 2,
     zIndex: 5,
     backgroundColor: '#4686c8'
   },
