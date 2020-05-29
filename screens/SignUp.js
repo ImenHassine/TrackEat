@@ -11,7 +11,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {  Input } from 'react-native-elements';
 import * as TrackWorker from '../TrackWorker';
 import { showMessage } from "react-native-flash-message";
-import axios from 'axios';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 
 
@@ -259,33 +260,20 @@ export default class SignUp extends React.Component {
 
   renderFbBtn = () => {
     return (
-      <Button
-        round
-        onlyIcon
-        shadowless
-        icon="facebook"
-        iconFamily="font-awesome"
-        size="small"
-        iconColor={theme.COLORS.WHITE}
-        iconSize={theme.SIZES.BASE * 1.45}
-        color={theme.COLORS.FACEBOOK}
-        style={[styles.social, styles.shadow, {margin: 20}]}
-        onPress={this.onFBLogin}
-      />
+      <FontAwesome.Button name="facebook" backgroundColor="#3b5998"  onPress={this.onFBLogin} style={styles.social}>
+        Crear Cuenta con Facebook
+      </FontAwesome.Button>
     )
   }
 
   renderCrearBtn = () => {
     return (
       <Button
-        size="small"
-        round
-        uppercase
         color="success"
-        style={[{width: "auto", paddingHorizontal: "8%"}, styles.shadow]}
-        onPress = {this.createAccount}
+        style={styles.shadow}
+        onPress={this.createAccount}
       >
-        Crear cuenta
+        Crear Cuenta
       </Button>
     )
   }
@@ -303,7 +291,7 @@ export default class SignUp extends React.Component {
             {this.renderInputs()}
 
             <Block style={{marginTop: "10%"}}>
-              <Block style={{marginVertical: 30, display: "inline-block", justifyContent: "space-around", alignItems: "center", padding: 10, bottom: 70}}>
+              <Block style={{marginVertical: 30,  padding: 10, bottom: 70}}>
                 {this.renderCrearBtn()}
                 {this.renderFbBtn()}
               </Block>
@@ -329,10 +317,10 @@ const styles = StyleSheet.create({
   inputs: {
     display: "flex",
     flexDirection: "column",
+    marginTop: 30,
   },
   group: {
-    bottom: 30,
-    display: "flex",
+    marginTop: 13,
     flexDirection: "row",
     justifyContent: "center",
   },
@@ -345,6 +333,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.2,
     elevation: 2,
+    marginBottom: 20,
+    width: "auto",
+    borderRadius: 5
   },
   containetInput: {
     borderColor: "black",
@@ -352,10 +343,9 @@ const styles = StyleSheet.create({
     borderRadius: 15
   },
   social: {
-    width: theme.SIZES.BASE * 3,
-    height: theme.SIZES.BASE * 3,
-    borderRadius: theme.SIZES.BASE * 1.75,
+    borderRadius: 20,
     justifyContent: 'center',
+    paddingVertical: 11
   },
   input: {
     color: "#111",
@@ -371,6 +361,7 @@ const styles = StyleSheet.create({
   },
   link: {
     color: "#1E90FF",
-    fontSize: 16
+    fontSize: 16,
+    marginTop: 10
   }
 });

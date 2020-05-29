@@ -7,6 +7,7 @@ import { Block, Text, theme, Button } from 'galio-framework';
 import * as Facebook from 'expo-facebook';
 import {  Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 import * as TrackWorker from '../TrackWorker';
 import { showMessage } from "react-native-flash-message";
 
@@ -218,33 +219,21 @@ export default class SignIn extends React.Component {
 
   renderFbBtn = () => {
     return (
-      <Button
-        round
-        onlyIcon
-        shadowless
-        icon="facebook"
-        iconFamily="font-awesome"
-        size="small"
-        iconColor={theme.COLORS.WHITE}
-        iconSize={theme.SIZES.BASE * 2.2}
-        color={theme.COLORS.FACEBOOK}
-        style={[styles.social, styles.shadow, {margin: 20}]}
-        onPress={this.onFBLogin}
-      />
+      <FontAwesome.Button name="facebook" backgroundColor="#3b5998"  onPress={this.onFBLogin} style={styles.social}>
+        Iniciar Sesión con Facebook
+      </FontAwesome.Button>
     )
   }
 
   renderCrearBtn = () => {
     return (
+      
       <Button
-        round
-        uppercase
-        size="small"
         color="success"
-        style={[{width: "auto", paddingHorizontal: 20}, styles.shadow]}
+        style={styles.shadow}
         onPress={this.onLogin}
       >
-        Iniciar sesión
+        Iniciar Sesión
       </Button>
     )
   }
@@ -261,13 +250,12 @@ export default class SignIn extends React.Component {
           <Block flex style={styles.inputs}>
             {this.renderInputs()}
 
-              <Block style={{marginVertical: 30, display: "inline-block", justifyContent: "space-around", alignItems: "center", padding: 10}}>
+              <Block style={{marginVertical: 30,  padding: 10}}>
                 {this.renderCrearBtn()}
                 {this.renderFbBtn()}
               </Block>
 
               <Block style={{marginVertical: 40, bottom:70, display: "flex", flexDirection: "column",  alignItems: "center"}}>
-                <Text  style={styles.link} onPress={() => navigation.navigate('Sign Up')}>¿Olvidaste tu contraseña?</Text>
                 <Text  style={[styles.link, {marginTop: 20}]} onPress={() => navigation.navigate('Sign Up')}>Crear una cuenta nueva</Text>
               </Block>
           </Block>
@@ -291,7 +279,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   group: {
-    bottom: 20,
+    marginTop: 13,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
@@ -307,11 +295,14 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.2,
     elevation: 2,
+    marginBottom: 20,
+    width: "auto",
+    borderRadius: 5
   },
   social: {
-    width: theme.SIZES.BASE * 3.5,
-    height: theme.SIZES.BASE * 3.5,
+    borderRadius: 20,
     justifyContent: 'center',
+    paddingVertical: 11
   },
   containetInput: {
     borderColor: "black",
