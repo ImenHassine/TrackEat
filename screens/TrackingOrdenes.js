@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   Dimensions,
+  Image
 } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import {Card} from 'react-native-elements';
@@ -14,6 +15,8 @@ import StepIndicator from 'react-native-step-indicator';
 import * as TrackWorker from '../TrackWorker';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 import Spinner from 'react-native-loading-spinner-overlay';
 import { DataNavigation } from 'react-data-navigation';
@@ -24,26 +27,25 @@ const labels = ["Orden Puesta", "En preparación", "En cocción", "Lista para re
 const customStyles = {
   stepIndicatorSize: 45,
   currentStepIndicatorSize: 65,
-  separatorStrokeWidth: 4,
-  currentStepStrokeWidth: 3,
-  stepStrokeCurrentColor: '#fe7013',
-  stepStrokeWidth: 3,
-  stepStrokeFinishedColor: '#fe7013',
-  stepStrokeUnFinishedColor: '#aaaaaa',
-  separatorFinishedColor: '#fe7013',
-  separatorUnFinishedColor: '#aaaaaa',
-  stepIndicatorFinishedColor: '#fe7013',
+  separatorStrokeWidth: 3,
+  currentStepStrokeWidth: 2,
+  stepStrokeCurrentColor: '#4686c8',
+  stepStrokeWidth: 2,
+  stepStrokeFinishedColor: ' #95bee0',
+  stepStrokeUnFinishedColor: '#95bee0',
+  separatorFinishedColor: '#95bee0',
+  separatorUnFinishedColor: '#95bee0',
+  stepIndicatorFinishedColor: '#95bee0',
   stepIndicatorUnFinishedColor: '#ffffff',
-  stepIndicatorCurrentColor: '#ffffff',
+  stepIndicatorCurrentColor: '#4686c8',
   stepIndicatorLabelFontSize: 13,
   currentStepIndicatorLabelFontSize: 13,
-  stepIndicatorLabelCurrentColor: '#fe7013',
+  stepIndicatorLabelCurrentColor: '#fff',
   stepIndicatorLabelFinishedColor: '#ffffff',
   stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-  labelColor: '#999999',
+  labelColor: '#333',
   labelSize: 13,
-  currentStepLabelColor: '#fe7013',
-  labelFontFamily:"Avenir"
+  currentStepLabelColor: '#333',
 }
 
 const steps = 4
@@ -239,48 +241,51 @@ function TrackingOrdenes({ navigation }) {
       
   const renderText = () => {
     return (
-      <Card
-        title="panitos' tracker"
-        titleStyle={styles.name}
-        containerStyle={styles.car}
-        image={require('../assets/images/planta-baja.jpg')}
-      >
+      <Block>
+        <Image
+          source={require('../assets/images/planta-baja.jpg')}
+          style={{ height: 220, bottom: 20 }}
+           />
+        <Text h3 style={{marginHorizontal: 20, marginBottom: 5}}>Panitos - Zona 10</Text>
+        <Text style={{marginHorizontal: 25, marginBottom: 10, color: "#696969"}}>Comida Rápida - Latina</Text>
+        <Text style={{marginHorizontal: 25, marginBottom: 20, color: "#696969"}}> <Icon
+        name='clock-o' />  20 - 30 min</Text>
+
         <StepIndicator
           customStyles={customStyles}
           currentPosition={currentPosition}
           labels={labels}
           stepCount={steps}
         />
-      </Card>
+      </Block>
     )
   }
       
   const renderOrden = () => {
     return (
-      <Block>
-        <Text>{"\n"}</Text>
+      <Block style={{ borderWidth: 1, borderRadius: 8, borderColor: "#DCDCDC", paddingTop: 30, paddingBottom: 30, paddingHorizontal: 10, marginHorizontal: 10, marginTop: 10 }}>
 
-        <Text h4 style={{textAlign: "center", fontWeight: 'bold', fontFamily:"Avenir"}}> Orden </Text>
+        <Text h5 style={{ marginHorizontal: 10}}> Detalles de Orden </Text>
         <View
           style={{
             flexDirection: 'row',
             paddingHorizontal: 20,
-            marginVertical: 20
+            marginVertical: 10
           }}
         >
           <Block>
-            <Block style={{ boxSizing: 'border-box', width: '100%', backgroundColor: '#FFCC00', borderRadius: 50, borderWidth: 0, paddingTop: 30, paddingBottom: 30, paddingHorizontal: 40, }}>
+            <Block >
               { currentOrden.length > 0 ? <Block>
                 {
                   currentOrden.map((product, index) => {
                     return (
                       <Block key={product + "_" + index} style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Block style={{width: '70%', wordBreak: 'break-all'}}>
-                          <Text size={19} style={{ fontFamily:"Avenir" }}>{product.cantidad} x {product.producto}</Text>
+                          <Text size={19} >{product.cantidad} x {product.producto}</Text>
                         </Block>
                         <Block style={{width: '30%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                          <Text size={19} style={{ fontFamily:"Avenir" }}>Q.</Text>
-                          <Text size={19} style={{ fontFamily:"Avenir" }}>{Math.floor(product.precio * product.cantidad)}.00</Text>
+                          <Text size={19} >Q.</Text>
+                          <Text size={19} >{Math.floor(product.precio * product.cantidad)}.00</Text>
                         </Block>
                       </Block>
                     )
@@ -340,7 +345,7 @@ const styles = StyleSheet.create({
       fontFamily: 'Avenir'
     },
     car: {
-      elevation: 0,
+      elevation: 1,
       borderColor: "white"
     },
     progressBar: {
