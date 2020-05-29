@@ -49,19 +49,13 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   image: {
-    resizeMode: 'stretch',
     borderRadius: 3,
-    marginHorizontal: theme.SIZES.BASE / 2,
   },
   horizontalImage: {
-    resizeMode: 'contain',
     height: 122,
-    width: 'auto',
   },
   fullImage: {
-    resizeMode: 'contain',
     height: 215,
-    width: width - theme.SIZES.BASE * 3,
   },
   shadow: {
     shadowColor: theme.COLORS.BLACK,
