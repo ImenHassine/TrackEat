@@ -360,7 +360,7 @@ function TrackingOrdenes({ navigation }) {
   }
 
   return (
-    <Block  style={styles.profile} >
+    <View  style={styles.profile} >
       <ScrollView>
         <Spinner
           visible={!canInteract}
@@ -370,7 +370,7 @@ function TrackingOrdenes({ navigation }) {
         {renderText()}
         {renderOrden()}
       </ScrollView>
-    </Block>
+    </View>
   );
 }
 
@@ -379,8 +379,7 @@ export default TrackingOrdenes;
 const styles = StyleSheet.create({
   profile: {
     marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
-    marginBottom: -HeaderHeight * 2,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   profileContainer: {
     height: height/3 ,

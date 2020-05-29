@@ -25,7 +25,7 @@ class ProfileOrder extends React.Component {
           <Block flex space="between" style={styles.productDescription}>
             <Text size={16} style={styles.productTitle}>{order.nombre}</Text>
             <Text size={16}  color={priceColor}>Total: Q {order.total} </Text>
-            <Text size={16} color={priceColor}>{order.fecha} </Text>
+            <Text size={16} color={priceColor}>Fecha: {order.fecha} </Text>
           </Block>
       </Block>
     )
