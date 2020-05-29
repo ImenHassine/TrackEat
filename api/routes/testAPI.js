@@ -17,7 +17,7 @@ router.post('/', (req, res, next) => {
     const lugar = req.body.lugar;
     const date = req.body.date;
     const idestado = 1;
-    const descripcion = {"1": { "productid":13, "qty":1},"2": { "productid":10, "qty":2},"3": { "productid":5, "qty":1}};
+    const descripcion = {"1": { "productid":4, "qty":1},"2": { "productid":10, "qty":2},"3": { "productid":5, "qty":1}};
     const puntos = Math.floor(total*0.1);
     const query = { text: 'INSERT INTO orden(total,descripcion,lugar,fechasolicitada,fechaentrega,idestado,puntos) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *' ,
     values: [total, descripcion, lugar, date, date, idestado, puntos] }
